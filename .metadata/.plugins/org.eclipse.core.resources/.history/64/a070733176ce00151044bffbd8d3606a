@@ -1,0 +1,14 @@
+
+public class Listener {
+
+	public static void main(String[] args) {
+		
+		System.out.println("what do you want to do ?\n");
+		System.out.println("\t create (c)\n");
+		System.out.println("\t read (r)\n");
+		System.out.println("\t update (u)\n");
+		System.out.println("\t delete (d)\n");
+
+	}
+
+}

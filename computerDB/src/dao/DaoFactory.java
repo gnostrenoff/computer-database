@@ -6,33 +6,28 @@ import java.sql.SQLException;
 
 public class DaoFactory {
 	
-	private static String url;
-	private static String username;
-	private static String password;
+	private final static String URL = "jdbc:mysql://127.0.0.1:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
+	private final static String USERNAME = "root";
+	private final static String PASSWORD = "root";
 	private static Connection conn;
 	private static DaoFactory daoFactory;
 	
-	private DaoFactory(String url, String username, String password){
-		this.url = url;
-		this.username = username;
-		this.password = password;
+	private DaoFactory(){
 	}
 	
 	public static DaoFactory getInstance(){
 		
 		if(daoFactory == null){
 	
-			daoFactory = new DaoFactory("jdbc:mysql://127.0.0.1:3306/computer-database-db?zeroDateTimeBehavior=convertToNull", "root", "root");
+			daoFactory = new DaoFactory();
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
-				conn = DriverManager.getConnection(url, username, password);
+				conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

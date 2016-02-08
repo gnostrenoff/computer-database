@@ -19,7 +19,7 @@ public class LauncherTest {
 		List<Computer> computerList;
 		
 		//create a new computer
-		Computer computer = new Computer("new computer", null, null, 1);
+		Computer computer = new Computer("new computer", new Timestamp((new Date()).getTime()) , null, 1);
 		computerDao.createComputer(computer);
 		
 		//check if the new entity actually exists in database

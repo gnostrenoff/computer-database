@@ -1,0 +1,87 @@
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Scanner;
+
+import dao.CompanyDao;
+import dao.ComputerDao;
+import dao.DaoFactory;
+import model.Computer;
+
+public class Listener {
+
+	public static void main(String[] args) {
+		
+		DaoFactory daoFactory = DaoFactory.getInstance();
+		ComputerDao computerDao = daoFactory.getComputerDao();
+		CompanyDao companyDao = daoFactory.getCompanyDao();
+		
+		Scanner scanIn = new Scanner(System.in);
+		String input;
+		boolean exit = false;
+		
+		System.out.println("what do you want to do ?\n");
+		System.out.println("\t list all computers (l)\n");
+		System.out.println("\t create computer (c)\n");
+		System.out.println("\t read detail computer (r)\n");
+		System.out.println("\t update computer (u)\n");
+		System.out.println("\t delete computer (d)\n");
+		System.out.println("\t exit (e)\n");
+		
+		while(!exit){
+			input = scanIn.nextLine();
+		    
+		    switch(input){
+			    case "create":
+			    case "c":
+			    	Computer newComputer = new Computer();
+			    	System.out.println("please enter a name :");
+					newComputer.setName(scanIn.nextLine());		
+					System.out.println("please enter id of manufacturer :");
+					newComputer.setCompanyId(scanIn.nextLong());
+					newComputer.setIntroduced(new Timestamp((new Date()).getTime()));
+					computerDao.createComputer(newComputer);
+					System.out.println(newComputer.getName() + " computer has been succesfully added to database");
+			    	break;
+			    case "read":
+			    case "r":
+			    	System.out.println("please enter a id :");
+			    	System.out.println(computerDao.getComputer(scanIn.nextLong()).toString());	    	
+			    	break;
+			    case "update":
+			    case "u":
+			    	break;
+			    case "delete":
+			    case "d":
+			    	System.out.println("please enter a id :");
+			    	computerDao.deleteComputer(scanIn.nextLong());
+			    	System.out.println("computer has been succesfully added to database");
+			    	break;
+			    case "exit":
+			    case "e":
+			    	exit = true;
+			    	break;
+			    default:
+		    	    System.out.println("command not reconized");
+		    	    break;
+		    }
+		}
+		scanIn.close();            
+	}
+	
+	public static void create(){
+		
+	}
+	
+	public static void read(){
+			
+	}
+	
+	public static void update(){
+		
+	}
+	
+	public static void delete(){
+		
+	}
+
+}

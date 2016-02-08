@@ -12,8 +12,8 @@ public class ComputerMapper {
 		try {
 			computer.setId(rs.getLong("id"));
 			computer.setName(rs.getString("name"));
-			//computer.setIntroduced(rs.getDate("introduced"));
-			//computer.setDiscontinued(rs.getDate("discontinued"));
+			computer.setIntroduced(rs.getTimestamp("introduced"));
+			computer.setDiscontinued(rs.getTimestamp("discontinued"));
 			computer.setCompanyId(rs.getLong("company_id"));
 		} catch (SQLException e) {
 			e.printStackTrace();

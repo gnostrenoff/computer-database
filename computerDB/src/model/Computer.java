@@ -1,20 +1,20 @@
 package model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Computer {
 	
 	private long id;
 	private String name;
-	private Date introduced;
-	private Date discontinued;
+	private Timestamp introduced;
+	private Timestamp discontinued;
 	private long companyId;
 	
 	public Computer() {
 		super();
 	}
 	
-	public Computer(String name, Date introduced, Date discontinued, long companyId) {
+	public Computer(String name, Timestamp introduced, Timestamp discontinued, long companyId) {
 		super();
 		this.name = name;
 		this.introduced = introduced;
@@ -22,7 +22,7 @@ public class Computer {
 		this.companyId = companyId;
 	}
 	
-	public Computer(long id, String name, Date introduced, Date discontinued, long companyId) {
+	public Computer(long id, String name, Timestamp introduced, Timestamp discontinued, long companyId) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -37,16 +37,16 @@ public class Computer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getIntroduced() {
+	public Timestamp getIntroduced() {
 		return introduced;
 	}
-	public void setIntroduced(Date introduced) {
+	public void setIntroduced(Timestamp introduced) {
 		this.introduced = introduced;
 	}
-	public Date getDiscontinued() {
+	public Timestamp getDiscontinued() {
 		return discontinued;
 	}
-	public void setDiscontinued(Date discontinued) {
+	public void setDiscontinued(Timestamp discontinued) {
 		this.discontinued = discontinued;
 	}
 	public long getCompanyId() {

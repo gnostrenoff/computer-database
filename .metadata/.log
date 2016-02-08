@@ -178,3 +178,19 @@ Command-line arguments:  -data file:/home/excilys/projects/computer-database/ -o
 
 !ENTRY org.eclipse.wst.server.discovery 1 0 2016-02-08 14:31:10.605
 !MESSAGE cacheFile=file:/home/excilys/file:/home/excilys/application/eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+
+!ENTRY org.eclipse.debug.ui 4 120 2016-02-08 16:38:45.799
+!MESSAGE Error logged from Debug UI: 
+!STACK 0
+java.io.IOException
+	at org.eclipse.debug.internal.core.StreamsProxy.write(StreamsProxy.java:132)
+	at org.eclipse.debug.internal.ui.views.console.ProcessConsole$InputReadJob.run(ProcessConsole.java:741)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.debug.ui 4 120 2016-02-08 17:04:33.399
+!MESSAGE Error logged from Debug UI: 
+!STACK 0
+java.io.IOException
+	at org.eclipse.debug.internal.core.StreamsProxy.write(StreamsProxy.java:132)
+	at org.eclipse.debug.internal.ui.views.console.ProcessConsole$InputReadJob.run(ProcessConsole.java:741)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)

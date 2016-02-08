@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+import dao.CompanyDao;
+import dao.ComputerDao;
+import dao.DaoFactory;
+import model.Computer;
+
+public class Listener {
+
+	public static void main(String[] args) {
+		
+		DaoFactory daoFactory = DaoFactory.getInstance();
+		ComputerDao computerDao = daoFactory.getComputerDao();
+		CompanyDao companyDao = daoFactory.getCompanyDao();
+		
+		Scanner scanIn = new Scanner(System.in);
+		String input;
+		boolean exit = false;
+		
+		System.out.println("what do you want to do ?\n");
+		System.out.println("\t create (c)\n");
+		System.out.println("\t read (r)\n");
+		System.out.println("\t update (u)\n");
+		System.out.println("\t delete (d)\n");
+		System.out.println("\t exit (e)\n");
+		
+		while(!exit){
+			input = scanIn.nextLine();
+		    
+		    switch(input){
+			    case "create":
+			    	Computer newComputer = new Computer();
+			    	System.out.println("please enter a name :");
+					newComputer.setName(scanIn.nextLine());
+					System.out.println("please enter id of manufacturer :");
+					newComputer.setCompanyId(scanIn.nextLong());
+					computerDao.createComputer(newComputer);
+					System.out.println(newComputer.getName() + " computer has been succesfully added to database");
+			    	break;
+			    case "read":
+			    	System.out.println("please enter a id :");
+			    	System.out.println(computerDao.getComputer(computer.getId()).toString());
+			    	
+			    	break;
+			    case "update":
+			    	break;
+			    case "delete":
+			    	break;
+			    case "exit":
+			    	exit = true;
+			    	break;
+			    default:
+		    	    System.out.println("command not reconized");
+		    	    break;
+		    }
+		}
+		scanIn.close();            
+	}
+	
+	public static void create(){
+		
+	}
+	
+	public static void read(){
+			
+	}
+	
+	public static void update(){
+		
+	}
+	
+	public static void delete(){
+		
+	}
+
+}

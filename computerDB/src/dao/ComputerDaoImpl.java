@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mappers.ComputerMapper;
-import model.Company;
 import model.Computer;
 
 public class ComputerDaoImpl implements ComputerDao{
@@ -30,16 +29,23 @@ public class ComputerDaoImpl implements ComputerDao{
 		ResultSet rs;
 		
 		try{
+			conn.setAutoCommit(false);
 			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, computer.getName());
-			ps.setDate(2, computer.getIntroduced());
-			ps.setDate(3, computer.getDiscontinued());
+			ps.setTimestamp(2, computer.getIntroduced());
+			ps.setTimestamp(3, computer.getDiscontinued());
 			ps.setLong(4, computer.getCompanyId());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			rs.next();
 			computer.setId(rs.getLong(1));
+			conn.commit();
 		}catch(Exception e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		
@@ -52,10 +58,11 @@ public class ComputerDaoImpl implements ComputerDao{
 		ResultSet rs = null;
 		
 		try{
+			conn.setAutoCommit(true);
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			rs = ps.executeQuery();
-		}catch(Exception e){
+		}catch(SQLException e){
 			e.printStackTrace();
 		}	
 		
@@ -74,14 +81,21 @@ public class ComputerDaoImpl implements ComputerDao{
 		String query = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
 		
 		try{
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, computer.getName());
-			ps.setDate(2, computer.getIntroduced());
-			ps.setDate(3, computer.getDiscontinued());
+			ps.setTimestamp(2, computer.getIntroduced());
+			ps.setTimestamp(3, computer.getDiscontinued());
 			ps.setLong(4, computer.getCompanyId());
 			ps.setLong(5, computer.getId());
 			ps.executeUpdate();
+			conn.commit();
 		}catch(Exception e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}
@@ -92,10 +106,17 @@ public class ComputerDaoImpl implements ComputerDao{
 		String query = "delete from computer where id=?";
 		
 		try{
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			ps.executeUpdate();
-		}catch(Exception e){
+			conn.commit();
+		}catch(SQLException e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		
@@ -110,6 +131,7 @@ public class ComputerDaoImpl implements ComputerDao{
 		ResultSet rs = null;
 		
 		try{
+			conn.setAutoCommit(true);
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(query);
 		}catch(Exception e){
