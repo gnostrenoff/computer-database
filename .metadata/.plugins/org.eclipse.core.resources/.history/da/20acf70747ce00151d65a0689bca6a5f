@@ -1,0 +1,26 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class DaoFactory {
+	
+	private static Connection conn;
+	private static DaoFactory daoFactory;
+	
+	private DaoFactory(){
+	}
+	
+	public static DaoFactory getInstance(){
+		
+		if(daoFactory != null){
+			return daoFactory;
+		}
+		else{
+			daoFactory = new DaoFactory();
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("", "root", "root");
+		}
+	}
+
+}

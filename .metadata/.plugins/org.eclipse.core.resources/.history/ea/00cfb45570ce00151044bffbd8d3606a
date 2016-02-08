@@ -1,0 +1,50 @@
+
+import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
+
+import dao.CompanyDao;
+import dao.ComputerDao;
+import dao.DaoFactory;
+import model.Company;
+import model.Computer;
+
+public class LauncherTest {
+
+	public static void main(String[] args) {
+		
+		DaoFactory daoFactory = DaoFactory.getInstance();
+		ComputerDao computerDao = daoFactory.getComputerDao();
+		CompanyDao companyDao = daoFactory.getCompanyDao();
+		
+		List<Company> compList = companyDao.getCompanies();
+		List<Computer> computerList = computerDao.getComputers();
+		
+		//create a new computer
+		Computer computer = new Computer("nex computer", null, null, 1);
+		//computerDao.createComputer(computer);
+		
+		//check if the new entity actually exists in database
+		System.out.println(computerDao.getComputer(1).toString());
+		
+		
+		/*for(int i = 0; i < compList.size(); i++){
+			Company comp = compList.get(i);
+			System.out.println(comp.toString());
+		}*/
+		
+		/*for(int i = 0; i < computerList.size(); i++){
+			Computer comp = computerList.get(i);
+			System.out.println(comp.toString());
+		}*/
+		
+		
+		/*Computer computer = new Computer();
+		computer.setName("new computer");
+		computer.setCompanyId(1);	
+		
+		computerDao.createComputer(computer);*/
+		
+	}
+
+}

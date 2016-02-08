@@ -1,0 +1,14 @@
+import model.Computer;
+
+public class LauncherTest {
+
+	public static void main(String[] args) {
+		
+		Computer computer = new Computer();
+		computer.setName("nouveau");
+		computer.setIntroduced("12/12/12");
+		computer.setIntroduced("12/12/15");
+		
+	}
+
+}

@@ -1,0 +1,21 @@
+package dao;
+
+import java.util.List;
+
+import model.Company;
+
+public class CompanyDaoImpl implements CompanyDao{
+	
+	private DaoFactory daoFactory;
+	
+	protected CompanyDaoImpl(DaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	@Override
+	public List<Company> getCompanies() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

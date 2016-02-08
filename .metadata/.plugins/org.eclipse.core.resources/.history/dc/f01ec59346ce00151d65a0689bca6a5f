@@ -1,0 +1,23 @@
+package dao;
+
+public class DaoFactory {
+	
+	private String url;
+	private String username;
+	private String password;
+	private static DaoFactory daoFactory;
+	
+	private DaoFactory(String url, String username, String password){
+		this.url = url;
+		this.username = username;
+		this.password = password;
+	}
+	
+	public static DaoFactory getInstance(){
+		
+		if(daoFactory != null){
+			return daoFactory;
+		}
+	}
+
+}

@@ -1,0 +1,37 @@
+package dao;
+
+import model.Company;
+import model.Computer;
+
+public class ComputerDaoImpl implements ComputerDao{
+	
+	private DaoFactory daoFactory;
+	
+	protected ComputerDaoImpl(DaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	@Override
+	public void createComputer(Computer computer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Computer getComputer(long computerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateComputer(Computer computer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteComputer(long computerId) {
+		// TODO Auto-generated method stub
+		
+	}
+}

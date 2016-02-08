@@ -1,0 +1,11 @@
+import model.Computer;
+
+public class LauncherTest {
+
+	public static void main(String[] args) {
+		
+		Computer computer = new Computer();
+		
+	}
+
+}

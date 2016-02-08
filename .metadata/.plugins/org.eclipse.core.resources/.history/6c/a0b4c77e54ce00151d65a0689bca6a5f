@@ -1,0 +1,35 @@
+
+import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
+
+import dao.CompanyDao;
+import dao.ComputerDao;
+import dao.DaoFactory;
+import model.Company;
+import model.Computer;
+
+public class LauncherTest {
+
+	public static void main(String[] args) {
+		
+		DaoFactory daoFactory = DaoFactory.getInstance();
+		ComputerDao computerDao = daoFactory.getComputerDao();
+		CompanyDao companyDao = daoFactory.getCompanyDao();
+		
+		Date dateIntro = new Date();
+		
+		Timestamp introduced = new Timestamp(dateIntro.getDate());
+		
+		//List<Company> compList = companyDao.getCompanies();
+		
+		Computer computer = new Computer();
+		computer.setName("new computer");
+		computer.setIntroduced(introduced);
+		computer.setCompanyId(1);	
+		
+		computerDao.createComputer(computer);
+		
+	}
+
+}

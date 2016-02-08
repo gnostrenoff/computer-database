@@ -1,0 +1,25 @@
+package dao;
+
+import java.sql.Connection;
+
+public class DaoFactory {
+	
+	private static Connection conn;
+	private static DaoFactory daoFactory;
+	
+	private DaoFactory(){
+	}
+	
+	public static DaoFactory getInstance(){
+		
+		
+		
+		if(daoFactory != null){
+			return daoFactory;
+		}
+		else{
+			daoFactory = new DaoFactory(url, username, password)
+		}
+	}
+
+}

@@ -1,0 +1,11 @@
+package model;
+
+public class Computer {
+	
+	private long id;
+	private String name;
+	private String introduced;
+	private String discontinued;
+	private long companyId;
+
+}

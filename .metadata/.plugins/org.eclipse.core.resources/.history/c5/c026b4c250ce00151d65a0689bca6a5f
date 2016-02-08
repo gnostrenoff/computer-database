@@ -1,0 +1,22 @@
+package dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Company;
+
+public class CompanyDaoImpl implements CompanyDao{
+	
+	private DaoFactory daoFactory;
+	
+	protected CompanyDaoImpl(DaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	@Override
+	public List<Company> getCompanies() {
+		List<Company> companyList = new ArrayList<>();
+		return null;
+	}
+
+}

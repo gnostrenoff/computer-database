@@ -1,0 +1,12 @@
+package dao;
+
+import model.Company;
+
+public interface CompanyDao {
+	
+	public void createCompany(Company company);
+	public Company getCompany(long companyId);
+	public void updateCompany(Company company);
+	public void deleteCompany(long companyId);
+
+}
