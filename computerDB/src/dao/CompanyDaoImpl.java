@@ -18,31 +18,31 @@ public class CompanyDaoImpl implements CompanyDao{
 	
 	protected CompanyDaoImpl(DaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
-		this.conn = daoFactory.getConnection();
 	}
 
 	@Override
 	public List<Company> getCompanies(){
-		List<Company> companyList = new ArrayList<>();
 		
+		List<Company> companyList = new ArrayList<>();	
 		String query = "select * from company";
 		ResultSet rs = null;
+		conn = daoFactory.getConnection();
 		
 		try{
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(query);
-		}catch(SQLException e){
-			
-		}
-		
-		try {
 			while(rs.next()){
 				companyList.add(CompanyMapper.map(rs));
 			}
-		} catch (SQLException e) {
+		}catch(SQLException e){
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
 		
 		return companyList;
 	}

@@ -25,6 +25,7 @@ public class ComputerDaoImpl implements ComputerDao{
 	public void createComputer(Computer computer) {
 		
 		String query = "insert into computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?);";
+		conn = daoFactory.getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
 		
@@ -47,6 +48,12 @@ public class ComputerDaoImpl implements ComputerDao{
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -55,6 +62,8 @@ public class ComputerDaoImpl implements ComputerDao{
 	public Computer getComputer(long computerId) {
 		
 		String query = "select * from computer where id=?";
+		conn = daoFactory.getConnection();
+		Computer computer = null;
 		ResultSet rs = null;
 		
 		try{
@@ -62,23 +71,26 @@ public class ComputerDaoImpl implements ComputerDao{
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			rs = ps.executeQuery();
+			rs.next();
+			computer = ComputerMapper.map(rs);
 		}catch(SQLException e){
 			e.printStackTrace();
-		}	
-		
-		try {
-			rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		return ComputerMapper.map(rs);
+
+		return computer;
 	}
 
 	@Override
 	public void updateComputer(Computer computer) {
 		
 		String query = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
+		conn = daoFactory.getConnection();
 		
 		try{
 			conn.setAutoCommit(false);
@@ -97,6 +109,12 @@ public class ComputerDaoImpl implements ComputerDao{
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -104,6 +122,7 @@ public class ComputerDaoImpl implements ComputerDao{
 	public void deleteComputer(long computerId) {
 		
 		String query = "delete from computer where id=?";
+		conn = daoFactory.getConnection();
 		
 		try{
 			conn.setAutoCommit(false);
@@ -118,6 +137,12 @@ public class ComputerDaoImpl implements ComputerDao{
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -125,27 +150,27 @@ public class ComputerDaoImpl implements ComputerDao{
 	@Override
 	public List<Computer> getComputers() {
 		
-		List<Computer> computerList = new ArrayList<>();
-		
+		List<Computer> computerList = new ArrayList<>();		
 		String query = "select * from computer";
+		conn = daoFactory.getConnection();
 		ResultSet rs = null;
 		
 		try{
 			conn.setAutoCommit(true);
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(query);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		try {
 			while(rs.next()){
 				computerList.add(ComputerMapper.map(rs));
 			}
-		} catch (SQLException e) {
+		}catch(SQLException e){
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
 		
 		return computerList;
 	}

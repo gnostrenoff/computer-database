@@ -25,16 +25,16 @@ public class DaoFactory {
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			}
-			try {
-				conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return daoFactory;
 	}
 	
 	protected Connection getConnection(){
+		try {
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return conn;
 	}
 	
