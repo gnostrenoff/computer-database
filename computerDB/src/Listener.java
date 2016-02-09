@@ -1,4 +1,6 @@
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -18,20 +20,21 @@ public class Listener {
 		CompanyDao companyDao = daoFactory.getCompanyDao();
 		
 		Scanner scanIn = new Scanner(System.in);
-		int input;
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
 		boolean exit = false;
+		int input;
 		
 		while(!exit){
 			
 			System.out.println("\n\n");
-			System.out.println("what do you want to do ?");
-			System.out.println("\t 1 - list all companies");
-			System.out.println("\t 2 - list all computers");
-			System.out.println("\t 3 - create computer");
-			System.out.println("\t 4 - read detail computer");
-			System.out.println("\t 5 - update computer");
-			System.out.println("\t 6 - delete computer");
-			System.out.println("\t 7 - exit");
+			System.out.println("what do you want to do ?\n");
+			System.out.println("\t * 1 - list all companies");
+			System.out.println("\t * 2 - list all computers");
+			System.out.println("\t * 3 - create computer");
+			System.out.println("\t * 4 - read detail computer");
+			System.out.println("\t * 5 - update computer");
+			System.out.println("\t * 6 - delete computer");
+			System.out.println("\t * 7 - exit");
 			input = scanIn.nextInt();
 		    
 		    switch(input){

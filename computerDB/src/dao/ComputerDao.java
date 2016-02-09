@@ -20,7 +20,7 @@ public interface ComputerDao {
 	/**
 	 * retrieves a computer by id form database
 	 * @param computerId id of computer to retrieve
-	 * @return computer retrieved
+	 * @return computer computer retrieved
 	 */
 	public Computer getComputer(long computerId);
 	
