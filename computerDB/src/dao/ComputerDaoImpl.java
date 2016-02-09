@@ -13,7 +13,13 @@ import model.Computer;
 
 public class ComputerDaoImpl implements ComputerDao{
 	
+	/**
+	 * dao factory to get a connection
+	 */
 	private DaoFactory daoFactory;
+	/**
+	 * connection got from dao factory
+	 */
 	private Connection conn;
 	
 	protected ComputerDaoImpl(DaoFactory daoFactory) {

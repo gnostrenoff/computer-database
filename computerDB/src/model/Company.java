@@ -2,7 +2,14 @@ package model;
 
 public class Company {
 	
+	/**
+	 * company id
+	 */
 	private long id;
+	
+	/**
+	 * company name
+	 */
 	private String name;
 	
 	public Company() {

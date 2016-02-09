@@ -11,9 +11,20 @@ import exceptions.DaoException;
 import mappers.CompanyMapper;
 import model.Company;
 
+/**
+ * implementation of CompanyDao interface
+ * @author excilys
+ *
+ */
 public class CompanyDaoImpl implements CompanyDao{
 	
+	/**
+	 * dao factory to get a connection
+	 */
 	private DaoFactory daoFactory;
+	/**
+	 * connection got from dao factory
+	 */
 	private Connection conn;
 	
 	protected CompanyDaoImpl(DaoFactory daoFactory) {

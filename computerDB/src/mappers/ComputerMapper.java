@@ -5,8 +5,17 @@ import java.sql.SQLException;
 
 import model.Computer;
 
+/**
+ * This class is providing a static method to convert a resultset to a computer object
+ * @author excilys
+ */
 public class ComputerMapper {
 
+	/**
+	 * converts a resulset to a computer object
+	 * @param rs resultset to convert
+	 * @return computer obtained
+	 */
 	public static Computer map(ResultSet rs){
 		Computer computer = new Computer();
 		try {

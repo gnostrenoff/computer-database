@@ -4,10 +4,29 @@ import java.sql.Timestamp;
 
 public class Computer {
 	
+	/**
+	 * id of computer
+	 */
 	private long id;
+	
+	/**
+	 * name of computer
+	 */
 	private String name;
+	
+	/**
+	 * date computer was introduced
+	 */
 	private Timestamp introduced;
+	
+	/**
+	 * date computer was discontinued
+	 */
 	private Timestamp discontinued;
+	
+	/**
+	 * id of manufacturer
+	 */
 	private long companyId;
 	
 	public Computer() {
