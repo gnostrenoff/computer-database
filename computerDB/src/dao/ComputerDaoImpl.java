@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.Copies;
+
+import exceptions.DaoException;
 import mappers.ComputerMapper;
 import model.Computer;
 
@@ -42,6 +46,7 @@ public class ComputerDaoImpl implements ComputerDao{
 			ps.setTimestamp(2, computer.getIntroduced());
 			ps.setTimestamp(3, computer.getDiscontinued());
 			ps.setLong(4, computer.getCompanyId());
+			checkDates(computer);
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			rs.next();
@@ -106,6 +111,7 @@ public class ComputerDaoImpl implements ComputerDao{
 			ps.setTimestamp(3, computer.getDiscontinued());
 			ps.setLong(4, computer.getCompanyId());
 			ps.setLong(5, computer.getId());
+			checkDates(computer);
 			ps.executeUpdate();
 			conn.commit();
 		}catch(Exception e){
@@ -180,4 +186,19 @@ public class ComputerDaoImpl implements ComputerDao{
 		
 		return computerList;
 	}
+	
+	/**
+	 * checks if date when the computer was introduced is before the date when it was discontinued 
+	 * @param computer computer to check
+	 * @throws DaoException
+	 */
+	private void checkDates(Computer computer) throws DaoException {
+		Timestamp introduced = computer.getIntroduced();
+		Timestamp discontinued = computer.getDiscontinued();
+		if(introduced != null && discontinued != null){
+			if(introduced.before(discontinued))
+				throw new DaoException("error : introduction date is after discontinuation date");			
+		}
+	}
+	
 }
