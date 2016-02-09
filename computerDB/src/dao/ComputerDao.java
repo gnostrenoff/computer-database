@@ -2,7 +2,6 @@ package dao;
 
 import java.util.List;
 
-import model.Company;
 import model.Computer;
 
 /**

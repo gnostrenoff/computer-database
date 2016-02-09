@@ -9,8 +9,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.Copies;
-
 import exceptions.DaoException;
 import mappers.ComputerMapper;
 import model.Computer;

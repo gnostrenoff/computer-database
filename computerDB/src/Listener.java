@@ -1,6 +1,4 @@
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +18,6 @@ public class Listener {
 		CompanyDao companyDao = daoFactory.getCompanyDao();
 		
 		Scanner scanIn = new Scanner(System.in);
-		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
 		boolean exit = false;
 		int input;
 		
@@ -94,6 +91,6 @@ public class Listener {
 		}
 		scanIn.close();  
 		System.out.println("exit ...");
-		System.exit(1);
+		System.exit(0);
 	}
 }
