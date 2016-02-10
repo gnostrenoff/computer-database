@@ -22,7 +22,7 @@ public class ComputerMapper {
 		Computer computer = new Computer();
 		try {
 			computer.setId(rs.getLong("computer.id"));
-			computer.setName(rs.getString("computer.name"));
+			computer.setName(rs.getString("computer .name"));
 			
 			Timestamp ts = rs.getTimestamp("introduced");
 			if(ts != null){

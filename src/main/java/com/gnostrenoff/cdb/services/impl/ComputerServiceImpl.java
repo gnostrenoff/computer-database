@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
+import com.gnostrenoff.cdb.exceptions.DatesNotCorrectException;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.ComputerService;
 
@@ -25,7 +26,12 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public void createComputer(Computer computer) {
-		computerDao.createComputer(computer);
+		if(computer.getDiscontinued().isAfter(computer.getIntroduced())){
+			computerDao.createComputer(computer);
+		}
+		else{
+			throw new DatesNotCorrectException("computer cannot be discontinued before being introduced!");
+		}
 	}
 
 	@Override
@@ -40,7 +46,12 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public void updateComputer(Computer computer) {
-		computerDao.updateComputer(computer);
+		if(computer.getDiscontinued().isAfter(computer.getIntroduced())){
+			computerDao.updateComputer(computer);
+		}
+		else{
+			throw new DatesNotCorrectException("computer cannot be discontinued before being introduced!");
+		}
 	}
 
 	@Override

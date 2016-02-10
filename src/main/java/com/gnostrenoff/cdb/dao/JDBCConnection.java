@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.gnostrenoff.cdb.exceptions.ConnectionPropertiesFileNotFoundException;
+
 public class JDBCConnection {
 
 	private static JDBCConnection jdbcConn;
@@ -17,6 +19,9 @@ public class JDBCConnection {
 	private JDBCConnection(){
 		try {
 	        InputStream file = JDBCConnection.class.getResourceAsStream("db_properties");
+	        if(file == null){
+	        	throw new ConnectionPropertiesFileNotFoundException("properties file not found");
+	        }
 	        Properties props = new Properties();
 			props.load(file);
 			Class.forName(props.getProperty("DRIVER_CLASS"));

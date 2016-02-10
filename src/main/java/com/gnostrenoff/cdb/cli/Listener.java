@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.gnostrenoff.cdb.dao.JDBCConnection;
+import com.gnostrenoff.cdb.exceptions.DatesNotCorrectException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.CompanyService;
@@ -28,15 +29,7 @@ public class Listener {
 		public void listen(){
 			while(!exit){
 				
-				System.out.println("\n\n");
-				System.out.println("what do you want to do ?\n");
-				System.out.println("\t * 1 - list all companies");
-				System.out.println("\t * 2 - list all computers");
-				System.out.println("\t * 3 - create computer");
-				System.out.println("\t * 4 - read detail computer");
-				System.out.println("\t * 5 - update computer");
-				System.out.println("\t * 6 - delete computer");
-				System.out.println("\t * 7 - exit");
+				displayMenu();
 				input = scanIn.nextInt();
 			    
 			    switch(input){
@@ -71,6 +64,21 @@ public class Listener {
 			System.exit(0);
 		}
 		
+		private void displayMenu(){
+			System.out.println("\n\n");
+			System.out.println("\t############################");
+			System.out.println("\t# what do you want to do ?");
+			System.out.println("\t#");
+			System.out.println("\t#  * 1 - list all companies");
+			System.out.println("\t#  * 2 - list all computers");
+			System.out.println("\t#  * 3 - create computer");
+			System.out.println("\t#  * 4 - read detail computer");
+			System.out.println("\t#  * 5 - update computer");
+			System.out.println("\t#  * 6 - delete computer");
+			System.out.println("\t#  * 7 - exit");
+			System.out.println("\t############################");
+		}
+		
 		private void listCompanies(){
 			List<Company> companiesList = companyService.getCompanies();
 			for(int i = 0; i < companiesList.size(); i++){
@@ -102,8 +110,13 @@ public class Listener {
 			company.setId(scanIn.nextLong());
 			newComputer.setCompany(company);
 			
-			computerService.createComputer(newComputer);
-			System.out.println("computer " + newComputer.getId() + " has been succesfully added to database");
+			try{
+				computerService.createComputer(newComputer);
+				System.out.println("computer " + newComputer.getId() + " has been succesfully added to database");
+			}catch(DatesNotCorrectException e){
+				System.out.println("computer " + newComputer.getId() + " was NOT added to database because the computer cannot be discontinued before being introduced");
+			}
+		
 		}
 		
 		private void readDetails(){
@@ -128,8 +141,12 @@ public class Listener {
 			company.setId(scanIn.nextLong());
 			computer.setCompany(company);
 			
-			computerService.updateComputer(computer);
-			System.out.println("computer " + computer.getId() + " has been succesfully updated in database");
+			try{
+				computerService.createComputer(computer);
+				System.out.println("computer " + computer.getId() + " has been succesfully updated to database");
+			}catch(DatesNotCorrectException e){
+				System.out.println("computer " + computer.getId() + " was NOT updated in database because the computer cannot be discontinued before being introduced");
+			}
 		}
 		
 		private void delete(){
