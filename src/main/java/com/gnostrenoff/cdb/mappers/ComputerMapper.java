@@ -2,7 +2,9 @@ package com.gnostrenoff.cdb.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
+import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
 /**
@@ -19,11 +21,24 @@ public class ComputerMapper {
 	public static Computer map(ResultSet rs){
 		Computer computer = new Computer();
 		try {
-			computer.setId(rs.getLong("id"));
-			computer.setName(rs.getString("name"));
-			computer.setIntroduced(rs.getTimestamp("introduced"));
-			computer.setDiscontinued(rs.getTimestamp("discontinued"));
-			computer.setCompanyId(rs.getLong("company_id"));
+			computer.setId(rs.getLong("computer.id"));
+			computer.setName(rs.getString("computer.name"));
+			
+			Timestamp ts = rs.getTimestamp("introduced");
+			if(ts != null){
+				computer.setIntroduced(ts.toLocalDateTime());
+			}
+			
+			ts = rs.getTimestamp("discontinued");
+			if(ts != null){
+				computer.setDiscontinued(ts.toLocalDateTime());
+			}		
+			
+			Company company = new Company();
+			company.setId(rs.getLong("company.id"));
+			company.setName(rs.getString("company.name"));
+			computer.setCompany(company);
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 package com.gnostrenoff.cdb.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import com.gnostrenoff.cdb.model.Company;
 
 public class Computer {
 	
@@ -17,37 +18,34 @@ public class Computer {
 	/**
 	 * date computer was introduced
 	 */
-	private Timestamp introduced;
+	private LocalDateTime introduced;
 	
 	/**
 	 * date computer was discontinued
 	 */
-	private Timestamp discontinued;
+	private LocalDateTime discontinued;
 	
 	/**
-	 * id of manufacturer
+	 * manufacturer
 	 */
-	private long companyId;
+	private Company company;
 	
 	public Computer() {
-		super();
 	}
 	
-	public Computer(String name, Timestamp introduced, Timestamp discontinued, long companyId) {
-		super();
+	public Computer(String name, LocalDateTime introduced, LocalDateTime discontinued, Company company) {
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
-		this.companyId = companyId;
+		this.company = company;
 	}
 	
-	public Computer(long id, String name, Timestamp introduced, Timestamp discontinued, long companyId) {
-		super();
+	public Computer(long id, String name, LocalDateTime introduced, LocalDateTime discontinued, Company company) {
 		this.id = id;
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
-		this.companyId = companyId;
+		this.company = company;
 	}
 	
 	public String getName() {
@@ -56,23 +54,23 @@ public class Computer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Timestamp getIntroduced() {
+	public LocalDateTime getIntroduced() {
 		return introduced;
 	}
-	public void setIntroduced(Timestamp introduced) {
+	public void setIntroduced(LocalDateTime introduced) {
 		this.introduced = introduced;
 	}
-	public Timestamp getDiscontinued() {
+	public LocalDateTime getDiscontinued() {
 		return discontinued;
 	}
-	public void setDiscontinued(Timestamp discontinued) {
+	public void setDiscontinued(LocalDateTime discontinued) {
 		this.discontinued = discontinued;
 	}
-	public long getCompanyId() {
-		return companyId;
+	public Company getCompany() {
+		return company;
 	}
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 	public long getId() {
 		return id;
@@ -85,7 +83,7 @@ public class Computer {
 	@Override
 	public String toString() {
 		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
-				+ ", companyId=" + companyId + "]";
+				+ ", company name=" + company.getName() + "]";
 	}
 
 	

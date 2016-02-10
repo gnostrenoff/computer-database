@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.dao;
+package com.gnostrenoff.cdb.dao.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,8 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gnostrenoff.cdb.dao.CompanyDao;
+import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.mappers.CompanyMapper;
 import com.gnostrenoff.cdb.model.Company;
+
+import sun.security.jca.GetInstance;
 
 /**
  * implementation of CompanyDao interface
@@ -17,17 +21,19 @@ import com.gnostrenoff.cdb.model.Company;
  */
 public class CompanyDaoImpl implements CompanyDao{
 	
-	/**
-	 * dao factory to get a connection
-	 */
-	private DaoFactory daoFactory;
-	/**
-	 * connection got from dao factory
-	 */
-	private Connection conn;
+	private static CompanyDaoImpl companyDaoImp;
+	private JDBCConnection jdbcConnection;
 	
-	protected CompanyDaoImpl(DaoFactory daoFactory) {
-		this.daoFactory = daoFactory;
+	
+	private CompanyDaoImpl() {
+		this.jdbcConnection = JDBCConnection.getInstance();
+	}
+	
+	public static CompanyDaoImpl getInstance(){
+		if(companyDaoImp == null){
+			companyDaoImp = new CompanyDaoImpl();
+		}
+		return companyDaoImp;
 	}
 
 	@Override
@@ -36,7 +42,7 @@ public class CompanyDaoImpl implements CompanyDao{
 		List<Company> companyList = new ArrayList<>();	
 		String query = "select * from company";
 		ResultSet rs = null;
-		conn = daoFactory.getConnection();
+		Connection conn = jdbcConnection.getConnection();
 		
 		try{
 			Statement s = conn.createStatement();

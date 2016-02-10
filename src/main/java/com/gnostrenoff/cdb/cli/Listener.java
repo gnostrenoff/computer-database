@@ -1,25 +1,27 @@
 package com.gnostrenoff.cdb.cli;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.DaoFactory;
+import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.services.CompanyService;
+import com.gnostrenoff.cdb.services.ComputerService;
+import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
+import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
 public class Listener {
 		
-		public static final DaoFactory daoFactory = DaoFactory.getInstance();
-		public static final ComputerDao computerDao = daoFactory.getComputerDao();
-		public static final CompanyDao companyDao = daoFactory.getCompanyDao();
+		public static final JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		public static final ComputerService computerService = ComputerServiceImpl.getInstance();
+		public static final CompanyService companyService = CompanyServiceImpl.getInstance();
 		
 		public static final Scanner scanIn = new Scanner(System.in);
-		public static final SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+		public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		public static boolean exit = false;
 		public static int input;
 		
@@ -70,7 +72,7 @@ public class Listener {
 		}
 		
 		private void listCompanies(){
-			List<Company> companiesList = companyDao.getCompanies();
+			List<Company> companiesList = companyService.getCompanies();
 			for(int i = 0; i < companiesList.size(); i++){
 				Company comp = companiesList.get(i);
 				System.out.println(comp.toString());
@@ -78,70 +80,78 @@ public class Listener {
 		}
 		
 		private void listComputers(){
-			List<Computer> computerList = computerDao.getComputers();
+			List<Computer> computerList = computerService.getComputers();
 			for(int i = 0; i < computerList.size(); i++){
 				Computer comp = computerList.get(i);
 				System.out.println(comp.toString());
 			}
 		}
-		
 		private void create(){
 			Computer newComputer = new Computer();
 	    	System.out.println("please enter a name :");
 	    	scanIn.nextLine(); //empty previous line
 			newComputer.setName(scanIn.nextLine());		
-			System.out.println("please enter date when the computer was introduced :");
+			
+			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm:ss) :");
 			newComputer.setIntroduced(waitForValidDate(newComputer));
-			System.out.println("please enter date when the computer was discontinued :");
+			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm:ss) :");
 			newComputer.setDiscontinued(waitForValidDate(newComputer));
 			System.out.println("please enter id of manufacturer :");
-			newComputer.setCompanyId(scanIn.nextLong());
-			//newComputer.setIntroduced(new Timestamp((new Date()).getTime()));
-			computerDao.createComputer(newComputer);
+			
+			Company company = new Company();
+			company.setId(scanIn.nextLong());
+			newComputer.setCompany(company);
+			
+			computerService.createComputer(newComputer);
 			System.out.println("computer " + newComputer.getId() + " has been succesfully added to database");
 		}
 		
 		private void readDetails(){
 			System.out.println("please enter a id :");
-	    	System.out.println(computerDao.getComputer(scanIn.nextLong()).toString());
+	    	System.out.println(computerService.getComputer(scanIn.nextLong()).toString());
 		}
 		
 		private void update(){
 			System.out.println("please enter a id :");
-	    	Computer computer = computerDao.getComputer(scanIn.nextLong());
+	    	Computer computer = computerService.getComputer(scanIn.nextLong());
 	    	System.out.println("please enter a new name :");
 	    	scanIn.nextLine(); //empty previous line
 			computer.setName(scanIn.nextLine());		
-			System.out.println("please enter date when the computer was introduced :");
+			
+			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm:ss) :");
 			computer.setIntroduced(waitForValidDate(computer));
-			System.out.println("please enter date when the computer was discontinued :");
+			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm:ss) :");
 			computer.setDiscontinued(waitForValidDate(computer));
 			System.out.println("please enter id of manufacturer :");
-			computer.setCompanyId(scanIn.nextLong());
-			computerDao.updateComputer(computer);
+
+			Company company = new Company();
+			company.setId(scanIn.nextLong());
+			computer.setCompany(company);
+			
+			computerService.updateComputer(computer);
 			System.out.println("computer " + computer.getId() + " has been succesfully updated in database");
 		}
 		
 		private void delete(){
 			System.out.println("please enter a id :");
 	    	long id = scanIn.nextLong();
-	    	computerDao.deleteComputer(id);
+	    	computerService.deleteComputer(id);
 	    	System.out.println("computer " + id + " has been succesfully deleted from database");
 		}
 		
-		@SuppressWarnings("deprecation")
-		private Timestamp waitForValidDate(Computer computer){
-			while(true){
-				//scanIn.nextLine(); //empty previous line
+		private LocalDateTime waitForValidDate(Computer computer){
+	
+			LocalDateTime dateTime = null;
+	
+			while(dateTime == null){
 				String sdate = scanIn.nextLine();
-				if(sdate.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}")){
-					return new Timestamp((new Date(sdate)).getTime());
-				}
-				else {
-				    System.out.println("Erreur format");
-				}
+				try{
+					dateTime = LocalDateTime.parse(sdate, formatter);
+				} catch(DateTimeParseException e){
+					dateTime = null;
+					System.out.println("date not valid, try again");
+				}					
 			}
+			return dateTime;
 		}
-		
-		
 }

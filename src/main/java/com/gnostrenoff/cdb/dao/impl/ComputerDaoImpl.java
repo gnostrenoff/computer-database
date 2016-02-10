@@ -1,37 +1,43 @@
-package com.gnostrenoff.cdb.dao;
+package com.gnostrenoff.cdb.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gnostrenoff.cdb.dao.ComputerDao;
+import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.mappers.ComputerMapper;
+import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
 public class ComputerDaoImpl implements ComputerDao{
 	
-	/**
-	 * dao factory to get a connection
-	 */
-	private DaoFactory daoFactory;
-	/**
-	 * connection got from dao factory
-	 */
-	private Connection conn;
+	private static ComputerDaoImpl computerDaoImpl;
+	private JDBCConnection jdbcConnection;
 	
-	protected ComputerDaoImpl(DaoFactory daoFactory) {
-		this.daoFactory = daoFactory;
-		this.conn = daoFactory.getConnection();
+	
+	private ComputerDaoImpl() {
+		this.jdbcConnection = JDBCConnection.getInstance();
+	}
+	
+	public static ComputerDaoImpl getInstance(){
+		if(computerDaoImpl == null){
+			computerDaoImpl = new ComputerDaoImpl();
+		}
+		return computerDaoImpl;
 	}
 
 	@Override
 	public void createComputer(Computer computer) {
 		
 		String query = "insert into computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?);";
-		conn = daoFactory.getConnection();
+		Connection conn = jdbcConnection.getConnection();
 		PreparedStatement ps;
 		ResultSet rs;
 		
@@ -39,9 +45,21 @@ public class ComputerDaoImpl implements ComputerDao{
 			conn.setAutoCommit(false);
 			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, computer.getName());
-			ps.setTimestamp(2, computer.getIntroduced());
-			ps.setTimestamp(3, computer.getDiscontinued());
-			ps.setLong(4, computer.getCompanyId());
+			
+			LocalDateTime localDateTime = computer.getIntroduced();
+			if(localDateTime != null){
+				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			}
+			localDateTime = computer.getDiscontinued();
+			if(localDateTime != null){
+				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			}
+			
+			Company company = computer.getCompany();
+			if(company != null){
+				ps.setLong(4, company.getId());
+			}
+			
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			rs.next();
@@ -67,8 +85,8 @@ public class ComputerDaoImpl implements ComputerDao{
 	@Override
 	public Computer getComputer(long computerId) {
 		
-		String query = "select * from computer where id=?";
-		conn = daoFactory.getConnection();
+		String query = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE computer.id=?";
+		Connection conn = jdbcConnection.getConnection();
 		Computer computer = null;
 		ResultSet rs = null;
 		
@@ -84,7 +102,7 @@ public class ComputerDaoImpl implements ComputerDao{
 		}finally{
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			} catch (SQLException e) {		
 				e.printStackTrace();
 			}
 		}
@@ -96,15 +114,27 @@ public class ComputerDaoImpl implements ComputerDao{
 	public void updateComputer(Computer computer) {
 		
 		String query = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
-		conn = daoFactory.getConnection();
+		Connection conn = jdbcConnection.getConnection();
 		
 		try{
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, computer.getName());
-			ps.setTimestamp(2, computer.getIntroduced());
-			ps.setTimestamp(3, computer.getDiscontinued());
-			ps.setLong(4, computer.getCompanyId());
+			
+			LocalDateTime localDateTime = computer.getIntroduced();
+			if(localDateTime != null){
+				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			}
+			localDateTime = computer.getDiscontinued();
+			if(localDateTime != null){
+				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			}
+			
+			Company company = computer.getCompany();
+			if(company != null){
+				ps.setLong(4, company.getId());
+			}
+			
 			ps.setLong(5, computer.getId());
 			ps.executeUpdate();
 			conn.commit();
@@ -128,7 +158,7 @@ public class ComputerDaoImpl implements ComputerDao{
 	public void deleteComputer(long computerId) {
 		
 		String query = "delete from computer where id=?";
-		conn = daoFactory.getConnection();
+		Connection conn = jdbcConnection.getConnection();
 		
 		try{
 			conn.setAutoCommit(false);
@@ -157,8 +187,8 @@ public class ComputerDaoImpl implements ComputerDao{
 	public List<Computer> getComputers() {
 		
 		List<Computer> computerList = new ArrayList<>();		
-		String query = "select * from computer";
-		conn = daoFactory.getConnection();
+		String query = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id";
+		Connection conn = jdbcConnection.getConnection();
 		ResultSet rs = null;
 		
 		try{
