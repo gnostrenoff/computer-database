@@ -7,6 +7,10 @@ import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.services.CompanyService;
 
+/**
+ * implementation of a company service
+ * @author excilys
+ */
 public class CompanyServiceImpl implements CompanyService{
 	
 	private static CompanyServiceImpl companyServiceImpl;

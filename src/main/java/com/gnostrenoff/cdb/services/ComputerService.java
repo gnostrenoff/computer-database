@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.gnostrenoff.cdb.model.Computer;
 
+/**
+ * service for computers
+ * @author excilys
+ */
 public interface ComputerService {
 	
 	/**

@@ -8,6 +8,10 @@ import com.gnostrenoff.cdb.exceptions.DatesNotCorrectException;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.ComputerService;
 
+/**
+ * implementation of a computer service
+ * @author excilys
+ */
 public class ComputerServiceImpl implements ComputerService{
 	
 	private static ComputerServiceImpl computerService;

@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.gnostrenoff.cdb.model.Company;
 
+/**
+ * service for companies
+ * @author excilys
+ */
 public interface CompanyService {
 	
 	/**

@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.cli;
+ package com.gnostrenoff.cdb.cli;
 
 public class Launcher {
 

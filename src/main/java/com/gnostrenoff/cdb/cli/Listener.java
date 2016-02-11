@@ -22,7 +22,7 @@ public class Listener {
 		public static final CompanyService companyService = CompanyServiceImpl.getInstance();
 		
 		public static final Scanner scanIn = new Scanner(System.in);
-		public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		public static boolean exit = false;
 		public static int input;
 		
@@ -100,9 +100,9 @@ public class Listener {
 	    	scanIn.nextLine(); //empty previous line
 			newComputer.setName(scanIn.nextLine());		
 			
-			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm:ss) :");
+			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm) :");
 			newComputer.setIntroduced(waitForValidDate(newComputer));
-			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm:ss) :");
+			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm) :");
 			newComputer.setDiscontinued(waitForValidDate(newComputer));
 			System.out.println("please enter id of manufacturer :");
 			
@@ -131,9 +131,9 @@ public class Listener {
 	    	scanIn.nextLine(); //empty previous line
 			computer.setName(scanIn.nextLine());		
 			
-			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm:ss) :");
+			System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm) :");
 			computer.setIntroduced(waitForValidDate(computer));
-			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm:ss) :");
+			System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm) :");
 			computer.setDiscontinued(waitForValidDate(computer));
 			System.out.println("please enter id of manufacturer :");
 

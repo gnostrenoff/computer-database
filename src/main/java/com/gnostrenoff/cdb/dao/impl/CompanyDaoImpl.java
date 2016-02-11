@@ -12,8 +12,6 @@ import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.mappers.CompanyMapper;
 import com.gnostrenoff.cdb.model.Company;
 
-import sun.security.jca.GetInstance;
-
 /**
  * implementation of CompanyDao interface
  * @author excilys

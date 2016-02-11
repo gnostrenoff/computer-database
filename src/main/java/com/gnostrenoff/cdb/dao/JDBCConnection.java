@@ -9,6 +9,10 @@ import java.util.Properties;
 
 import com.gnostrenoff.cdb.exceptions.ConnectionPropertiesFileNotFoundException;
 
+/**
+ * this class provides configured connection instances. It can have only one instance. 
+ * @author excilys
+ */
 public class JDBCConnection {
 
 	private static JDBCConnection jdbcConn;
@@ -16,6 +20,9 @@ public class JDBCConnection {
 	private static String username;
 	private static String password;
 	
+	/**
+	 * constructor makes sure there is only one instance at a time, and prepares properties for connections.
+	 */
 	private JDBCConnection(){
 		try {
 	        InputStream file = JDBCConnection.class.getResourceAsStream("db_properties");
@@ -35,6 +42,10 @@ public class JDBCConnection {
 		}
 	}
 	
+	/**
+	 * this methode statically provides a instance of this class 
+	 * @return an instance of this class
+	 */
 	public static JDBCConnection getInstance(){	
 		if(jdbcConn == null){
 			jdbcConn = new JDBCConnection();
@@ -42,6 +53,10 @@ public class JDBCConnection {
 		return jdbcConn;
 	}
 	
+	/**
+	 * this method provides a configured connection, ready to handle transaction.
+	 * @return a configured connection
+	 */
 	public Connection getConnection(){
 		Connection conn = null;
 		try {
