@@ -26,7 +26,7 @@ public class JDBCConnection {
 	 */
 	private JDBCConnection(){
 		try {
-	        InputStream file = JDBCConnection.class.getClassLoader().getResourceAsStream("db.properties");
+	        InputStream file = getClass().getClassLoader().getResourceAsStream("db.properties");
 	        if(file == null){
 	        	throw new ConnectionPropertiesFileNotFoundException("properties file not found");
 	        }

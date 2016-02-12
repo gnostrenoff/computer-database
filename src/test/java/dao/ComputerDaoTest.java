@@ -83,7 +83,7 @@ public class ComputerDaoTest {
 	@Test
 	public void getAllComputers() {
 
-		List<Computer> list = computerDao.getComputers();
+		List<Computer> list = computerDao.getComputers(1,10);
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
 		Computer computer0 = new Computer(3, "macbook", LocalDateTime.of(2015, 03, 12, 12, 35, 00),

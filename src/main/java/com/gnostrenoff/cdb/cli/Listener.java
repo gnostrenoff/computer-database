@@ -88,7 +88,7 @@ public class Listener {
 		}
 		
 		private void listComputers(){
-			List<Computer> computerList = computerService.getComputers();
+			List<Computer> computerList = computerService.getComputers(50,0);
 			for(int i = 0; i < computerList.size(); i++){
 				Computer comp = computerList.get(i);
 				System.out.println(comp.toString());

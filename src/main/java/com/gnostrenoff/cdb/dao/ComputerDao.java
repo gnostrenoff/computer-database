@@ -27,7 +27,7 @@ public interface ComputerDao {
 	 * load the complete list of existing computers in database
 	 * @return list of computers
 	 */
-	public List<Computer> getComputers();
+	public List<Computer> getComputers(int rowCount, int offset);
 	
 	/**
 	 * updates the given computer in database
@@ -40,5 +40,11 @@ public interface ComputerDao {
 	 * @param computerId id of the computer to delete
 	 */
 	public void deleteComputer(long computerId);
+	
+	/**
+	 * get row count of computer table
+	 * @return row count
+	 */
+	public int getRowCount();
 
 }

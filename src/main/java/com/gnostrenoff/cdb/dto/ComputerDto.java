@@ -11,7 +11,6 @@ public class ComputerDto {
 	}
 
 	public ComputerDto(String name, String introduced, String discontinued, String company) {
-		super();
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;

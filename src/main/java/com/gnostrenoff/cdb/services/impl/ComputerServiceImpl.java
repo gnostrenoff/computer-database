@@ -44,8 +44,8 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 
 	@Override
-	public List<Computer> getComputers() {
-		return computerDao.getComputers();
+	public List<Computer> getComputers(int rowCount, int offset) {
+		return computerDao.getComputers(rowCount,0);
 	}
 
 	@Override
@@ -61,6 +61,11 @@ public class ComputerServiceImpl implements ComputerService{
 	@Override
 	public void deleteComputer(long computerId) {
 		computerDao.deleteComputer(computerId);
+	}
+
+	@Override
+	public int getRowCount() {
+		return computerDao.getRowCount();
 	}
 
 }

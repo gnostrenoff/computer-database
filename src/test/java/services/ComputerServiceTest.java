@@ -29,7 +29,7 @@ public class ComputerServiceTest {
 	@BeforeClass
 	public static void init(){
 		dao = Mockito.mock(ComputerDaoImpl.class);
-		Mockito.when(dao.getComputers()).thenReturn(new ArrayList<Computer>());
+		Mockito.when(dao.getComputers(10,0)).thenReturn(new ArrayList<Computer>());
 		Mockito.when(dao.getComputer((long)2)).thenReturn(new Computer());
 		
 		PowerMockito.mockStatic(ComputerDaoImpl.class);
@@ -46,7 +46,7 @@ public class ComputerServiceTest {
 	@Test
 	public void getAllComputers(){
 		ComputerService computerService = ComputerServiceImpl.getInstance();
-		assertTrue(computerService.getComputers() instanceof List<?>);
+		assertTrue(computerService.getComputers(100,0) instanceof List<?>);
 	}	
 
 }
