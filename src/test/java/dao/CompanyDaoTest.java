@@ -27,62 +27,44 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
+import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
+import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(JDBCConnection.class)
 public class CompanyDaoTest {
-
-	private static final String JDBC_DRIVER = org.h2.Driver.class.getName();
-	private static final String JDBC_URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
-	private static final String USER = "sa";
-	private static final String PASSWORD = "";
-
-	private static Connection connection;
+	
 	private static CompanyDao companyDao;
 	private static JdbcDataSource dataSource;
-	private static JDBCConnection jdbcConnection;
 	private static IDatabaseTester databaseTester;
 
 	@BeforeClass
 	public static void init() {
 
-		// create connection
+		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
 		try {
-			RunScript.execute("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "", "src/test/java/db-test/SCHEMA_TEST.sql",
+			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(), "src/test/java/db-test/SCHEMA_TEST.sql",
 					Charset.forName("UTF8"), false);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 
 		dataSource = new JdbcDataSource();
-		dataSource.setURL(JDBC_URL);
-		dataSource.setUser(USER);
-		dataSource.setPassword(PASSWORD);
-
-		jdbcConnection = Mockito.mock(JDBCConnection.class);
-		PowerMockito.mockStatic(JDBCConnection.class);
-		BDDMockito.given(JDBCConnection.getInstance()).willReturn(jdbcConnection);
+		dataSource.setURL(jdbcConnection.getUrl());
+		
+		dataSource.setUser(jdbcConnection.getUsername());
+		dataSource.setPassword(jdbcConnection.getPassword());
 
 		companyDao = CompanyDaoImpl.getInstance();
 	}
 
 	@Before
 	public void importDataSet() throws Exception {
-		getTestConnection();
 		IDataSet dataSet = readDataSet();
 		cleanlyInsert(dataSet);
-	}
-
-	public void getTestConnection() {
-		try {
-			connection = dataSource.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		Mockito.when(jdbcConnection.getConnection()).thenReturn(connection);
 	}
 
 	private IDataSet readDataSet() throws Exception {
@@ -90,7 +72,8 @@ public class CompanyDaoTest {
 	}
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
-		databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
+		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword());
 		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		databaseTester.setDataSet(dataSet);
 		databaseTester.onSetup();

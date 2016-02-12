@@ -16,22 +16,24 @@ import com.gnostrenoff.cdb.exceptions.ConnectionPropertiesFileNotFoundException;
 public class JDBCConnection {
 
 	private static JDBCConnection jdbcConn;
-	private static String url;
-	private static String username;
-	private static String password;
+	private String driver;
+	private String url;
+	private String username;
+	private String password;
 	
 	/**
 	 * constructor makes sure there is only one instance at a time, and prepares properties for connections.
 	 */
 	private JDBCConnection(){
 		try {
-	        InputStream file = JDBCConnection.class.getResourceAsStream("db_properties");
+	        InputStream file = JDBCConnection.class.getClassLoader().getResourceAsStream("db_properties");
 	        if(file == null){
 	        	throw new ConnectionPropertiesFileNotFoundException("properties file not found");
 	        }
 	        Properties props = new Properties();
 			props.load(file);
-			Class.forName(props.getProperty("DRIVER_CLASS"));
+			driver = props.getProperty("DRIVER_CLASS");
+			Class.forName(driver);
 			url = props.getProperty("URL");
 			username = props.getProperty("USERNAME");
 			password = props.getProperty("PASSWORD");
@@ -65,5 +67,21 @@ public class JDBCConnection {
 			e.printStackTrace();
 		}
 		return conn;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getDriver() {
+		return driver;
 	}
 }
