@@ -1,5 +1,0 @@
-#h2 test DB properties
-DRIVER_CLASS=org.h2.Driver
-URL=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-USERNAME=sa
-PASSWORD=

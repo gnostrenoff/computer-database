@@ -26,17 +26,17 @@ public class JDBCConnection {
 	 */
 	private JDBCConnection(){
 		try {
-	        InputStream file = JDBCConnection.class.getClassLoader().getResourceAsStream("db_properties");
+	        InputStream file = JDBCConnection.class.getClassLoader().getResourceAsStream("db.properties");
 	        if(file == null){
 	        	throw new ConnectionPropertiesFileNotFoundException("properties file not found");
 	        }
 	        Properties props = new Properties();
 			props.load(file);
-			driver = props.getProperty("DRIVER_CLASS");
+			driver = props.getProperty("db.DRIVER_CLASS");
 			Class.forName(driver);
-			url = props.getProperty("URL");
-			username = props.getProperty("USERNAME");
-			password = props.getProperty("PASSWORD");
+			url = props.getProperty("db.URL");
+			username = props.getProperty("db.USERNAME");
+			password = props.getProperty("db.PASSWORD");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {

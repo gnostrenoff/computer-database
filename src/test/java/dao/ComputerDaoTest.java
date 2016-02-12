@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +20,7 @@ import org.h2.tools.RunScript;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -34,6 +34,7 @@ import com.gnostrenoff.cdb.model.Computer;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(JDBCConnection.class)
+@Ignore
 public class ComputerDaoTest {
 
 	private static ComputerDao computerDao;
@@ -42,6 +43,7 @@ public class ComputerDaoTest {
 
 	@BeforeClass
 	public static void init() {
+
 
 		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
 		try {

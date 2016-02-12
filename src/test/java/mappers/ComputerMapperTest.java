@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import com.gnostrenoff.cdb.mappers.ComputerMapper;
 import com.gnostrenoff.cdb.model.Computer;
 
+@Ignore
 public class ComputerMapperTest {
 
 	ResultSet rs;
