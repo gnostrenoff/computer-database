@@ -30,12 +30,17 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public void createComputer(Computer computer) {
-		if(computer.getDiscontinued().isAfter(computer.getIntroduced())){
-			computerDao.createComputer(computer);
-		}
+		if(computer.getIntroduced() != null && computer.getDiscontinued() != null){
+			if(computer.getDiscontinued().isAfter(computer.getIntroduced())){
+				computerDao.createComputer(computer);
+			}
+			else{
+				throw new DatesNotCorrectException("computer cannot be discontinued before being introduced!");
+			}
+		}		
 		else{
-			throw new DatesNotCorrectException("computer cannot be discontinued before being introduced!");
-		}
+			computerDao.createComputer(computer);
+		}		
 	}
 
 	@Override
@@ -45,7 +50,7 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public List<Computer> getComputers(int rowCount, int offset) {
-		return computerDao.getComputers(rowCount,0);
+		return computerDao.getComputers(rowCount,offset);
 	}
 
 	@Override

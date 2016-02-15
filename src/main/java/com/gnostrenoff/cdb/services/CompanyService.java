@@ -15,5 +15,12 @@ public interface CompanyService {
 	 * @return list of computers
 	 */
 	public List<Company> getCompanies();
+	
+	/**
+	 * retrieves a company by id form database
+	 * @param companyId id of company to retrieve
+	 * @return company companyretrieved
+	 */
+	public Company getCompany(long companyId);
 
 }

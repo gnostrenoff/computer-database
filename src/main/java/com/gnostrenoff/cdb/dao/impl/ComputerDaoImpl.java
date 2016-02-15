@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +56,21 @@ public class ComputerDaoImpl implements ComputerDao {
 			LocalDateTime localDateTime = computer.getIntroduced();
 			if (localDateTime != null) {
 				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			} else {
+				ps.setNull(2, Types.TIMESTAMP);
 			}
 			localDateTime = computer.getDiscontinued();
 			if (localDateTime != null) {
 				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			} else {
+				ps.setNull(3, Types.TIMESTAMP);
 			}
 
 			Company company = computer.getCompany();
 			if (company != null) {
 				ps.setLong(4, company.getId());
+			} else {
+				ps.setNull(4, Types.TIMESTAMP);
 			}
 
 			ps.executeUpdate();
@@ -118,8 +125,9 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public void updateComputer(/**
-			 * 
-			 */Computer computer) {
+								* 
+								*/
+	Computer computer) {
 
 		String query = SQL_UPDATE;
 		Connection conn = jdbcConnection.getConnection();
@@ -132,15 +140,22 @@ public class ComputerDaoImpl implements ComputerDao {
 			LocalDateTime localDateTime = computer.getIntroduced();
 			if (localDateTime != null) {
 				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			} else {
+				ps.setNull(2, Types.TIMESTAMP);
 			}
+
 			localDateTime = computer.getDiscontinued();
 			if (localDateTime != null) {
 				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			} else {
+				ps.setNull(3, Types.TIMESTAMP);
 			}
 
 			Company company = computer.getCompany();
 			if (company != null) {
 				ps.setLong(4, company.getId());
+			} else {
+				ps.setNull(4, Types.TIMESTAMP);
 			}
 
 			ps.setLong(5, computer.getId());
@@ -221,19 +236,19 @@ public class ComputerDaoImpl implements ComputerDao {
 
 	@Override
 	public int getRowCount() {
-		
+
 		Connection conn = jdbcConnection.getConnection();
 		String query = SQL_GET_ROWCOUNT;
 		ResultSet rs = null;
 		int rowCount = 0;
-		
+
 		try {
 			conn.setAutoCommit(true);
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(query);
 			rs.next();
 			rowCount = rs.getInt(1);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -243,7 +258,7 @@ public class ComputerDaoImpl implements ComputerDao {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return rowCount;
 	}
 

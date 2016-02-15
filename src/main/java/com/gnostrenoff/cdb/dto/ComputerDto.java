@@ -2,21 +2,41 @@ package com.gnostrenoff.cdb.dto;
 
 public class ComputerDto {
 	
+	private long id;
 	private String name;
 	private String introduced;
 	private String discontinued;
-	private String company;
+	private String companyName;
+	private long companyId;
 	
 	public ComputerDto() {
 	}
-
-	public ComputerDto(String name, String introduced, String discontinued, String company) {
+	
+	public ComputerDto(String name, String introduced, String discontinued, String companyName, long companyId) {
+		super();
 		this.name = name;
 		this.introduced = introduced;
 		this.discontinued = discontinued;
-		this.company = company;
+		this.companyName = companyName;
+		this.companyId = companyId;
 	}
-	
+
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -41,11 +61,11 @@ public class ComputerDto {
 		this.discontinued = discontinued;
 	}
 	
-	public String getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
 	
-	public void setCompany(String company) {
-		this.company = company;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 }

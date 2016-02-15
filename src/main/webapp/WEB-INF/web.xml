@@ -4,6 +4,26 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>EditComputerServlet</servlet-name>
+  	<display-name>EditComputerServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.gnostrenoff.cdb.servlets.EditComputerServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>newComputerServlet</servlet-name>
+  	<display-name>newComputerServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.gnostrenoff.cdb.servlets.newComputerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EditComputerServlet</servlet-name>
+  	<url-pattern>/EditComputerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>newComputerServlet</servlet-name>
+  	<url-pattern>/newComputerServlet</url-pattern>
+  </servlet-mapping>
   
   <!--<welcome-file-list>
   	<welcome-file>WEB−INF/jsp/dashboard.jsp</welcome-file>

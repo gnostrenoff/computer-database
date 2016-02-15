@@ -32,4 +32,9 @@ public class CompanyServiceImpl implements CompanyService{
 		return companyDao.getCompanies();
 	}
 
+	@Override
+	public Company getCompany(long companyId) {
+		return companyDao.getCompany(companyId);
+	}
+
 }

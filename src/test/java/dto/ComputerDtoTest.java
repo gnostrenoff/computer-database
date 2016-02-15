@@ -41,7 +41,8 @@ public class ComputerDtoTest {
 		Mockito.when(dtoMock.getName()).thenReturn("macbookpro3000");
 		Mockito.when(dtoMock.getIntroduced()).thenReturn("2014-03-12 12:35");
 		Mockito.when(dtoMock.getDiscontinued()).thenReturn("2015-03-12 12:35");
-		Mockito.when(dtoMock.getCompany()).thenReturn("apple");
+		Mockito.when(dtoMock.getCompanyName()).thenReturn("apple");
+		Mockito.when(dtoMock.getCompanyId()).thenReturn((long) 1);
 	}
 
 	@Test
@@ -56,8 +57,9 @@ public class ComputerDtoTest {
 		assertEquals(dto.getIntroduced(), "2014-03-12 12:35");
 		assertTrue(dto.getDiscontinued() instanceof String);
 		assertEquals(dto.getDiscontinued(), "2015-03-12 12:35");
-		assertTrue(dto.getCompany() instanceof String);
-		assertEquals(dto.getCompany(), "apple");
+		assertTrue(dto.getCompanyName() instanceof String);
+		assertEquals(dto.getCompanyName(), "apple");
+		assertEquals(dto.getCompanyId(), (long)1);
 	}
 
 	@Test
