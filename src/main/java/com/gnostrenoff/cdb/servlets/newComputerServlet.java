@@ -69,18 +69,17 @@ public class newComputerServlet extends HttpServlet {
 		Long companyId = null;
 		String companyName = null;
 		
-		if(strCompanyId == null){
+		if(strCompanyId == null || strCompanyId.equals("0")){
 			companyId = (long) 0;		
 		}else{
 			companyId = Long.parseLong(request.getParameter("companyId"));
 			companyName = companyService.getCompany(companyId).getName();
-			System.out.println(companyId);
-			System.out.println(companyName);
 		}
 		
 		//create dto accordingly
 		ComputerDto dto = new ComputerDto(name, introduced, discontinued, companyName, companyId);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
+		
 		//then save computer into database
 		computerService.createComputer(computer);
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,15 +54,15 @@ public class ComputerDaoImpl implements ComputerDao {
 			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, computer.getName());
 
-			LocalDateTime localDateTime = computer.getIntroduced();
-			if (localDateTime != null) {
-				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			LocalDate localDate = computer.getIntroduced();
+			if (localDate != null) {
+				ps.setTimestamp(2, Timestamp.valueOf(localDate.atStartOfDay()));
 			} else {
 				ps.setNull(2, Types.TIMESTAMP);
 			}
-			localDateTime = computer.getDiscontinued();
-			if (localDateTime != null) {
-				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			localDate = computer.getDiscontinued();
+			if (localDate != null) {
+				ps.setTimestamp(3, Timestamp.valueOf(localDate.atStartOfDay()));
 			} else {
 				ps.setNull(3, Types.TIMESTAMP);
 			}
@@ -138,16 +138,16 @@ public class ComputerDaoImpl implements ComputerDao {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, computer.getName());
 
-			LocalDateTime localDateTime = computer.getIntroduced();
-			if (localDateTime != null) {
-				ps.setTimestamp(2, Timestamp.valueOf(localDateTime));
+			LocalDate localDate= computer.getIntroduced();
+			if (localDate != null) {
+				ps.setTimestamp(2, Timestamp.valueOf(localDate.atStartOfDay()));
 			} else {
 				ps.setNull(2, Types.TIMESTAMP);
 			}
 
-			localDateTime = computer.getDiscontinued();
-			if (localDateTime != null) {
-				ps.setTimestamp(3, Timestamp.valueOf(localDateTime));
+			localDate = computer.getDiscontinued();
+			if (localDate != null) {
+				ps.setTimestamp(3, Timestamp.valueOf(localDate.atStartOfDay()));
 			} else {
 				ps.setNull(3, Types.TIMESTAMP);
 			}

@@ -26,12 +26,12 @@ public class ComputerMapper {
 			
 			Timestamp ts = rs.getTimestamp("introduced");
 			if(ts != null){
-				computer.setIntroduced(ts.toLocalDateTime());
+				computer.setIntroduced(ts.toLocalDateTime().toLocalDate());
 			}
 			
 			ts = rs.getTimestamp("discontinued");
 			if(ts != null){
-				computer.setDiscontinued(ts.toLocalDateTime());
+				computer.setDiscontinued(ts.toLocalDateTime().toLocalDate());
 			}		
 			
 			Company company = new Company();

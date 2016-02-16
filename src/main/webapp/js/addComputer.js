@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
-	// Setup form validation on the #register-form element
+	// Setup form validation on the form
 	$('#add-computer-form').validate({
 
 		// Specify the validation rules
 		rules : {
-			computerName : "required",
+			name : "required",
 			introduced : {
 				Date : true
 			},
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 		// Specify the validation error messages
 		messages : {
-			computerName : "Please enter at least the name of the computer",
+			name : "Please enter at least the name of the computer",
 			introduced : "Please enter a valide date format",
 			discontinued : "Please enter a valide date format"
 		},
@@ -25,5 +25,4 @@ $(document).ready(function() {
 			form.submit();
 		}
 	});
-
 });

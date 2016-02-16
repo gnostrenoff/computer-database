@@ -38,12 +38,12 @@
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									placeholder="YYYY-MM-DD HH:MM" name="introduced">
+									placeholder="YYYY-MM-DD" name="introduced">
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									placeholder="YYYY-MM-DD HH:MM" name="discontinued">
+									placeholder="YYYY-MM-DD" name="discontinued">
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
@@ -69,6 +69,6 @@
 	<script src="js/lib/bootstrap.min.js"></script>
 	<script src="js/lib/jquery.validate.js"></script>
 	<script src="js/lib/jquery.validate.additional.js"></script>
-	<!-- <script src="js/addComputer.js"></script> -->
+	<script src="js/addComputer.js"></script>
 </body>
 </html>

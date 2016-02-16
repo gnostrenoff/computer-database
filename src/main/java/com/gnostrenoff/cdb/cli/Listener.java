@@ -1,6 +1,6 @@
 package com.gnostrenoff.cdb.cli;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -156,14 +156,14 @@ public class Listener {
 	    	System.out.println("computer " + id + " has been succesfully deleted from database");
 		}
 		
-		private LocalDateTime waitForValidDate(Computer computer){
+		private LocalDate waitForValidDate(Computer computer){
 	
-			LocalDateTime dateTime = null;
+			LocalDate dateTime = null;
 	
 			while(dateTime == null){
 				String sdate = scanIn.nextLine();
 				try{
-					dateTime = LocalDateTime.parse(sdate, formatter);
+					dateTime = LocalDate.parse(sdate, formatter);
 				} catch(DateTimeParseException e){
 					dateTime = null;
 					System.out.println("date not valid, try again");

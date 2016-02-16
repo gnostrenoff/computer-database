@@ -1,6 +1,6 @@
 package com.gnostrenoff.cdb.mappers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class ComputerDtoMapper {
 	/**
 	 * format for dates
 	 */
-	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	
 	/**
 	 * converts a dto in computer
@@ -32,12 +32,12 @@ public class ComputerDtoMapper {
 		
 		String strIntroduced = dto.getIntroduced();
 		if(strIntroduced != null && !strIntroduced.isEmpty()){
-			LocalDateTime introduced = LocalDateTime.parse(strIntroduced, FORMATTER);
+			LocalDate introduced = LocalDate.parse(strIntroduced, FORMATTER);
 			computer.setIntroduced(introduced);
 		}
 		String strDiscontinued = dto.getDiscontinued();
 		if(strDiscontinued != null && !strDiscontinued.isEmpty()){
-			LocalDateTime discontinued = LocalDateTime.parse(strDiscontinued, FORMATTER);
+			LocalDate discontinued = LocalDate.parse(strDiscontinued, FORMATTER);
 			computer.setDiscontinued(discontinued);
 		}
 

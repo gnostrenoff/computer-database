@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.Before;
@@ -34,8 +35,8 @@ public class ComputerDtoTest {
 		Mockito.when(companyMock.getId()).thenReturn((long) 1);
 
 		Mockito.when(computerMock.getName()).thenReturn("macbookpro3000");
-		Mockito.when(computerMock.getIntroduced()).thenReturn(LocalDateTime.of(2014, 03, 12, 12, 35, 00));
-		Mockito.when(computerMock.getDiscontinued()).thenReturn(LocalDateTime.of(2015, 03, 12, 12, 35, 00));
+		Mockito.when(computerMock.getIntroduced()).thenReturn(LocalDate.of(2014, 03, 12));
+		Mockito.when(computerMock.getDiscontinued()).thenReturn(LocalDate.of(2015, 03, 12));
 		Mockito.when(computerMock.getCompany()).thenReturn(companyMock);
 
 		Mockito.when(dtoMock.getName()).thenReturn("macbookpro3000");
@@ -70,9 +71,9 @@ public class ComputerDtoTest {
 		assertNotNull(computer);
 		assertTrue(computer.getName() instanceof String);
 		assertEquals(computer.getName(), "macbookpro3000");
-		assertTrue(computer.getIntroduced() instanceof LocalDateTime);
+		assertTrue(computer.getIntroduced() instanceof LocalDate);
 		assertEquals(computer.getIntroduced(), LocalDateTime.of(2014, 03, 12, 12, 35, 00));
-		assertTrue(computer.getDiscontinued() instanceof LocalDateTime);
+		assertTrue(computer.getDiscontinued() instanceof LocalDate);
 		assertEquals(computer.getDiscontinued(), LocalDateTime.of(2015, 03, 12, 12, 35, 00));
 		assertTrue(computer.getCompany().getName() instanceof String);
 		assertEquals(computer.getCompany().getName(), "apple");

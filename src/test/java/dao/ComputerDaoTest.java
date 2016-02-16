@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.dbunit.IDatabaseTester;
@@ -86,10 +86,10 @@ public class ComputerDaoTest {
 		List<Computer> list = computerDao.getComputers(1,10);
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
-		Computer computer0 = new Computer(3, "macbook", LocalDateTime.of(2015, 03, 12, 12, 35, 00),
-				LocalDateTime.of(2015, 8, 12, 12, 36, 00), new Company(1, "Apple Inc."));
-		Computer computer1 = new Computer(4, "CM-200", LocalDateTime.of(2014, 03, 12, 12, 35, 00),
-				LocalDateTime.of(2015, 9, 12, 12, 36, 00), new Company(2, "Thinking Machines"));
+		Computer computer0 = new Computer(3, "macbook", LocalDate.of(2015, 03, 12),
+				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
+		Computer computer1 = new Computer(4, "CM-200", LocalDate.of(2014, 03, 12),
+				LocalDate.of(2015, 9, 12), new Company(2, "Thinking Machines"));
 		assertTrue(computer0.equals(list.get(0)));
 		assertTrue(computer1.equals(list.get(1)));
 
@@ -100,8 +100,8 @@ public class ComputerDaoTest {
 
 		Computer computerFromDatabase = computerDao.getComputer(3);
 		assertNotNull(computerFromDatabase);
-		Computer computer = new Computer(3, "macbook", LocalDateTime.of(2015, 03, 12, 12, 35, 00),
-				LocalDateTime.of(2015, 8, 12, 12, 36, 00), new Company(1, "Apple Inc."));
+		Computer computer = new Computer(3, "macbook", LocalDate.of(2015, 03, 12),
+				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
 		assertTrue(computer.equals(computerFromDatabase));
 	}
 
@@ -124,7 +124,7 @@ public class ComputerDaoTest {
     @Test
     public void createComputer(){
 
-    	Computer computer = new Computer(5, "macbookpro", LocalDateTime.of(2011, 03, 12, 12, 35, 00), LocalDateTime.of(2010, 8, 12, 12, 36, 00), new Company(1, "Apple Inc."));
+    	Computer computer = new Computer(5, "macbookpro", LocalDate.of(2011, 03, 12), LocalDate.of(2010, 8, 12), new Company(1, "Apple Inc."));
     	computerDao.createComputer(computer); 	
     	
     	try {
@@ -142,8 +142,8 @@ public class ComputerDaoTest {
 	@Test
 	public void updateComputer() {
 
-		Computer computer = new Computer(3, "macbook++", LocalDateTime.of(2014, 03, 12, 12, 35, 00),
-				LocalDateTime.of(2015, 8, 12, 12, 36, 00), new Company(1, "Apple Inc."));
+		Computer computer = new Computer(3, "macbook++", LocalDate.of(2014, 03, 12),
+				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
 		computerDao.updateComputer(computer);
 
 		try {
