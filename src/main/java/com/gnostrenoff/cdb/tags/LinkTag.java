@@ -7,6 +7,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+/**
+ * class implementing link taglib
+ * @author excilys
+ */
 public class LinkTag extends SimpleTagSupport {
 
 	private String baseUri;

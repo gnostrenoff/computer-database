@@ -9,10 +9,22 @@ import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
+/**
+ * This class is providing a static method to convert a dto to a computer object, and a computer into dto
+ * @author excilys
+ */
 public class ComputerDtoMapper {
 	
+	/**
+	 * format for dates
+	 */
 	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
+	/**
+	 * converts a dto in computer
+	 * @param dto
+	 * @return computer
+	 */
 	public static Computer toComputer(ComputerDto dto){
 		Computer computer = new Computer();		
 		computer.setName(dto.getName());
@@ -39,6 +51,11 @@ public class ComputerDtoMapper {
 		return computer;
 	}
 	
+	/**
+	 * converts a computer in dto
+	 * @param computer
+	 * @return dto
+	 */
 	public static ComputerDto toDto(Computer computer){
 		
 		ComputerDto computerDto = new ComputerDto();
@@ -59,6 +76,11 @@ public class ComputerDtoMapper {
 		return computerDto;
 	}
 	
+	/**
+	 * convert a list of dto into a list of computer
+	 * @param dtoList list of dtos
+	 * @return computerList list of computers
+	 */
 	public static List<Computer> toComputerList(List<ComputerDto> dtoList){
 		
 		List<Computer> computerList = new ArrayList<>();
@@ -70,6 +92,11 @@ public class ComputerDtoMapper {
 		return computerList;
 	}
 	
+	/**
+	 * convert a list of computer into a list of dto
+	 * @param computerList list of computers
+	 * @return dtoList of dtos
+	 */
 	public static List<ComputerDto> toDtoList(List<Computer> computerList){
 		
 		List<ComputerDto> dtoList = new ArrayList<>();

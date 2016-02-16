@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.page.Page;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 

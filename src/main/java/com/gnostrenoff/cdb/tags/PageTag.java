@@ -7,6 +7,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+/**
+ * class implementing pagination taglib
+ * @author excilys
+ */
 public class PageTag extends SimpleTagSupport {
 	
 	private String uri;
@@ -35,6 +39,7 @@ public class PageTag extends SimpleTagSupport {
 		
 		Writer out = getWriter();
 		
+		boolean firstPage = currentPageIndex == 1;
 		boolean lastPage = currentPageIndex == totalPages;
         int pgStart = Math.max(currentPageIndex - maxLinks / 2, 1);
         int pgEnd = pgStart + maxLinks;
@@ -49,27 +54,25 @@ public class PageTag extends SimpleTagSupport {
         try {
         	out.write("<ul class=\"pagination\">");
  
-            if (currentPageIndex > 1)
-                out.write(constructLinkPage(currentPageIndex - 1, "Previous", false));
+            out.write(constructLinkPage(currentPageIndex - 1, "Previous", false, firstPage));
  
             for (int i = pgStart; i < pgEnd; i++) {
             	if(currentPageIndex == i){
-            		out.write(constructLinkPage(i,String.valueOf(i), true));
+            		out.write(constructLinkPage(i,String.valueOf(i), true, true));
             	}
             	else{
-            		out.write(constructLinkPage(i,String.valueOf(i), false));
+            		out.write(constructLinkPage(i,String.valueOf(i), false, false));
             	}	           
             }
  
-            if (!lastPage)
-                out.write(constructLinkPage(currentPageIndex + 1, "Next", false));
+            out.write(constructLinkPage(currentPageIndex + 1, "Next", false, lastPage));
  
             out.write("</ul>");           
             out.write("<div class=\"btn-group btn-group-sm pull-right\" role=\"group\">");
 			
-		    out.write(constructLinknbElement(10));
-		    out.write(constructLinknbElement(50));
-		    out.write(constructLinknbElement(100));			
+		    out.write(constructLinknbElement(10, nbElementsPerPage == 10));
+		    out.write(constructLinknbElement(50, nbElementsPerPage == 50));
+		    out.write(constructLinknbElement(100, nbElementsPerPage == 100));			
 				
 			out.write("</div>");
 			
@@ -79,8 +82,12 @@ public class PageTag extends SimpleTagSupport {
 		
 	  }
 
-	private String constructLinkPage(int page, String text, boolean current) {
-		StringBuilder link = new StringBuilder("<li><a href=\"");
+	private String constructLinkPage(int page, String text, boolean current, boolean disable) {
+		StringBuilder link = new StringBuilder("<li");
+		if(disable){
+			link.append(" class=\"disabled active\"");
+		}
+		link.append("><a href=\"");
         if(!current){
         	link.append(uri.replace("$1", String.valueOf(nbElementsPerPage)).replace("$2", String.valueOf(computeOffset(page))));
         }       
@@ -90,12 +97,15 @@ public class PageTag extends SimpleTagSupport {
         return link.toString();
     }
 	
-	private String constructLinknbElement(int nbElement) {
-        StringBuilder link = new StringBuilder("<li><a href=\"");
-        link.append(uri.replace("$1", String.valueOf(nbElement)).replace("$2", String.valueOf(0)))
+	private String constructLinknbElement(int nbElement, boolean active) {
+		StringBuilder link = new StringBuilder("<a class=\"btn default-btn");
+		if(active){
+			link.append(" active");
+		}
+        link.append("\" href=\"" + uri.replace("$1", String.valueOf(nbElement)).replace("$2", String.valueOf(0)))
             .append("\">")
             .append(String.valueOf(nbElement))
-            .append("</a></li>");
+            .append("</a>");
         return link.toString();
     }
 	
