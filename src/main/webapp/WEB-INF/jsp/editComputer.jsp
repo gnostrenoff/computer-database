@@ -29,7 +29,7 @@
 					<div class="label label-default pull-right">id: 0</div>
 					<h1>Edit Computer</h1>
 
-					<form action="editComputer" method="POST">
+					<form action="editComputer" method="POST" id="edit-comupter-form">
 						<input type="hidden" value="0" />
 						<fieldset>
 							<div class="form-group">
@@ -49,7 +49,7 @@
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId">
+									class="form-control" id="company-id">
 									<option value="0">--</option>
 								</select>
 							</div>

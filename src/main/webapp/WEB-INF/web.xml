@@ -25,6 +25,20 @@
   	<url-pattern>/newComputerServlet</url-pattern>
   </servlet-mapping>
   
+  <error-page>
+ 	<exception-type>com.gnostrenoff.cdb.exceptions.DaoException</exception-type>
+ 	<location>/WEB-INF/jsp/500.jsp</location>
+  </error-page>
+  <error-page>
+ 	<exception-type>com.gnostrenoff.cdb.exceptions.InvalidComputerException</exception-type>
+ 	<location>/WEB-INF/jsp/500noName.jsp</location>
+  </error-page>
+  <error-page>
+ 	<exception-type>com.gnostrenoff.cdb.exceptions.DatesNotCorrectException</exception-type>
+ 	<location>/WEB-INF/jsp/500datesIncorrect.jsp</location>
+  </error-page>
+
+  
   <!--<welcome-file-list>
   	<welcome-file>WEB−INF/jsp/dashboard.jsp</welcome-file>
   </welcome-file-list>-->

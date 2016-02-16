@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.JDBCConnection;
+import com.gnostrenoff.cdb.exceptions.DaoException;
 import com.gnostrenoff.cdb.mappers.ComputerMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
@@ -84,12 +85,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
+			throw new DaoException("failed to create computer");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 
@@ -111,12 +112,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			rs.next();
 			computer = ComputerMapper.map(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DaoException("failed to get computer");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 
@@ -167,12 +168,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
+			throw new DaoException("failed to update computer");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 	}
@@ -195,12 +196,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			e.printStackTrace();
+			throw new DaoException("failed to delete computer");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 
@@ -222,12 +223,12 @@ public class ComputerDaoImpl implements ComputerDao {
 				computerList.add(ComputerMapper.map(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DaoException("failed to get computer list");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 
@@ -250,12 +251,12 @@ public class ComputerDaoImpl implements ComputerDao {
 			rowCount = rs.getInt(1);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DaoException("failed to get row count");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 

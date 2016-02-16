@@ -3,7 +3,6 @@ package com.gnostrenoff.cdb.dao;
 import java.util.List;
 
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.model.Computer;
 
 /**
  * interface for company entity DAO

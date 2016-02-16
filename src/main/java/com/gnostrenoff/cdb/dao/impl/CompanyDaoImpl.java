@@ -10,10 +10,9 @@ import java.util.List;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.JDBCConnection;
+import com.gnostrenoff.cdb.exceptions.DaoException;
 import com.gnostrenoff.cdb.mappers.CompanyMapper;
-import com.gnostrenoff.cdb.mappers.ComputerMapper;
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.model.Computer;
 
 /**
  * implementation of CompanyDao interface
@@ -53,12 +52,12 @@ public class CompanyDaoImpl implements CompanyDao {
 				companyList.add(CompanyMapper.map(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DaoException("failed to get company list");
 		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DaoException("failed to close connection");
 			}
 		}
 

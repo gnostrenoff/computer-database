@@ -26,7 +26,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${nbTotalComputers}Computersfound</h1>
+			<h1 id="homeTitle">${nbTotalComputers}Computers found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
@@ -98,9 +98,9 @@
 				nbElementsPerPage="${nbElementsPerPage}" maxLinks="10" />
 		</div>
 	</footer>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="js/lib/jquery.validate.min.js"></script>
 	<script src="js/dashboard.js"></script>
-
 </body>
 </html>

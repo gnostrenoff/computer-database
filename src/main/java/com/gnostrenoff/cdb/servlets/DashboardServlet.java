@@ -37,28 +37,30 @@ public class DashboardServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		computerService = ComputerServiceImpl.getInstance();
-		int totalComputer = computerService.getRowCount();
 
 		int pageIndex = 1;
 		int nbElementsPerPage = 10;
-		int offset;
-		List<Computer> computerList = null;
+		List<Computer> computerList;
 
+		//get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
 		String strOffset = request.getParameter("offset");
+		
+		//get computers depending on parameters if present, get default amount otherwise
 		if (StrNbElementPerPage != null && strOffset != null) {
 			nbElementsPerPage = Integer.parseInt(StrNbElementPerPage);
-			offset = Integer.parseInt(strOffset);
+			int offset = Integer.parseInt(strOffset);
 			computerList = computerService.getComputers(nbElementsPerPage, offset);
 			pageIndex = offset / nbElementsPerPage + 1;
 		} else
 			computerList = computerService.getComputers(10, 0);
 
+		//set attributes
 		request.setAttribute("currentPageIndex", pageIndex);
-		request.setAttribute("nbTotalComputers", totalComputer);
+		request.setAttribute("nbTotalComputers", computerService.getRowCount());
 		request.setAttribute("nbElementsPerPage", nbElementsPerPage);
-
 		request.setAttribute("computers", ComputerDtoMapper.toDtoList(computerList));
+		
 		request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
 	}
 

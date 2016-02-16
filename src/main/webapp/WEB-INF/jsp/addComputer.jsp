@@ -28,26 +28,26 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<h1>Add Computer</h1>
-					<form action="newComputer" method="POST">
+					<form action="newComputer" method="POST" id="add-computer-form">
 						<fieldset>
 							<div class="form-group">
-								<label for="computerName">Computer name</label> <input
+								<label for="computerName">Computer name *</label> <input
 									type="text" class="form-control" id="computerName"
 									placeholder="Computer name" name="name">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									placeholder="Introduced date" name="introduced">
+									placeholder="YYYY-MM-DD HH:MM" name="introduced">
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									placeholder="Discontinued date" name="discontinued">
+									placeholder="YYYY-MM-DD HH:MM" name="discontinued">
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="companyId">
+									class="form-control" id="company-id" name="companyId">
 									<option value=0>no company</option>
 									<c:forEach items="${companies}" var="company">
 										<option value="${company.id}">${company.id}-
@@ -65,5 +65,10 @@
 			</div>
 		</div>
 	</section>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="js/lib/jquery.validate.js"></script>
+	<script src="js/lib/jquery.validate.additional.js"></script>
+	<!-- <script src="js/addComputer.js"></script> -->
 </body>
 </html>

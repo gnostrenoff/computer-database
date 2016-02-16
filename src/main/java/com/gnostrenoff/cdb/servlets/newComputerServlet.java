@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
+import com.gnostrenoff.cdb.exceptions.InvalidComputerException;
 import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
@@ -48,26 +49,41 @@ public class newComputerServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		companyService = CompanyServiceImpl.getInstance();
 		computerService = ComputerServiceImpl.getInstance();
-		
+
+		//get parameters
 		String name = request.getParameter("name");
 		String introduced = request.getParameter("introduced");
 		String discontinued = request.getParameter("discontinued");
-		long companyId = Long.parseLong(request.getParameter("companyId"));
-		Company company = companyService.getCompany(companyId);
+		String strCompanyId = request.getParameter("companyId");
 		
+		System.out.println(strCompanyId);
+		
+		Long companyId = null;
 		String companyName = null;
-		if(company != null){
-			companyName =company.getName();
+		
+		if(strCompanyId == null){
+			companyId = (long) 0;		
+		}else{
+			companyId = Long.parseLong(request.getParameter("companyId"));
+			companyName = companyService.getCompany(companyId).getName();
+			System.out.println(companyId);
+			System.out.println(companyName);
 		}
+		
+		//create dto accordingly
 		ComputerDto dto = new ComputerDto(name, introduced, discontinued, companyName, companyId);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
+		//then save computer into database
 		computerService.createComputer(computer);
+
 		response.sendRedirect("/computer-database/dashboard");
 	}
 

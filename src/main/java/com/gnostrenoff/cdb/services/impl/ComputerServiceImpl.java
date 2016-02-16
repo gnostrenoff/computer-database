@@ -5,6 +5,7 @@ import java.util.List;
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.exceptions.DatesNotCorrectException;
+import com.gnostrenoff.cdb.exceptions.InvalidComputerException;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.ComputerService;
 
@@ -30,6 +31,10 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public void createComputer(Computer computer) {
+		String name = computer.getName();
+		if("".equals(name) || name == null){
+			throw new InvalidComputerException("computer creation failed : no name found");
+		}
 		if(computer.getIntroduced() != null && computer.getDiscontinued() != null){
 			if(computer.getDiscontinued().isAfter(computer.getIntroduced())){
 				computerDao.createComputer(computer);
