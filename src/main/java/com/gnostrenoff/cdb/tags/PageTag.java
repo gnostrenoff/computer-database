@@ -80,7 +80,7 @@ public class PageTag extends SimpleTagSupport {
 	  }
 
 	private String constructLinkPage(int page, String text, boolean current) {
-        StringBuilder link = new StringBuilder("<li><a href=\"");
+		StringBuilder link = new StringBuilder("<li><a href=\"");
         if(!current){
         	link.append(uri.replace("$1", String.valueOf(nbElementsPerPage)).replace("$2", String.valueOf(computeOffset(page))));
         }       
