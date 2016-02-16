@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="p" uri="/WEB-INF/customtaglib.tld"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${nbTotalComputers} Computers found</h1>
+			<h1 id="homeTitle">${nbTotalComputers}	Computersfound</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
@@ -89,25 +90,11 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-			<ul class="pagination">
-				<li><a href="dashboard?prev=true" aria-label="Previous"> <span
-						aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li><a href="dashboard?pageIndex=1">1</a></li>
-				<li><a href="dashboard?pageIndex=2">2</a></li>
-				<li><a href="dashboard?pageIndex=3">3</a></li>
-				<li><a href="dashboard?pageIndex=4">4</a></li>
-				<li><a href="dashboard?pageIndex=5">5</a></li>
-				<li><a href="dashboard?next=true" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				<li><a href="dashboard?last=true" aria-label="Last"> <span aria-hidden="true">last</span>
-				</a></li>
-			</ul>
-
-			<div class="btn-group btn-group-sm pull-right" role="group">
-				<a href="dashboard?nbElementPerPage=10">10</a>
-				<a href="dashboard?nbElementPerPage=50">50</a>
-				<a href="dashboard?nbElementPerPage=100">100</a>
-			</div>
+			<p:page uri="dashboard?nbElementPerPage=$1&offset=$2"
+				currentPageIndex="${currentPageIndex}"
+				totalElements="${nbTotalComputers}"
+				nbElementsPerPage="${nbElementsPerPage}" maxLinks="10" />
+		</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

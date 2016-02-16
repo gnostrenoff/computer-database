@@ -37,24 +37,27 @@ public class DashboardServlet extends HttpServlet {
 		
 		computerService = ComputerServiceImpl.getInstance();	
 		int totalComputer = computerService.getRowCount();
-		Page.updateValues(totalComputer);		
 		
-		if(request.getParameter("pageIndex") != null)
-			Page.currentPageIndex = Integer.parseInt(request.getParameter("pageIndex"));
-		if(request.getParameter("nbElementPerPage") != null){
-			Page.nbElementPerPage = Integer.parseInt(request.getParameter("nbElementPerPage"));
-			Page.currentPageIndex = 1;
+		int pageIndex = 1;
+		int nbElementsPerPage = 10;
+		int offset;
+		List<Computer> computerList = null;
+		
+		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
+		String strOffset = request.getParameter("offset");
+		if(StrNbElementPerPage != null && strOffset != null){
+			nbElementsPerPage = Integer.parseInt(StrNbElementPerPage);
+			offset = Integer.parseInt(strOffset);			
+			computerList = computerService.getComputers(nbElementsPerPage, offset);
+			pageIndex = offset / nbElementsPerPage + 1;
 		}		
-		if("true".equals(request.getParameter("next")) && Page.currentPageIndex < Page.nbPages)
-			Page.currentPageIndex++;
-		if("true".equals(request.getParameter("prev")) && Page.currentPageIndex > 1)
-			Page.currentPageIndex--;
-		if("true".equals(request.getParameter("last")))
-			Page.currentPageIndex = Page.nbPages;
-		
+		else
+			computerList = computerService.getComputers(10, 0);
+	
+		request.setAttribute("currentPageIndex", pageIndex);
 		request.setAttribute("nbTotalComputers", totalComputer);
-		request.setAttribute("nbPages", Page.nbPages);
-		List<Computer> computerList = computerService.getComputers(Page.nbElementPerPage, Page.computeOffset());
+		request.setAttribute("nbElementsPerPage", nbElementsPerPage);	
+		
 		request.setAttribute("computers", ComputerDtoMapper.toDtoList(computerList));		
 		request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
 	}

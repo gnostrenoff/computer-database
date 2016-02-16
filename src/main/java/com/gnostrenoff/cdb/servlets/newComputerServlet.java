@@ -32,7 +32,6 @@ public class newComputerServlet extends HttpServlet {
 	 */
 	public newComputerServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
