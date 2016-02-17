@@ -3,7 +3,6 @@ package services;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,6 +16,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.model.Page;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
@@ -46,7 +46,10 @@ public class ComputerServiceTest {
 	@Test
 	public void getAllComputers() {
 		ComputerService computerService = ComputerServiceImpl.getInstance();
-		assertTrue(computerService.getList(100, 0) instanceof List<?>);
+		Page page = new Page(1, 10);
+		computerService.fillPage(page);
+		assertTrue(page.getIndex() == 1);
+		assertTrue(page.getNbElements() == 10);
 	}
 
 }

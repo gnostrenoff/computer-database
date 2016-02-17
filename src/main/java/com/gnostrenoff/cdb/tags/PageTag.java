@@ -90,7 +90,7 @@ public class PageTag extends SimpleTagSupport {
 		}
 		link.append("><a href=\"");
         if(!current){
-        	link.append(uri.replace("$1", String.valueOf(nbElementsPerPage)).replace("$2", String.valueOf(computeOffset(page))));
+        	link.append(uri.replace("$1", String.valueOf(nbElementsPerPage)).replace("$2", String.valueOf(page)));
         }       
         link.append("\">")
             .append(text)
@@ -103,18 +103,12 @@ public class PageTag extends SimpleTagSupport {
 		if(active){
 			link.append(" active");
 		}
-        link.append("\" href=\"" + uri.replace("$1", String.valueOf(nbElement)).replace("$2", String.valueOf(0)))
+        link.append("\" href=\"" + uri.replace("$1", String.valueOf(nbElement)).replace("$2", String.valueOf(1)))
             .append("\">")
             .append(String.valueOf(nbElement))
             .append("</a>");
         return link.toString();
     }
-	
-	private int computeOffset(int page) {
-		int offset;
-		offset = (page - 1) * nbElementsPerPage;
-		return offset;
-	}
 
 	public String getUri() {
 		return uri;

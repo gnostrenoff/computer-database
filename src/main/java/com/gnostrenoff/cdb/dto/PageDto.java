@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.model;
+package com.gnostrenoff.cdb.dto;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author excilys
  *
  */
-public class Page {
+public class PageDto {
 
 	/**
 	 * index of page
@@ -23,12 +23,12 @@ public class Page {
 	/**
 	 * list of computers present in this page
 	 */
-	private List<Computer> computerList;
+	private List<ComputerDto> computerList;
 
-	public Page() {
+	public PageDto() {
 	}
 
-	public Page(int index, int nbElements) {
+	public PageDto(int index, int nbElements) {
 		super();
 		this.index = index;
 		this.nbElements = nbElements;
@@ -50,11 +50,11 @@ public class Page {
 		this.nbElements = nbElements;
 	}
 
-	public List<Computer> getComputerList() {
+	public List<ComputerDto> getComputerList() {
 		return computerList;
 	}
 
-	public void setComputerList(List<Computer> comuterList) {
+	public void setComputerList(List<ComputerDto> comuterList) {
 		this.computerList = comuterList;
 	}
 }

@@ -26,7 +26,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${nbTotalComputers}Computers found</h1>
+			<h1 id="homeTitle">${nbTotalComputers} Computers found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="#" method="GET" class="form-inline">
@@ -74,7 +74,7 @@
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-					<c:forEach items="${computers}" var="computer">
+					<c:forEach items="${page.computerList}" var="computer">
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="0"></td>
@@ -92,10 +92,10 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-			<p:page uri="dashboard?nbElementPerPage=$1&offset=$2"
-				currentPageIndex="${currentPageIndex}"
+			<p:page uri="dashboard?nbElementPerPage=$1&pageIndex=$2"
+				currentPageIndex="${page.index}"
 				totalElements="${nbTotalComputers}"
-				nbElementsPerPage="${nbElementsPerPage}" maxLinks="10" />
+				nbElementsPerPage="${page.nbElements}" maxLinks="10" />
 		</div>
 	</footer>
 	<script src="js/lib/jquery.min.js"></script>

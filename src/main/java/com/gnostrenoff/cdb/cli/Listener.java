@@ -10,6 +10,7 @@ import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.exceptions.ComputerValidatorException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.model.Page;
 import com.gnostrenoff.cdb.services.CompanyService;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
@@ -88,9 +89,11 @@ public class Listener {
 	}
 
 	private void listComputers() {
-		List<Computer> computerList = computerService.getList(50, 0);
-		for (int i = 0; i < computerList.size(); i++) {
-			Computer comp = computerList.get(i);
+		Page page = new Page(1, 10);
+		computerService.fillPage(page);
+		List<Computer> list = page.getComputerList();
+		for (int i = 0; i < list.size(); i++) {
+			Computer comp = list.get(i);
 			System.out.println(comp.toString());
 		}
 	}
