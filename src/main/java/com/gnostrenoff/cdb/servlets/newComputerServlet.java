@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
-import com.gnostrenoff.cdb.exceptions.InvalidComputerException;
 import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
-import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.CompanyService;
 import com.gnostrenoff.cdb.services.ComputerService;
@@ -63,8 +61,6 @@ public class newComputerServlet extends HttpServlet {
 		String introduced = request.getParameter("introduced");
 		String discontinued = request.getParameter("discontinued");
 		String strCompanyId = request.getParameter("companyId");
-		
-		System.out.println(strCompanyId);
 		
 		Long companyId = null;
 		String companyName = null;

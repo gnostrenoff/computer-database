@@ -15,7 +15,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class SeleniumPaginationTest {
+public class PaginationTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -29,18 +29,18 @@ public class SeleniumPaginationTest {
   }
 
   @Test
-  public void testSeleniumPagination() throws Exception {
-    driver.get(baseUrl + "/computer-database/dashboard?nbElementPerPage=10&offset=0");
-    driver.findElement(By.linkText("2")).click();
-    assertTrue(isElementPresent(By.linkText("Apple II Plus")));
-    driver.findElement(By.linkText("1")).click();   
-    assertTrue(isElementPresent(By.linkText("MacBook Pro 15.4 inch")));
-    driver.findElement(By.linkText("100")).click();
-    assertTrue(isElementPresent(By.linkText("Tinkertoy Tic-Tac-Toe Computer")));  
-    driver.findElement(By.linkText("6")).click();
-    assertTrue(isElementPresent(By.linkText("iPhone 4S")));   
-    driver.findElement(By.linkText("50")).click();
+  public void testPagination() throws Exception {
+    driver.get(baseUrl + "/computer-database/dashboard");
+    driver.findElement(By.linkText("5")).click();
+    assertTrue(isElementPresent(By.linkText("Macintosh LC III")));
+    driver.findElement(By.linkText("Previous")).click();
+    assertTrue(isElementPresent(By.linkText("Macintosh Quadra")));
+    driver.findElement(By.linkText("Next")).click();
     assertTrue(isElementPresent(By.linkText("Commodore PET")));
+    driver.findElement(By.xpath("(//a[contains(text(),'50')])[2]")).click();
+    assertTrue(isElementPresent(By.linkText("Commodore PET")));  
+    driver.findElement(By.linkText("100")).click();
+    assertTrue(isElementPresent(By.linkText("Tinkertoy Tic-Tac-Toe Computer")));
   }
 
   @After

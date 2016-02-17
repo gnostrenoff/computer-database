@@ -1,28 +1,69 @@
-$(document).ready(function() {
+$(function() {
 
-	// Setup form validation on the form
-	$('#add-computer-form').validate({
+	jQuery.validator.addMethod("dateCompare",
+			function() {
 
-		// Specify the validation rules
-		rules : {
-			name : "required",
-			introduced : {
-				Date : true
-			},
-			discontinued : {
-				Date : true
-			}
-		},
+				if ($("#introduced").val().toString() == ""
+						|| $("#discontinued").val().toString() == "") {
+					return true;
+				} else {
+					return $("#introduced").val() < $("#discontinued").val()
+							.toString();
+				}
 
-		// Specify the validation error messages
-		messages : {
-			name : "Please enter at least the name of the computer",
-			introduced : "Please enter a valide date format",
-			discontinued : "Please enter a valide date format"
-		},
+			}, "The ending date must be a later date than the start date");
 
-		submitHandler : function(form) {
-			form.submit();
+	jQuery.validator.addMethod("needsIntroduced", function() {
+
+		if ($("#discontinued").val().toString() == "") {
+			return true;
+		} else if ($("#introduced").val().toString() == "") {
+			return false;
+		} else {
+			return true;
 		}
-	});
+
+	}, "An introduced date in mandatory with a discontinued date.");
+
+	$("#addcomputer-form").validate(
+			{
+
+				rules : {
+					name : "required",
+
+					introduced : {
+						dateCompare : true,
+						date : true
+					},
+
+					discontinued : {
+						dateCompare : true,
+						needsIntroduced : true,
+						date : true
+					},
+
+					companyId : {
+						number : true
+					}
+				},
+
+				messages : {
+					name : "Please enter a computer name.",
+				},
+
+				highlight : function(element) {
+					$(element).parent().closest("div").addClass('has-error')
+							.removeClass('has-success')
+				},
+
+				unhighlight : function(element) {
+					$(element).parent().closest("div").removeClass('has-error')
+							.addClass('has-success')
+				},
+
+				submitHandler : function(form) {
+					form.submit();
+					alert('Computer has been successfully created');
+				}
+			});
 });

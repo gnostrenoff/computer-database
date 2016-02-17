@@ -28,7 +28,8 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<h1>Add Computer</h1>
-					<form action="newComputer" method="POST" id="add-computer-form">
+					<form action="newComputer" method="POST" id="addcomputer-form"
+						name="addcomputer-form">
 						<fieldset>
 							<div class="form-group">
 								<label for="computerName">Computer name *</label> <input
@@ -58,14 +59,16 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Add" class="btn btn-primary">
-							or <a href="dashboard.jsp" class="btn btn-default">Cancel</a>
+							or
+							<l:link baseUri="dashboard" text="Cancel"
+								styleClass="btn btn-default" />
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</section>
-	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery-1.11.1.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
 	<script src="js/lib/jquery.validate.js"></script>
 	<script src="js/lib/jquery.validate.additional.js"></script>
