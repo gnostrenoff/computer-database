@@ -23,30 +23,30 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ComputerDaoImpl.class)
 public class ComputerServiceTest {
-	
+
 	private static ComputerDao dao;
-	
+
 	@BeforeClass
-	public static void init(){
+	public static void init() {
 		dao = Mockito.mock(ComputerDaoImpl.class);
-		Mockito.when(dao.getComputers(10,0)).thenReturn(new ArrayList<Computer>());
-		Mockito.when(dao.getComputer((long)2)).thenReturn(new Computer());
-		
+		Mockito.when(dao.getList(10, 0)).thenReturn(new ArrayList<Computer>());
+		Mockito.when(dao.get((long) 2)).thenReturn(new Computer());
+
 		PowerMockito.mockStatic(ComputerDaoImpl.class);
 		BDDMockito.given(ComputerDaoImpl.getInstance()).willReturn((ComputerDaoImpl) dao);
-		
+
 	}
-	
+
 	@Test
-	public void getOneComputer(){
+	public void getOneComputer() {
 		ComputerService computerService = ComputerServiceImpl.getInstance();
-		assertTrue(computerService.getComputer((long)2) instanceof Computer);
+		assertTrue(computerService.get((long) 2) instanceof Computer);
 	}
-	
+
 	@Test
-	public void getAllComputers(){
+	public void getAllComputers() {
 		ComputerService computerService = ComputerServiceImpl.getInstance();
-		assertTrue(computerService.getComputers(100,0) instanceof List<?>);
-	}	
+		assertTrue(computerService.getList(100, 0) instanceof List<?>);
+	}
 
 }

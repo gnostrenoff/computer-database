@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.mappers;
+package com.gnostrenoff.cdb.dto.mappers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

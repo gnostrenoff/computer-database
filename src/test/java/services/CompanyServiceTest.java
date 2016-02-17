@@ -23,23 +23,23 @@ import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(CompanyDaoImpl.class)
 public class CompanyServiceTest {
-	
+
 	private static CompanyDao dao;
-	
+
 	@BeforeClass
-	public static void init(){
+	public static void init() {
 		dao = Mockito.mock(CompanyDaoImpl.class);
-		Mockito.when(dao.getCompanies()).thenReturn(new ArrayList<Company>());
-		
+		Mockito.when(dao.getList()).thenReturn(new ArrayList<Company>());
+
 		PowerMockito.mockStatic(CompanyDaoImpl.class);
 		BDDMockito.given(CompanyDaoImpl.getInstance()).willReturn((CompanyDaoImpl) dao);
-		
+
 	}
-	
+
 	@Test
-	public void getAllComputers(){
+	public void getAllComputers() {
 		CompanyService companyService = CompanyServiceImpl.getInstance();
-		assertTrue(companyService.getCompanies() instanceof List<?>);
-	}	
+		assertTrue(companyService.getList() instanceof List<?>);
+	}
 
 }

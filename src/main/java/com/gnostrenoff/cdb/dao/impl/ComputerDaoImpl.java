@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.JDBCConnection;
+import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
+import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
+import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.exceptions.DaoException;
-import com.gnostrenoff.cdb.mappers.ComputerMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
@@ -42,12 +43,12 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public void createComputer(Computer computer) {
+	public void create(Computer computer) throws DaoException {
 
 		String query = SQL_CREATE;
 		Connection conn = jdbcConnection.getConnection();
-		PreparedStatement ps;
-		ResultSet rs;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
 			conn.setAutoCommit(false);
@@ -87,58 +88,49 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 			throw new DaoException("failed to create computer");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 	}
 
 	@Override
-	public Computer getComputer(long computerId) {
+	public Computer get(long computerId) throws DaoException {
 
 		String query = SQL_GET_ONE;
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
 		Computer computer = null;
 		ResultSet rs = null;
 
 		try {
 			conn.setAutoCommit(true);
-			PreparedStatement ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			rs = ps.executeQuery();
 			rs.next();
-			computer = ComputerMapper.map(rs);
+			computer = ComputerDaoMapper.map(rs);
 		} catch (SQLException e) {
 			throw new DaoException("failed to get computer");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 		return computer;
 	}
 
 	@Override
-	public void updateComputer(/**
-								* 
-								*/
-	Computer computer) {
+	public void update(Computer computer) throws DaoException {
 
 		String query = SQL_UPDATE;
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
 
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ps.setString(1, computer.getName());
 
-			LocalDate localDate= computer.getIntroduced();
+			LocalDate localDate = computer.getIntroduced();
 			if (localDate != null) {
 				ps.setTimestamp(2, Timestamp.valueOf(localDate.atStartOfDay()));
 			} else {
@@ -170,23 +162,20 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 			throw new DaoException("failed to update computer");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps);
 		}
 	}
 
 	@Override
-	public void deleteComputer(long computerId) {
+	public void delete(long computerId) throws DaoException {
 
 		String query = SQL_DELETE;
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
 
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			ps.executeUpdate();
 			conn.commit();
@@ -198,66 +187,56 @@ public class ComputerDaoImpl implements ComputerDao {
 			}
 			throw new DaoException("failed to delete computer");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps);
 		}
 
 	}
 
 	@Override
-	public List<Computer> getComputers(int rowCount, int offset) {
+	public List<Computer> getList(int rowCount, int offset) throws DaoException {
 
 		List<Computer> computerList = new ArrayList<>();
 		String query = String.format(SQL_GET_MANY, rowCount, offset);
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			conn.setAutoCommit(true);
-			Statement s = conn.createStatement();
-			rs = s.executeQuery(query);
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				computerList.add(ComputerMapper.map(rs));
+				computerList.add(ComputerDaoMapper.map(rs));
 			}
 		} catch (SQLException e) {
 			throw new DaoException("failed to get computer list");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 		return computerList;
 	}
 
 	@Override
-	public int getRowCount() {
+	public int count() throws DaoException {
 
 		Connection conn = jdbcConnection.getConnection();
 		String query = SQL_GET_ROWCOUNT;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int rowCount = 0;
 
 		try {
 			conn.setAutoCommit(true);
-			Statement s = conn.createStatement();
-			rs = s.executeQuery(query);
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
 			rs.next();
 			rowCount = rs.getInt(1);
 
 		} catch (SQLException e) {
 			throw new DaoException("failed to get row count");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 		return rowCount;

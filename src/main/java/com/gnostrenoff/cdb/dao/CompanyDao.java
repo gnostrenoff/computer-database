@@ -14,13 +14,13 @@ public interface CompanyDao {
 	 * load the complete list of existing company in database
 	 * @return list of computers
 	 */
-	public List<Company> getCompanies();
+	public List<Company> getList();
 	
 	/**
 	 * retrieves a company by id form database
 	 * @param companyId id of company to retrieve
 	 * @return company companyretrieved
 	 */
-	public Company getCompany(long companyId);
+	public Company get(long companyId);
 
 }

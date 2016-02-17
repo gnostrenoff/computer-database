@@ -37,7 +37,7 @@ public class AddComputerTest {
     driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
     //assertTrue(isElementPresent(By.className("form-group has-error")));
     
-    driver.findElement(By.id("computerName")).clear();
+    driver.findElement(By.id("computerName")).clear(); 
     driver.findElement(By.id("computerName")).sendKeys("azerty");
     driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
     assertTrue(isAlertPresent());

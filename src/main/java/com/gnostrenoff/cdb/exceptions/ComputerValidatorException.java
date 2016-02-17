@@ -6,11 +6,11 @@ package com.gnostrenoff.cdb.exceptions;
  * 
  * @author excilys
  */
-public class ConnectionPropertiesFileNotFoundException extends RuntimeException {
+public class ComputerValidatorException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ConnectionPropertiesFileNotFoundException(String message) {
+	public ComputerValidatorException(String message) {
 		super(message);
 	}
 

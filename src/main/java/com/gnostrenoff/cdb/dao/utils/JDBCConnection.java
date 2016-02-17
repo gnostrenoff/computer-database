@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.dao;
+package com.gnostrenoff.cdb.dao.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

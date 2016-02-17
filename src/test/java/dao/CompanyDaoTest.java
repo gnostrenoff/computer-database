@@ -24,15 +24,15 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
+import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.model.Company;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(JDBCConnection.class)
 @Ignore
 public class CompanyDaoTest {
-	
+
 	private static CompanyDao companyDao;
 	private static JdbcDataSource dataSource;
 	private static IDatabaseTester databaseTester;
@@ -42,15 +42,15 @@ public class CompanyDaoTest {
 
 		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
 		try {
-			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(), "src/test/java/db-test/SCHEMA_TEST.sql",
-					Charset.forName("UTF8"), false);
+			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(),
+					"src/test/java/db-test/SCHEMA_TEST.sql", Charset.forName("UTF8"), false);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 
 		dataSource = new JdbcDataSource();
 		dataSource.setURL(jdbcConnection.getUrl());
-		
+
 		dataSource.setUser(jdbcConnection.getUsername());
 		dataSource.setPassword(jdbcConnection.getPassword());
 
@@ -69,7 +69,8 @@ public class CompanyDaoTest {
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
 		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
-		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword());
+		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(),
+				jdbcConnection.getUsername(), jdbcConnection.getPassword());
 		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		databaseTester.setDataSet(dataSet);
 		databaseTester.onSetup();
@@ -78,12 +79,12 @@ public class CompanyDaoTest {
 	@Test
 	public void getAllCompanies() {
 
-		List<Company> list = companyDao.getCompanies();
+		List<Company> list = companyDao.getList();
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
 		Company company0 = new Company(1, "Apple Inc.");
 		Company company1 = new Company(2, "Thinking Machines");
-		
+
 		assertTrue(company0.equals(list.get(0)));
 		assertTrue(company1.equals(list.get(1)));
 

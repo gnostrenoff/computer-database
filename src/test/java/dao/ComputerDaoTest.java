@@ -27,8 +27,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.JDBCConnection;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
+import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
@@ -44,18 +44,17 @@ public class ComputerDaoTest {
 	@BeforeClass
 	public static void init() {
 
-
 		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
 		try {
-			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(), "src/test/java/db-test/SCHEMA_TEST.sql",
-					Charset.forName("UTF8"), false);
+			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(),
+					"src/test/java/db-test/SCHEMA_TEST.sql", Charset.forName("UTF8"), false);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 
 		dataSource = new JdbcDataSource();
 		dataSource.setURL(jdbcConnection.getUrl());
-		
+
 		dataSource.setUser(jdbcConnection.getUsername());
 		dataSource.setPassword(jdbcConnection.getPassword());
 
@@ -74,7 +73,8 @@ public class ComputerDaoTest {
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
 		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
-		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword());
+		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(),
+				jdbcConnection.getUsername(), jdbcConnection.getPassword());
 		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		databaseTester.setDataSet(dataSet);
 		databaseTester.onSetup();
@@ -83,13 +83,13 @@ public class ComputerDaoTest {
 	@Test
 	public void getAllComputers() {
 
-		List<Computer> list = computerDao.getComputers(1,10);
+		List<Computer> list = computerDao.getList(1, 10);
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
-		Computer computer0 = new Computer(3, "macbook", LocalDate.of(2015, 03, 12),
-				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
-		Computer computer1 = new Computer(4, "CM-200", LocalDate.of(2014, 03, 12),
-				LocalDate.of(2015, 9, 12), new Company(2, "Thinking Machines"));
+		Computer computer0 = new Computer(3, "macbook", LocalDate.of(2015, 03, 12), LocalDate.of(2015, 8, 12),
+				new Company(1, "Apple Inc."));
+		Computer computer1 = new Computer(4, "CM-200", LocalDate.of(2014, 03, 12), LocalDate.of(2015, 9, 12),
+				new Company(2, "Thinking Machines"));
 		assertTrue(computer0.equals(list.get(0)));
 		assertTrue(computer1.equals(list.get(1)));
 
@@ -98,17 +98,17 @@ public class ComputerDaoTest {
 	@Test
 	public void getOneComputers() {
 
-		Computer computerFromDatabase = computerDao.getComputer(3);
+		Computer computerFromDatabase = computerDao.get(3);
 		assertNotNull(computerFromDatabase);
-		Computer computer = new Computer(3, "macbook", LocalDate.of(2015, 03, 12),
-				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
+		Computer computer = new Computer(3, "macbook", LocalDate.of(2015, 03, 12), LocalDate.of(2015, 8, 12),
+				new Company(1, "Apple Inc."));
 		assertTrue(computer.equals(computerFromDatabase));
 	}
 
 	@Test
 	public void deleteComputer() {
 
-		computerDao.deleteComputer(4);
+		computerDao.delete(4);
 
 		try {
 			IDataSet dataSet = databaseTester.getConnection().createDataSet();
@@ -121,37 +121,40 @@ public class ComputerDaoTest {
 
 	}
 
-    @Test
-    public void createComputer(){
+	@Test
+	public void createComputer() {
 
-    	Computer computer = new Computer(5, "macbookpro", LocalDate.of(2011, 03, 12), LocalDate.of(2010, 8, 12), new Company(1, "Apple Inc."));
-    	computerDao.createComputer(computer); 	
-    	
-    	try {
+		Computer computer = new Computer(5, "macbookpro", LocalDate.of(2011, 03, 12), LocalDate.of(2010, 8, 12),
+				new Company(1, "Apple Inc."));
+		computerDao.create(computer);
+
+		try {
 			IDataSet dataSet = databaseTester.getConnection().createDataSet();
 			ITable cTable = dataSet.getTable("computer");
 			assertTrue(cTable.getRowCount() == 3);
-			int index = 0; 
-			while(!cTable.getValue(index, "id").toString().equals("5")) index++;
+			int index = 0;
+			while (!cTable.getValue(index, "id").toString().equals("5"))
+				index++;
 			assertTrue(cTable.getValue(index, "name").equals("macbookpro"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
 	@Test
 	public void updateComputer() {
 
-		Computer computer = new Computer(3, "macbook++", LocalDate.of(2014, 03, 12),
-				LocalDate.of(2015, 8, 12), new Company(1, "Apple Inc."));
-		computerDao.updateComputer(computer);
+		Computer computer = new Computer(3, "macbook++", LocalDate.of(2014, 03, 12), LocalDate.of(2015, 8, 12),
+				new Company(1, "Apple Inc."));
+		computerDao.update(computer);
 
 		try {
 			IDataSet dataSet = databaseTester.getConnection().createDataSet();
 			ITable cTable = dataSet.getTable("computer");
 			assertTrue(cTable.getRowCount() == 2);
-			int index = 0; 
-			while(!cTable.getValue(index, "id").toString().equals("3")) index++;
+			int index = 0;
+			while (!cTable.getValue(index, "id").toString().equals("3"))
+				index++;
 			assertTrue(cTable.getValue(index, "name").equals("macbook++"));
 		} catch (Exception e) {
 			e.printStackTrace();

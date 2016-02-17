@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
-import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.CompanyService;
 import com.gnostrenoff.cdb.services.ComputerService;
@@ -42,7 +42,7 @@ public class newComputerServlet extends HttpServlet {
 
 		companyService = CompanyServiceImpl.getInstance();
 
-		request.setAttribute("companies", companyService.getCompanies());
+		request.setAttribute("companies", companyService.getList());
 		request.getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
 	}
 
@@ -69,7 +69,7 @@ public class newComputerServlet extends HttpServlet {
 			companyId = (long) 0;		
 		}else{
 			companyId = Long.parseLong(request.getParameter("companyId"));
-			companyName = companyService.getCompany(companyId).getName();
+			companyName = companyService.get(companyId).getName();
 		}
 		
 		//create dto accordingly
@@ -77,7 +77,7 @@ public class newComputerServlet extends HttpServlet {
 		Computer computer = ComputerDtoMapper.toComputer(dto);
 		
 		//then save computer into database
-		computerService.createComputer(computer);
+		computerService.create(computer);
 
 		response.sendRedirect("/computer-database/dashboard");
 	}

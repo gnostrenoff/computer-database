@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
@@ -50,14 +50,14 @@ public class DashboardServlet extends HttpServlet {
 		if (StrNbElementPerPage != null && strOffset != null) {
 			nbElementsPerPage = Integer.parseInt(StrNbElementPerPage);
 			int offset = Integer.parseInt(strOffset);
-			computerList = computerService.getComputers(nbElementsPerPage, offset);
+			computerList = computerService.getList(nbElementsPerPage, offset);
 			pageIndex = offset / nbElementsPerPage + 1;
 		} else
-			computerList = computerService.getComputers(10, 0);
+			computerList = computerService.getList(10, 0);
 
 		//set attributes
 		request.setAttribute("currentPageIndex", pageIndex);
-		request.setAttribute("nbTotalComputers", computerService.getRowCount());
+		request.setAttribute("nbTotalComputers", computerService.count());
 		request.setAttribute("nbElementsPerPage", nbElementsPerPage);
 		request.setAttribute("computers", ComputerDtoMapper.toDtoList(computerList));
 		

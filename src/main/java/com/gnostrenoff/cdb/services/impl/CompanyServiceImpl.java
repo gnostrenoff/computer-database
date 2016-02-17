@@ -9,32 +9,33 @@ import com.gnostrenoff.cdb.services.CompanyService;
 
 /**
  * implementation of a company service
+ * 
  * @author excilys
  */
-public class CompanyServiceImpl implements CompanyService{
-	
+public class CompanyServiceImpl implements CompanyService {
+
 	private static CompanyServiceImpl companyServiceImpl;
 	private static CompanyDao companyDao;
-	
-	private CompanyServiceImpl(){
+
+	private CompanyServiceImpl() {
 		companyDao = CompanyDaoImpl.getInstance();
 	}
-	
-	public static CompanyServiceImpl getInstance(){
-		if(companyServiceImpl == null){
+
+	public static CompanyServiceImpl getInstance() {
+		if (companyServiceImpl == null) {
 			companyServiceImpl = new CompanyServiceImpl();
 		}
 		return companyServiceImpl;
 	}
 
 	@Override
-	public List<Company> getCompanies() {
-		return companyDao.getCompanies();
+	public List<Company> getList() {
+		return companyDao.getList();
 	}
 
 	@Override
-	public Company getCompany(long companyId) {
-		return companyDao.getCompany(companyId);
+	public Company get(long companyId) {
+		return companyDao.get(companyId);
 	}
 
 }

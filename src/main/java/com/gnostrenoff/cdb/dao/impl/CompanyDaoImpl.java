@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.JDBCConnection;
+import com.gnostrenoff.cdb.dao.mappers.CompanyDaoMapper;
+import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
+import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.exceptions.DaoException;
-import com.gnostrenoff.cdb.mappers.CompanyMapper;
 import com.gnostrenoff.cdb.model.Company;
 
 /**
@@ -38,58 +38,52 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Company> getCompanies() {
+	public List<Company> getList() throws DaoException {
 
 		List<Company> companyList = new ArrayList<>();
 		String query = "select * from company";
-		ResultSet rs = null;
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			Statement s = conn.createStatement();
-			rs = s.executeQuery(query);
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				companyList.add(CompanyMapper.map(rs));
+				companyList.add(CompanyDaoMapper.map(rs));
 			}
 		} catch (SQLException e) {
 			throw new DaoException("failed to get company list");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				throw new DaoException("failed to close connection");
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 		return companyList;
 	}
 
 	@Override
-	public Company getCompany(long companyId) {
+	public Company get(long companyId) throws DaoException {
 		String query = SQL_GET_ONE;
 		Connection conn = jdbcConnection.getConnection();
+		PreparedStatement ps = null;
 		Company company = null;
 		ResultSet rs = null;
 
 		try {
 			conn.setAutoCommit(true);
-			PreparedStatement ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ps.setLong(1, companyId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				company = CompanyMapper.map(rs);
+				company = CompanyDaoMapper.map(rs);
 			} else {
 				company = null;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DaoException("failed to get company");
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			ObjectCloser.close(conn, ps, rs);
 		}
 
 		return company;

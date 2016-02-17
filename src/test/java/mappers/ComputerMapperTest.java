@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.gnostrenoff.cdb.mappers.ComputerMapper;
+import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 
 @Ignore
@@ -45,7 +45,7 @@ public class ComputerMapperTest {
 
 	@Test
 	public void mapTest() {
-		Computer computer = ComputerMapper.map(rs);
+		Computer computer = ComputerDaoMapper.map(rs);
 		assertEquals("macbookpro3000", computer.getName());
 		assertEquals("apple", computer.getCompany().getName());
 		assertEquals((long) 10, computer.getId());

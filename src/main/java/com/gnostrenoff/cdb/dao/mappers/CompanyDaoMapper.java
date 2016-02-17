@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.mappers;
+package com.gnostrenoff.cdb.dao.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import com.gnostrenoff.cdb.model.Company;
  * This class is providing a static method to convert a resultset to a company object
  * @author excilys
  */
-public class CompanyMapper {
+public class CompanyDaoMapper {
 	
 	/**
 	 * converts a resulset to a company object

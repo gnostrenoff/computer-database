@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.mappers;
+package com.gnostrenoff.cdb.dao.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import com.gnostrenoff.cdb.model.Computer;
  * This class is providing a static method to convert a resultset to a computer object
  * @author excilys
  */
-public class ComputerMapper {
+public class ComputerDaoMapper {
 
 	/**
 	 * converts a resulset to a computer object
@@ -23,17 +23,14 @@ public class ComputerMapper {
 		try {
 			computer.setId(rs.getLong("computer.id"));
 			computer.setName(rs.getString("computer.name"));
-			
 			Timestamp ts = rs.getTimestamp("introduced");
 			if(ts != null){
 				computer.setIntroduced(ts.toLocalDateTime().toLocalDate());
 			}
-			
 			ts = rs.getTimestamp("discontinued");
 			if(ts != null){
 				computer.setDiscontinued(ts.toLocalDateTime().toLocalDate());
-			}		
-			
+			}	
 			Company company = new Company();
 			company.setId(rs.getLong("company.id"));
 			company.setName(rs.getString("company.name"));

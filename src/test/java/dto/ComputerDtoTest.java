@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
-import com.gnostrenoff.cdb.mappers.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
