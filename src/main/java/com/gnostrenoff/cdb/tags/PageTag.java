@@ -66,6 +66,7 @@ public class PageTag extends SimpleTagSupport {
             }
  
             out.write(constructLinkPage(currentPageIndex + 1, "Next", false, lastPage));
+            out.write(constructLinkPage(totalPages, "Last", false, lastPage));
  
             out.write("</ul>");           
             out.write("<div class=\"btn-group btn-group-sm pull-right\" role=\"group\">");

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +39,8 @@ public class ComputerDtoTest {
 		Mockito.when(computerMock.getCompany()).thenReturn(companyMock);
 
 		Mockito.when(dtoMock.getName()).thenReturn("macbookpro3000");
-		Mockito.when(dtoMock.getIntroduced()).thenReturn("2014-03-12 12:35");
-		Mockito.when(dtoMock.getDiscontinued()).thenReturn("2015-03-12 12:35");
+		Mockito.when(dtoMock.getIntroduced()).thenReturn("2014/03/12");
+		Mockito.when(dtoMock.getDiscontinued()).thenReturn("2015/03/12");
 		Mockito.when(dtoMock.getCompanyName()).thenReturn("apple");
 		Mockito.when(dtoMock.getCompanyId()).thenReturn((long) 1);
 	}
@@ -55,9 +54,9 @@ public class ComputerDtoTest {
 		assertTrue(dto.getName() instanceof String);
 		assertEquals(dto.getName(), "macbookpro3000");
 		assertTrue(dto.getIntroduced() instanceof String);
-		assertEquals(dto.getIntroduced(), "2014-03-12 12:35");
+		assertEquals(dto.getIntroduced(), "2014/03/12");
 		assertTrue(dto.getDiscontinued() instanceof String);
-		assertEquals(dto.getDiscontinued(), "2015-03-12 12:35");
+		assertEquals(dto.getDiscontinued(), "2015/03/12");
 		assertTrue(dto.getCompanyName() instanceof String);
 		assertEquals(dto.getCompanyName(), "apple");
 		assertEquals(dto.getCompanyId(), (long)1);
@@ -72,9 +71,9 @@ public class ComputerDtoTest {
 		assertTrue(computer.getName() instanceof String);
 		assertEquals(computer.getName(), "macbookpro3000");
 		assertTrue(computer.getIntroduced() instanceof LocalDate);
-		assertEquals(computer.getIntroduced(), LocalDateTime.of(2014, 03, 12, 12, 35, 00));
+		assertEquals(computer.getIntroduced(), LocalDate.of(2014, 03, 12));
 		assertTrue(computer.getDiscontinued() instanceof LocalDate);
-		assertEquals(computer.getDiscontinued(), LocalDateTime.of(2015, 03, 12, 12, 35, 00));
+		assertEquals(computer.getDiscontinued(), LocalDate.of(2015, 03, 12));
 		assertTrue(computer.getCompany().getName() instanceof String);
 		assertEquals(computer.getCompany().getName(), "apple");
 	}
