@@ -3,6 +3,7 @@ package services;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.Page;
+import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
@@ -29,7 +30,7 @@ public class ComputerServiceTest {
 	@BeforeClass
 	public static void init() {
 		dao = Mockito.mock(ComputerDaoImpl.class);
-		Mockito.when(dao.getList(10, 0)).thenReturn(new ArrayList<Computer>());
+		Mockito.when(dao.getList(null)).thenReturn(new ArrayList<Computer>());
 		Mockito.when(dao.get((long) 2)).thenReturn(new Computer());
 
 		PowerMockito.mockStatic(ComputerDaoImpl.class);
@@ -46,10 +47,11 @@ public class ComputerServiceTest {
 	@Test
 	public void getAllComputers() {
 		ComputerService computerService = ComputerServiceImpl.getInstance();
-		Page page = new Page(1, 10);
-		computerService.fillPage(page);
-		assertTrue(page.getIndex() == 1);
-		assertTrue(page.getNbElements() == 10);
+		List<Computer> computerList;
+		QueryParams queryParams = new QueryParams(1, 10);
+		queryParams.setOffset(0);
+		computerList = computerService.getList(queryParams);
+		assertTrue(computerList instanceof List<?>);
 	}
 
 }

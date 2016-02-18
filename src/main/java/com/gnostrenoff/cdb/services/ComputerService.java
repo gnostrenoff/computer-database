@@ -1,7 +1,9 @@
 package com.gnostrenoff.cdb.services;
 
+import java.util.List;
+
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.Page;
+import com.gnostrenoff.cdb.model.QueryParams;
 
 /**
  * service for computers
@@ -24,9 +26,10 @@ public interface ComputerService {
 	
 	/**
 	 * load the complete list of existing computers in database
-	 * @param page TODO
+	 * @param params TODO
+	 * @return TODO
 	 */
-	public void fillPage(Page page);
+	public List<Computer> getList(QueryParams params);
 	
 	/**
 	 * updates the given computer in database

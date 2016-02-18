@@ -19,7 +19,22 @@ public class PageDto {
 	 * number of elements in this page
 	 */
 	private int nbElements;
-
+	
+	/**
+	 * number total of page
+	 */
+	private int nbTotalPages;
+	
+	/**
+	 * start page
+	 */
+	private int pageStart;
+	
+	/**
+	 * end page
+	 */
+	private int pageEnd;
+	
 	/**
 	 * list of computers present in this page
 	 */
@@ -56,5 +71,29 @@ public class PageDto {
 
 	public void setComputerList(List<ComputerDto> comuterList) {
 		this.computerList = comuterList;
+	}
+
+	public int getNbTotalPages() {
+		return nbTotalPages;
+	}
+
+	public void setNbTotalPages(int nbTotalPages) {
+		this.nbTotalPages = nbTotalPages;
+	}
+
+	public int getPageStart() {
+		return pageStart;
+	}
+
+	public void setPageStart(int pageStart) {
+		this.pageStart = pageStart;
+	}
+
+	public int getPageEnd() {
+		return pageEnd;
+	}
+
+	public void setPageEnd(int pageEnd) {
+		this.pageEnd = pageEnd;
 	}
 }

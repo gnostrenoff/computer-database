@@ -11,6 +11,7 @@ import com.gnostrenoff.cdb.exceptions.ComputerValidatorException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.Page;
+import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.CompanyService;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
@@ -89,9 +90,9 @@ public class Listener {
 	}
 
 	private void listComputers() {
-		Page page = new Page(1, 10);
-		computerService.fillPage(page);
-		List<Computer> list = page.getComputerList();
+		QueryParams queryParams = new QueryParams(1, 10);
+		queryParams.setOffset(0);
+		List<Computer> list = computerService.getList(queryParams);
 		for (int i = 0; i < list.size(); i++) {
 			Computer comp = list.get(i);
 			System.out.println(comp.toString());

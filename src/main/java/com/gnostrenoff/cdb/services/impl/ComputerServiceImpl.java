@@ -1,9 +1,11 @@
 package com.gnostrenoff.cdb.services.impl;
 
+import java.util.List;
+
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.Page;
+import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.validator.ComputerValidator;
 
@@ -42,10 +44,8 @@ public class ComputerServiceImpl implements ComputerService {
 	}
 
 	@Override
-	public void fillPage(Page page) {
-		//compute offset
-		int offset = (page.getIndex() - 1) * page.getNbElements();
-		page.setComputerList(computerDao.getList(page.getNbElements(), offset));
+	public List<Computer> getList(QueryParams params) {
+		return computerDao.getList(params);
 	}
 
 	@Override

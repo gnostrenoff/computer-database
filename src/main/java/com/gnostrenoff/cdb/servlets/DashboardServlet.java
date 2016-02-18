@@ -1,6 +1,7 @@
 package com.gnostrenoff.cdb.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.dto.PageDto;
-import com.gnostrenoff.cdb.dto.mappers.PageDtoMapper;
-import com.gnostrenoff.cdb.model.Page;
+import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.servlets.utils.PageCreator;
 
 /**
  * Servlet implementation class ComputerServlet
@@ -37,28 +39,35 @@ public class DashboardServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		computerService = ComputerServiceImpl.getInstance();
+		List<Computer> list = null;
 
 		// create a default page
-		Page page = new Page(1, 10);
-
+		QueryParams queryParams = new QueryParams(1, 10);
+		queryParams.setOffset(0);
+		
 		// get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
 		String strPageIndxex = request.getParameter("pageIndex");
+		
+		//retrieve nb of computers
+		int nbTotalComputers = computerService.count();
 
 		// get computers depending on parameters if present, get default page
 		// otherwise
 		if (StrNbElementPerPage != null && strPageIndxex != null) {
-			page.setNbElements(Integer.parseInt(StrNbElementPerPage));
-			page.setIndex(Integer.parseInt(strPageIndxex));
-			computerService.fillPage(page);
+			int nbElementPerPage = Integer.parseInt(StrNbElementPerPage);
+			int pageIndex = Integer.parseInt(strPageIndxex);
+			queryParams.setIndex(pageIndex);
+			queryParams.setNbElements(nbElementPerPage);
+			list = computerService.getList(queryParams);
 		} else // default page
-			computerService.fillPage(page);
+			list = computerService.getList(queryParams);
 
-		PageDto pageDto = PageDtoMapper.toDto(page);
+		PageDto page = PageCreator.create(list, queryParams, nbTotalComputers);
 
 		// set attributes
-		request.setAttribute("nbTotalComputers", computerService.count());
-		request.setAttribute("page", pageDto);
+		request.setAttribute("nbTotalComputers", nbTotalComputers);
+		request.setAttribute("page", page);
 
 		request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
 	}

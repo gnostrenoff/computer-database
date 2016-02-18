@@ -18,6 +18,7 @@ import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.exceptions.DaoException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.model.QueryParams;
 
 public class ComputerDaoImpl implements ComputerDao {
 
@@ -193,10 +194,10 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public List<Computer> getList(int rowCount, int offset) throws DaoException {
+	public List<Computer> getList(QueryParams params) throws DaoException {
 
 		List<Computer> computerList = new ArrayList<>();
-		String query = String.format(SQL_GET_MANY, rowCount, offset);
+		String query = String.format(SQL_GET_MANY, params.getNbElements(), params.getOffset());
 		Connection conn = jdbcConnection.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
