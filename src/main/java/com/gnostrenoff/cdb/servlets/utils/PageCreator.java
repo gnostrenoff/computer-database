@@ -3,6 +3,7 @@ package com.gnostrenoff.cdb.servlets.utils;
 import java.util.List;
 
 import com.gnostrenoff.cdb.dto.PageDto;
+import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 
@@ -18,6 +19,7 @@ public class PageCreator {
     	}
     	
     	pageDto.setNbTotalPages(totalPages);
+    	pageDto.setComputerList(ComputerDtoMapper.toDtoList(computerList));
 		
 		int pgStart = Math.max(queryParams.getIndex() - 5, 1);
         int pgEnd = pgStart + 10;
@@ -32,7 +34,7 @@ public class PageCreator {
         pageDto.setPageStart(pgStart);
         pageDto.setPageEnd(pgEnd);
 	
-		return null;
+		return pageDto;
 	}
 
 }

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
 <%@ taglib prefix="p" uri="/WEB-INF/pagetaglib.tld"%>
 <%@ taglib prefix="l" uri="/WEB-INF/linktaglib.tld"%>
 <!DOCTYPE html>
@@ -93,8 +92,7 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<p:page uri="dashboard?nbElementPerPage=$1&pageIndex=$2"
-				currentPageIndex="${page.index}"
-				totalElements="${nbTotalComputers}"
+				currentPageIndex="${page.index}" totalElements="${nbTotalComputers}"
 				nbElementsPerPage="${page.nbElements}" maxLinks="10" />
 		</div>
 	</footer>

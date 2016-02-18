@@ -1,29 +1,9 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:web="http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1"
+xmlns="http://xmlns.jcp.org/xml/ns/javaee">
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>EditComputerServlet</servlet-name>
-  	<display-name>EditComputerServlet</display-name>
-  	<description></description>
-  	<servlet-class>com.gnostrenoff.cdb.servlets.EditComputerServlet</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>newComputerServlet</servlet-name>
-  	<display-name>newComputerServlet</display-name>
-  	<description></description>
-  	<servlet-class>com.gnostrenoff.cdb.servlets.newComputerServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>EditComputerServlet</servlet-name>
-  	<url-pattern>/EditComputerServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>newComputerServlet</servlet-name>
-  	<url-pattern>/newComputerServlet</url-pattern>
-  </servlet-mapping>
   
   <error-page>
  	<exception-type>com.gnostrenoff.cdb.exceptions.DaoException</exception-type>

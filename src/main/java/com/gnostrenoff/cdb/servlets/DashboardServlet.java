@@ -47,18 +47,19 @@ public class DashboardServlet extends HttpServlet {
 		
 		// get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
-		String strPageIndxex = request.getParameter("pageIndex");
+		String strPageIndex = request.getParameter("pageIndex");
 		
 		//retrieve nb of computers
 		int nbTotalComputers = computerService.count();
 
 		// get computers depending on parameters if present, get default page
 		// otherwise
-		if (StrNbElementPerPage != null && strPageIndxex != null) {
+		if (StrNbElementPerPage != null && strPageIndex != null) {
 			int nbElementPerPage = Integer.parseInt(StrNbElementPerPage);
-			int pageIndex = Integer.parseInt(strPageIndxex);
+			int pageIndex = Integer.parseInt(strPageIndex);
 			queryParams.setIndex(pageIndex);
 			queryParams.setNbElements(nbElementPerPage);
+			queryParams.setOffset((pageIndex - 1) * nbElementPerPage);
 			list = computerService.getList(queryParams);
 		} else // default page
 			list = computerService.getList(queryParams);
