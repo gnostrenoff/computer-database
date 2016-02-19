@@ -17,18 +17,18 @@ public class PageCreator {
     	if(nbTotalElements % queryParams.getNbElements() != 0){
     		totalPages++;
     	}
-    	
+
     	pageDto.setNbTotalPages(totalPages);
     	pageDto.setComputerList(ComputerDtoMapper.toDtoList(computerList));
 		
 		int pgStart = Math.max(queryParams.getIndex() - 5, 1);
         int pgEnd = pgStart + 10;
-        if (pgEnd > totalPages + 1) {
+        if (pgEnd > totalPages) {
             int diff = pgEnd - totalPages;
-            pgStart -= diff - 1;
+            pgStart -= diff;
             if (pgStart < 1)
                 pgStart = 1;
-            pgEnd = totalPages + 1;
+            pgEnd = totalPages;
         }
         
         pageDto.setPageStart(pgStart);

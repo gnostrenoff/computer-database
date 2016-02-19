@@ -10,7 +10,6 @@ import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.exceptions.ComputerValidatorException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.Page;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.CompanyService;
 import com.gnostrenoff.cdb.services.ComputerService;

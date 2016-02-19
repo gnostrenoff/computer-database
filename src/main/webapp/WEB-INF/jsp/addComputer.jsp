@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
-<%@ taglib prefix="p" uri="/WEB-INF/pagetaglib.tld"%>
-<%@ taglib prefix="l" uri="/WEB-INF/linktaglib.tld"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +14,8 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<l:link baseUri="dashboard"
-				text="Application -
-				Computer Database" styleClass="navbar-brand" />
+			<a class="navbar-brand" href="dashboard"> Application - Computer
+				Database </a>
 		</div>
 	</header>
 
@@ -60,8 +56,7 @@
 						<div class="actions pull-right">
 							<input type="submit" value="Add" class="btn btn-primary">
 							or
-							<l:link baseUri="dashboard" text="Cancel"
-								styleClass="btn btn-default" />
+							<a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
 					</form>
 				</div>

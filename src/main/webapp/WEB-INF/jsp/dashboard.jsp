@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="p" uri="/WEB-INF/pagetaglib.tld"%>
-<%@ taglib prefix="l" uri="/WEB-INF/linktaglib.tld"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +16,8 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<l:link baseUri="dashboard"
-				text="Application -
-				Computer Database" styleClass="navbar-brand" />
+			<a class="navbar-brand" href="dashboard"> Application - Computer
+				Database </a>
 		</div>
 	</header>
 
@@ -91,9 +89,7 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-			<p:page uri="dashboard?nbElementPerPage=$1&pageIndex=$2"
-				currentPageIndex="${page.index}" totalElements="${nbTotalComputers}"
-				nbElementsPerPage="${page.nbElements}" maxLinks="10" />
+			<t:pagination uri="dashboard" page="${page}"/>
 		</div>
 	</footer>
 	<script src="js/lib/jquery.min.js"></script>

@@ -80,7 +80,7 @@ public class PageTag extends SimpleTagSupport {
         } catch (java.io.IOException ex) {
             throw new JspException("Error in Paginator tag", ex);
         }
-		
+		 
 	  }
 
 	private String constructLinkPage(int page, String text, boolean current, boolean disable) {
