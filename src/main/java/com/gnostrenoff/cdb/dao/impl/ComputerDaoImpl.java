@@ -74,7 +74,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			if (company != null) {
 				ps.setLong(4, company.getId());
 			} else {
-				ps.setNull(4, Types.TIMESTAMP);
+				ps.setNull(4, Types.DOUBLE);
 			}
 
 			ps.executeUpdate();

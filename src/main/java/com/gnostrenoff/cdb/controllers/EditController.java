@@ -18,42 +18,50 @@ import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
 /**
- * Servlet implementation class newComputerServlet
+ * Servlet implementation class EditControlller
  */
-@WebServlet("/new")
-public class NewComputerController extends HttpServlet {
+@WebServlet("/edit")
+public class EditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	private ComputerService computerService;
 	private CompanyService companyService;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public EditController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public NewComputerController() {
-		super();
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		companyService = CompanyServiceImpl.getInstance();
+		computerService = ComputerServiceImpl.getInstance();	
+		long id;
+		
+		//get parameter
+		String strId = request.getParameter("id");			
+		id = (long)Integer.parseInt(strId);
+		
+		//retrieve computer
+		Computer computer = computerService.get(id);
+		ComputerDto computerDto = ComputerDtoMapper.toDto(computer);
+		ComputerDtoValidator.validate(computerDto);
 
+		request.setAttribute("computer", computerDto);
 		request.setAttribute("companies", companyService.getList());
-		request.getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/editComputer.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		companyService = CompanyServiceImpl.getInstance();
 		computerService = ComputerServiceImpl.getInstance();
 
@@ -61,7 +69,7 @@ public class NewComputerController extends HttpServlet {
 		String name = request.getParameter("name");
 		String introduced = request.getParameter("introduced");
 		String discontinued = request.getParameter("discontinued");
-		String strCompanyId = request.getParameter("companyId");
+		String strCompanyId = request.getParameter("company-id");
 		
 		Long companyId = null;
 		String companyName = null;
@@ -69,7 +77,7 @@ public class NewComputerController extends HttpServlet {
 		if(strCompanyId == null || strCompanyId.equals("0")){
 			companyId = (long) 0;		
 		}else{
-			companyId = Long.parseLong(request.getParameter("companyId"));
+			companyId = Long.parseLong(strCompanyId);
 			companyName = companyService.get(companyId).getName();
 		}
 		
@@ -78,8 +86,10 @@ public class NewComputerController extends HttpServlet {
 		ComputerDtoValidator.validate(dto);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
 		
+		System.out.println(computer);
+		
 		//then save computer into database
-		computerService.create(computer);
+		computerService.update(computer);
 
 		response.sendRedirect("/computer-database/dashboard");
 	}

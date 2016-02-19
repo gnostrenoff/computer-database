@@ -82,7 +82,7 @@ public class Computer {
 	@Override
 	public String toString() {
 		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
-				+ ", company name=" + company.getName() + "]";
+				+ ", company name=" + ((company == null ) ? "" : company.getName()) + "]";
 	}
 
 	@Override
