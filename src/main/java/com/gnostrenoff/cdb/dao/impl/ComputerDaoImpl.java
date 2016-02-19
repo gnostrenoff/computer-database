@@ -14,7 +14,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gnostrenoff.cdb.controllers.DashboardController;
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.exceptions.DaoException;
 import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;

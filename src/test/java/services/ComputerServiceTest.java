@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -27,6 +28,7 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ComputerDaoImpl.class)
+@PowerMockIgnore({ "javax.management.*" })
 public class ComputerServiceTest {
 
 	private static ComputerDao dao;
