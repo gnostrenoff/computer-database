@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.gnostrenoff.cdb.dao.CompanyDao;
+import com.gnostrenoff.cdb.dao.exceptions.DaoException;
 import com.gnostrenoff.cdb.dao.mappers.CompanyDaoMapper;
 import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
-import com.gnostrenoff.cdb.exceptions.DaoException;
 import com.gnostrenoff.cdb.model.Company;
 
 /**
@@ -23,7 +26,8 @@ import com.gnostrenoff.cdb.model.Company;
 public class CompanyDaoImpl implements CompanyDao {
 
 	private static final String SQL_GET_ONE = "SELECT * FROM company WHERE id=?";
-	private static CompanyDaoImpl companyDaoImp;
+	private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
+	private static CompanyDaoImpl companyDaoImp = new CompanyDaoImpl();
 	private JDBCConnection jdbcConnection;
 
 	private CompanyDaoImpl() {
@@ -31,9 +35,6 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	public static CompanyDaoImpl getInstance() {
-		if (companyDaoImp == null) {
-			companyDaoImp = new CompanyDaoImpl();
-		}
 		return companyDaoImp;
 	}
 
@@ -53,6 +54,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				companyList.add(CompanyDaoMapper.map(rs));
 			}
 		} catch (SQLException e) {
+			LOGGER.error("failed to get company list");
 			throw new DaoException("failed to get company list");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);
@@ -81,6 +83,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			}
 
 		} catch (SQLException e) {
+			LOGGER.error("failed to get company");
 			throw new DaoException("failed to get company");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);

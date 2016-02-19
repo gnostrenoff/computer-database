@@ -6,16 +6,16 @@ xmlns="http://xmlns.jcp.org/xml/ns/javaee">
   <display-name>Archetype Created Web Application</display-name>
   
   <error-page>
- 	<exception-type>com.gnostrenoff.cdb.exceptions.DaoException</exception-type>
+ 	<exception-type>com.gnostrenoff.cdb.dao.exceptions.DaoException</exception-type>
  	<location>/WEB-INF/jsp/500.jsp</location>
   </error-page>
   <error-page>
- 	<exception-type>com.gnostrenoff.cdb.exceptions.InvalidComputerException</exception-type>
- 	<location>/WEB-INF/jsp/500noName.jsp</location>
+ 	<exception-type>com.gnostrenoff.cdb.servlets.exceptions.InvalidComputerException</exception-type>
+ 	<location>/WEB-INF/jsp/500.jsp</location>
   </error-page>
   <error-page>
- 	<exception-type>com.gnostrenoff.cdb.exceptions.DatesNotCorrectException</exception-type>
- 	<location>/WEB-INF/jsp/500datesIncorrect.jsp</location>
+ 	<exception-type>com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException</exception-type>
+ 	<location>/WEB-INF/jsp/500.jsp</location>
   </error-page>
 
   

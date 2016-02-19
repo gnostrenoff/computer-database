@@ -11,11 +11,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.gnostrenoff.cdb.controllers.DashboardController;
 import com.gnostrenoff.cdb.dao.ComputerDao;
+import com.gnostrenoff.cdb.dao.exceptions.DaoException;
 import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
 import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
-import com.gnostrenoff.cdb.exceptions.DaoException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -28,8 +32,9 @@ public class ComputerDaoImpl implements ComputerDao {
 	private static final String SQL_UPDATE = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
 	private static final String SQL_GET_MANY = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id LIMIT %d OFFSET %d";
 	private static final String SQL_GET_ROWCOUNT = "SELECT COUNT(*) FROM computer;";
+	private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoImpl.class);
 
-	private static ComputerDaoImpl computerDaoImpl;
+	private static ComputerDaoImpl computerDaoImpl = new ComputerDaoImpl();
 	private JDBCConnection jdbcConnection;
 
 	private ComputerDaoImpl() {
@@ -37,9 +42,6 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	public static ComputerDaoImpl getInstance() {
-		if (computerDaoImpl == null) {
-			computerDaoImpl = new ComputerDaoImpl();
-		}
 		return computerDaoImpl;
 	}
 
@@ -87,6 +89,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			LOGGER.error("failed to create computer");
 			throw new DaoException("failed to create computer");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);
@@ -111,6 +114,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			rs.next();
 			computer = ComputerDaoMapper.map(rs);
 		} catch (SQLException e) {
+			LOGGER.error("failed to get computer");
 			throw new DaoException("failed to get computer");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);
@@ -161,6 +165,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			LOGGER.error("failed to update computer");
 			throw new DaoException("failed to update computer");
 		} finally {
 			ObjectCloser.close(conn, ps);
@@ -186,6 +191,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			LOGGER.error("failed to delete computer");
 			throw new DaoException("failed to delete computer");
 		} finally {
 			ObjectCloser.close(conn, ps);
@@ -210,6 +216,7 @@ public class ComputerDaoImpl implements ComputerDao {
 				computerList.add(ComputerDaoMapper.map(rs));
 			}
 		} catch (SQLException e) {
+			LOGGER.error("failed to get computer list");
 			throw new DaoException("failed to get computer list");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);
@@ -235,6 +242,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			rowCount = rs.getInt(1);
 
 		} catch (SQLException e) {
+			LOGGER.error("failed to get row count");
 			throw new DaoException("failed to get row count");
 		} finally {
 			ObjectCloser.close(conn, ps, rs);

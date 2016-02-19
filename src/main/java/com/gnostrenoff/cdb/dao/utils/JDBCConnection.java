@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.gnostrenoff.cdb.exceptions.ConnectionPropertiesFileNotFoundException;
+import com.gnostrenoff.cdb.dao.exceptions.ConnectionPropertiesFileNotFoundException;
 
 /**
  * this class provides configured connection instances. It can have only one instance. 
@@ -15,7 +15,7 @@ import com.gnostrenoff.cdb.exceptions.ConnectionPropertiesFileNotFoundException;
  */
 public class JDBCConnection {
 
-	private static JDBCConnection jdbcConn;
+	private static JDBCConnection jdbcConn = new JDBCConnection();
 	private String driver;
 	private String url;
 	private String username;
@@ -49,9 +49,6 @@ public class JDBCConnection {
 	 * @return an instance of this class
 	 */
 	public static JDBCConnection getInstance(){	
-		if(jdbcConn == null){
-			jdbcConn = new JDBCConnection();
-		}
 		return jdbcConn;
 	}
 	

@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.servlets;
+package com.gnostrenoff.cdb.controllers;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gnostrenoff.cdb.controllers.utils.ComputerDtoValidator;
 import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
@@ -20,7 +21,7 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
  * Servlet implementation class newComputerServlet
  */
 @WebServlet("/newComputer")
-public class newComputerServlet extends HttpServlet {
+public class NewComputerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private ComputerService computerService;
@@ -29,7 +30,7 @@ public class newComputerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public newComputerServlet() {
+	public NewComputerController() {
 		super();
 	}
 
@@ -74,6 +75,7 @@ public class newComputerServlet extends HttpServlet {
 		
 		//create dto accordingly
 		ComputerDto dto = new ComputerDto(name, introduced, discontinued, companyName, companyId);
+		ComputerDtoValidator.validate(dto);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
 		
 		//then save computer into database

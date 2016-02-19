@@ -14,7 +14,7 @@ import com.gnostrenoff.cdb.services.CompanyService;
  */
 public class CompanyServiceImpl implements CompanyService {
 
-	private static CompanyServiceImpl companyServiceImpl;
+	private static CompanyServiceImpl companyServiceImpl = new CompanyServiceImpl();
 	private static CompanyDao companyDao;
 
 	private CompanyServiceImpl() {
@@ -22,9 +22,6 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	public static CompanyServiceImpl getInstance() {
-		if (companyServiceImpl == null) {
-			companyServiceImpl = new CompanyServiceImpl();
-		}
 		return companyServiceImpl;
 	}
 

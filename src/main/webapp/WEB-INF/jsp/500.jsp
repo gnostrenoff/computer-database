@@ -19,6 +19,7 @@
 		<div class="container">	
 			<div class="alert alert-danger">
 				Error 500: An error has occured!
+				entered data is not valid
 				<br/>
 				<!-- stacktrace -->
 			</div>

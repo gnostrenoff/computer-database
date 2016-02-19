@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.servlets;
+package com.gnostrenoff.cdb.controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,26 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gnostrenoff.cdb.controllers.utils.PageCreator;
 import com.gnostrenoff.cdb.dto.PageDto;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
-import com.gnostrenoff.cdb.servlets.utils.PageCreator;
 
 /**
  * Servlet implementation class ComputerServlet
  */
 @WebServlet("/dashboard")
-public class DashboardServlet extends HttpServlet {
+public class DashboardController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
 	private ComputerService computerService;
 
 	/**
 	 * Default constructor.
 	 */
-	public DashboardServlet() {
+	public DashboardController() {
 	}
 
 	/**

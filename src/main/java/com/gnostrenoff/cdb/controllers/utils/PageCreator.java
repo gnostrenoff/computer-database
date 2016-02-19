@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.servlets.utils;
+package com.gnostrenoff.cdb.controllers.utils;
 
 import java.util.List;
 

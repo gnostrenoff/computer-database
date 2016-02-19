@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.exceptions;
+package com.gnostrenoff.cdb.dao.exceptions;
 
 /**
  * generic exception for dao special behevior

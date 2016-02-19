@@ -28,7 +28,6 @@ public class ComputerDtoTest {
 		computerMock = Mockito.mock(Computer.class);
 		companyMock = Mockito.mock(Company.class);
 		dtoMock = Mockito.mock(ComputerDto.class);
-		;
 
 		Mockito.when(companyMock.getName()).thenReturn("apple");
 		Mockito.when(companyMock.getId()).thenReturn((long) 1);

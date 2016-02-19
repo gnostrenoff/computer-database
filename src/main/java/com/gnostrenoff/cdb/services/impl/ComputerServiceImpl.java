@@ -2,11 +2,16 @@ package com.gnostrenoff.cdb.services.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
+import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
+import com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException;
 import com.gnostrenoff.cdb.services.validator.ComputerValidator;
 
 /**
@@ -16,7 +21,8 @@ import com.gnostrenoff.cdb.services.validator.ComputerValidator;
  */
 public class ComputerServiceImpl implements ComputerService {
 
-	private static ComputerServiceImpl computerService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
+	private static ComputerServiceImpl computerService = new ComputerServiceImpl();
 	private static ComputerDao computerDao;
 
 	private ComputerServiceImpl() {
@@ -24,9 +30,6 @@ public class ComputerServiceImpl implements ComputerService {
 	}
 
 	public static ComputerServiceImpl getInstance() {
-		if (computerService == null) {
-			computerService = new ComputerServiceImpl();
-		}
 		return computerService;
 	}
 
@@ -56,7 +59,12 @@ public class ComputerServiceImpl implements ComputerService {
 
 	@Override
 	public void delete(long computerId) {
-		computerDao.delete(computerId);
+		if (computerId != 0)
+			computerDao.delete(computerId);
+		else{
+			LOGGER.error("delete computer failed : invalid id");
+			throw new ComputerValidatorException("delete computer failed : invalid id");
+		}
 	}
 
 	@Override

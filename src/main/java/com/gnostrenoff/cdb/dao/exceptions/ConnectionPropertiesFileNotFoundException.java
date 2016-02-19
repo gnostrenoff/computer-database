@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.exceptions;
+package com.gnostrenoff.cdb.dao.exceptions;
 
 /**
  * Exception thrown when properties files is not found while configuring

@@ -30,8 +30,8 @@ public class ComputerMapperTest {
 		try {
 			Mockito.when(rs.getString("computer.name")).thenReturn("macbookpro3000");
 			Mockito.when(rs.getString("company.name")).thenReturn("apple");
-			Mockito.when(rs.getTimestamp("introduced")).thenReturn(new Timestamp(2015, 03, 24, 10, 30, 54, 00));
-			Mockito.when(rs.getTimestamp("discontinued")).thenReturn(new Timestamp(2015, 05, 24, 10, 30, 54, 00));
+			Mockito.when(rs.getTimestamp("introduced")).thenReturn(new Timestamp(2015, 03, 24, 0, 0, 0, 0));
+			Mockito.when(rs.getTimestamp("discontinued")).thenReturn(new Timestamp(2015, 05, 24, 0, 0, 0, 0));
 			Mockito.when(rs.getLong("computer.id")).thenReturn((long) 10);
 			Mockito.when(rs.getLong("company.id")).thenReturn((long) 1);
 		} catch (SQLException e) {
@@ -45,6 +45,13 @@ public class ComputerMapperTest {
 
 	@Test
 	public void mapTest() {
+
+		try {
+			System.out.println(rs.getTimestamp("introduced"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		Computer computer = ComputerDaoMapper.map(rs);
 		assertEquals("macbookpro3000", computer.getName());
 		assertEquals("apple", computer.getCompany().getName());
