@@ -26,6 +26,7 @@ import com.gnostrenoff.cdb.model.Company;
 public class CompanyDaoImpl implements CompanyDao {
 
 	private static final String SQL_GET_ONE = "SELECT * FROM company WHERE id=?";
+	private static final String SQL_DELETE = "delete from company where id=?";
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
 	private static CompanyDaoImpl companyDaoImp = new CompanyDaoImpl();
 	private JDBCConnection jdbcConnection;
@@ -90,6 +91,30 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 
 		return company;
+	}
+
+	@Override
+	public void delete(long id, Connection conn) {
+		String query = SQL_DELETE;
+		boolean ownConnection = false;
+		
+		if(conn == null){
+			conn = jdbcConnection.getConnection();
+			ownConnection = true;
+		}
+		
+		PreparedStatement ps = null;
+
+		try {
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.error("failed to delete company");
+			throw new DaoException("failed to delete company");
+		} finally {
+			ObjectCloser.close(ownConnection ? conn : null, ps);
+		}
 	}
 
 }

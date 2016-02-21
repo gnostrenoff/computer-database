@@ -1,5 +1,6 @@
 package com.gnostrenoff.cdb.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import com.gnostrenoff.cdb.model.Company;
@@ -22,5 +23,12 @@ public interface CompanyDao {
 	 * @return company companyretrieved
 	 */
 	public Company get(long companyId);
+	
+	/**
+	 * deletes a company
+	 * @param id id of company to delete
+	 * @param conn connection to use in case of a transaction is needed
+	 */
+	public void delete(long id, Connection conn);
 
 }

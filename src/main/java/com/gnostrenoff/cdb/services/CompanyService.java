@@ -26,5 +26,11 @@ public interface CompanyService {
 	 * @return company companyretrieved
 	 */
 	public Company get(long companyId);
+	
+	/**
+	 * deletes a company, and all the computers related
+	 * @param id id of company to delete
+	 */
+	public void delete(long id);
 
 }

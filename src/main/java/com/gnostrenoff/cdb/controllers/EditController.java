@@ -32,7 +32,6 @@ public class EditController extends HttpServlet {
      */
     public EditController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -66,6 +65,7 @@ public class EditController extends HttpServlet {
 		computerService = ComputerServiceImpl.getInstance();
 
 		//get parameters
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String introduced = request.getParameter("introduced");
 		String discontinued = request.getParameter("discontinued");
@@ -83,11 +83,10 @@ public class EditController extends HttpServlet {
 		
 		//create dto accordingly
 		ComputerDto dto = new ComputerDto(name, introduced, discontinued, companyName, companyId);
+		dto.setId(Long.parseLong(id));
 		ComputerDtoValidator.validate(dto);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
-		
-		System.out.println(computer);
-		
+
 		//then save computer into database
 		computerService.update(computer);
 

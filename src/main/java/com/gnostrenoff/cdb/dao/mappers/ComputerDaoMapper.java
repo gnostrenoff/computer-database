@@ -4,6 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.gnostrenoff.cdb.dao.exceptions.DaoException;
+import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
@@ -12,6 +17,8 @@ import com.gnostrenoff.cdb.model.Computer;
  * @author excilys
  */
 public class ComputerDaoMapper {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
 
 	/**
 	 * converts a resulset to a computer object
@@ -37,7 +44,8 @@ public class ComputerDaoMapper {
 			computer.setCompany(company);
 	
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("failed to convert into computer");
+			throw new DaoException("failed to convert into computer");
 		}
 		return computer;
 	}

@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gnostrenoff.cdb.dao.exceptions.DaoException;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 
 /**
  * class providing static methods to close objects
@@ -25,7 +24,8 @@ public class ObjectCloser {
 	public static void close(Connection conn, PreparedStatement ps, ResultSet rs){
 		try {
 			close(conn, ps);
-			rs.close();
+			if(rs != null)
+				rs.close();
 		} catch (SQLException e) {
 			LOGGER.error("failed to close object");
 			throw new DaoException("failed to close object");
@@ -33,8 +33,10 @@ public class ObjectCloser {
 	}
 	public static void close(Connection conn, PreparedStatement ps){
 		try {
-			conn.close();
-			ps.close();
+			if(conn != null)
+				conn.close();
+			if(ps != null)
+				ps.close();
 		} catch (SQLException e) {
 			LOGGER.error("failed to close object");
 			throw new DaoException("failed to close object");

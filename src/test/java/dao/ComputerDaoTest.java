@@ -83,7 +83,7 @@ public class ComputerDaoTest {
 	@Test
 	public void getAllComputers() {
 
-		List<Computer> list = computerDao.getList(null);
+		List<Computer> list = computerDao.getList(null, null);
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
 		Computer computer0 = new Computer(3, "macbook", LocalDate.of(2015, 03, 12), LocalDate.of(2015, 8, 12),
@@ -108,7 +108,7 @@ public class ComputerDaoTest {
 	@Test
 	public void deleteComputer() {
 
-		computerDao.delete(4);
+		computerDao.delete(4, null);
 
 		try {
 			IDataSet dataSet = databaseTester.getConnection().createDataSet();

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
-import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
@@ -48,7 +47,7 @@ public class ComputerServiceImpl implements ComputerService {
 
 	@Override
 	public List<Computer> getList(QueryParams params) {
-		return computerDao.getList(params);
+		return computerDao.getList(params, null);
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class ComputerServiceImpl implements ComputerService {
 	@Override
 	public void delete(long computerId) {
 		if (computerId != 0)
-			computerDao.delete(computerId);
+			computerDao.delete(computerId, null);
 		else{
 			LOGGER.error("delete computer failed : invalid id");
 			throw new ComputerValidatorException("delete computer failed : invalid id");

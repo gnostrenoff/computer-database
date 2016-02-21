@@ -39,7 +39,7 @@ public class ComputerServiceTest {
 	@BeforeClass
 	public static void init() {
 		dao = Mockito.mock(ComputerDaoImpl.class);
-		Mockito.when(dao.getList(null)).thenReturn(new ArrayList<Computer>());
+		Mockito.when(dao.getList(null, null)).thenReturn(new ArrayList<Computer>());
 		Mockito.when(dao.get((long) 2)).thenReturn(new Computer());
 		
 		goodComputer = Mockito.mock(Computer.class);

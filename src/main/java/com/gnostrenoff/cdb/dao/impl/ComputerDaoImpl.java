@@ -30,6 +30,7 @@ public class ComputerDaoImpl implements ComputerDao {
 	private static final String SQL_DELETE = "delete from computer where id=?";
 	private static final String SQL_UPDATE = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
 	private static final String SQL_GET_MANY = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id LIMIT %d OFFSET %d";
+	private static final String SQL_GET_MANY_BY_ID = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE company_id=?";
 	private static final String SQL_GET_ROWCOUNT = "SELECT COUNT(*) FROM computer;";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoImpl.class);
 
@@ -172,44 +173,62 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public void delete(long computerId) throws DaoException {
+	public void delete(long computerId, Connection conn) throws DaoException {
 
 		String query = SQL_DELETE;
-		Connection conn = jdbcConnection.getConnection();
+		boolean ownConnection = false;
+		
+		if(conn == null){
+			conn = jdbcConnection.getConnection();
+			ownConnection = true;
+		}
+		
 		PreparedStatement ps = null;
 
 		try {
-			conn.setAutoCommit(false);
 			ps = conn.prepareStatement(query);
 			ps.setLong(1, computerId);
 			ps.executeUpdate();
-			conn.commit();
 		} catch (SQLException e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 			LOGGER.error("failed to delete computer");
 			throw new DaoException("failed to delete computer");
 		} finally {
-			ObjectCloser.close(conn, ps);
+			ObjectCloser.close(ownConnection ? conn : null, ps);
 		}
 
 	}
 
 	@Override
-	public List<Computer> getList(QueryParams params) throws DaoException {
+	public List<Computer> getList(QueryParams params, Connection conn) throws DaoException {
 
 		List<Computer> computerList = new ArrayList<>();
-		String query = String.format(SQL_GET_MANY, params.getNbElements(), params.getOffset());
-		Connection conn = jdbcConnection.getConnection();
+		String query;	
+		boolean ownConnection = false;
+		
+		if(conn == null){
+			conn = jdbcConnection.getConnection();
+			ownConnection = true;
+		}
+		
+		long companyId = params.getCompanyId();
+		
+		if(companyId != 0){
+			query = SQL_GET_MANY_BY_ID;
+		}
+		else{
+			query = String.format(SQL_GET_MANY, params.getNbElements(), params.getOffset());
+		}
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			conn.setAutoCommit(true);
 			ps = conn.prepareStatement(query);
+			
+			if(companyId != 0){
+				ps.setLong(1, companyId);
+			}
+			
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				computerList.add(ComputerDaoMapper.map(rs));
@@ -218,7 +237,7 @@ public class ComputerDaoImpl implements ComputerDao {
 			LOGGER.error("failed to get computer list");
 			throw new DaoException("failed to get computer list");
 		} finally {
-			ObjectCloser.close(conn, ps, rs);
+			ObjectCloser.close(ownConnection ? conn : null, ps, rs);
 		}
 
 		return computerList;

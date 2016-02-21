@@ -23,7 +23,7 @@ public class Listener {
 	public static final CompanyService companyService = CompanyServiceImpl.getInstance();
 
 	public static final Scanner scanIn = new Scanner(System.in);
-	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	public static boolean exit = false;
 	public static int input;
 
@@ -50,9 +50,12 @@ public class Listener {
 				update();
 				break;
 			case 6:
-				delete();
+				deleteSingleComputer();
 				break;
 			case 7:
+				deleteByCompanyId();
+				break;
+			case 8:
 				exit = true;
 				break;
 			default:
@@ -76,7 +79,8 @@ public class Listener {
 		System.out.println("\t#  * 4 - read detail computer");
 		System.out.println("\t#  * 5 - update computer");
 		System.out.println("\t#  * 6 - delete computer");
-		System.out.println("\t#  * 7 - exit");
+		System.out.println("\t#  * 7 - delete computer by company id");
+		System.out.println("\t#  * 8 - exit");
 		System.out.println("\t############################");
 	}
 
@@ -104,9 +108,9 @@ public class Listener {
 		scanIn.nextLine(); // empty previous line
 		newComputer.setName(scanIn.nextLine());
 
-		System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm) :");
+		System.out.println("please enter date when the computer was introduced (date format : yyyy/MM/dd) :");
 		newComputer.setIntroduced(waitForValidDate(newComputer));
-		System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm) :");
+		System.out.println("please enter date when the computer was discontinued (date format : yyyy/MM/dd) :");
 		newComputer.setDiscontinued(waitForValidDate(newComputer));
 		System.out.println("please enter id of manufacturer :");
 
@@ -136,9 +140,9 @@ public class Listener {
 		scanIn.nextLine(); // empty previous line
 		computer.setName(scanIn.nextLine());
 
-		System.out.println("please enter date when the computer was introduced (date format : yyyy-mm-dd hh:mm) :");
+		System.out.println("please enter date when the computer was introduced (date format : yyyy/MM/dd) :");
 		computer.setIntroduced(waitForValidDate(computer));
-		System.out.println("please enter date when the computer was discontinued (date format : yyyy-mm-dd hh:mm) :");
+		System.out.println("please enter date when the computer was discontinued (date format : yyyy/MM/dd) :");
 		computer.setDiscontinued(waitForValidDate(computer));
 		System.out.println("please enter id of manufacturer :");
 
@@ -147,7 +151,7 @@ public class Listener {
 		computer.setCompany(company);
 
 		try {
-			computerService.create(computer);
+			computerService.update(computer);
 			System.out.println("computer " + computer.getId() + " has been succesfully updated to database");
 		} catch (ComputerValidatorException e) {
 			System.out.println("computer " + computer.getId()
@@ -155,11 +159,18 @@ public class Listener {
 		}
 	}
 
-	private void delete() {
+	private void deleteSingleComputer() {
 		System.out.println("please enter a id :");
 		long id = scanIn.nextLong();
 		computerService.delete(id);
 		System.out.println("computer " + id + " has been succesfully deleted from database");
+	}
+	
+	private void deleteByCompanyId() {
+		System.out.println("please enter a id :");
+		long id = scanIn.nextLong();
+		companyService.delete(id);
+		System.out.println("company " + id + ", and all the related computers have been succesfully deleted from database");
 	}
 
 	private LocalDate waitForValidDate(Computer computer) {

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import com.gnostrenoff.cdb.controllers.exceptions.ConnectionException;
 import com.gnostrenoff.cdb.dao.exceptions.ConnectionPropertiesFileNotFoundException;
-import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
