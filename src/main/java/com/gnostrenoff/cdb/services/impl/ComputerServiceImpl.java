@@ -67,8 +67,8 @@ public class ComputerServiceImpl implements ComputerService {
 	}
 
 	@Override
-	public int count() {
-		return computerDao.count();
+	public int count(QueryParams params) {
+		return computerDao.count(params);
 	}
 
 }

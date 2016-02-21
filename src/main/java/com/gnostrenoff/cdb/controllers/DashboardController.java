@@ -48,10 +48,16 @@ public class DashboardController extends HttpServlet {
 		// get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
 		String strPageIndex = request.getParameter("pageIndex");
+		String search = request.getParameter("search");
 		
-		//retrieve nb of computers
-		int nbTotalComputers = computerService.count();
+		//set search parameter if present
+		if(search != null && !search.isEmpty()){
+			queryParams.setSearch(search);
+		}
 
+		//retrieve nb of computers
+		int nbTotalComputers = computerService.count(queryParams);
+		
 		// get computers depending on parameters if present, get default page
 		// otherwise
 		if (StrNbElementPerPage != null && strPageIndex != null) {

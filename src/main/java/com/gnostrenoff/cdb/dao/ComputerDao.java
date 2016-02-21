@@ -62,6 +62,6 @@ public interface ComputerDao {
 	 * 
 	 * @return row count
 	 */
-	public int count();
+	public int count(QueryParams params);
 
 }

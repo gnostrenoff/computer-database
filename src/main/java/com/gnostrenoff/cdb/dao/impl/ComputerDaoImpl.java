@@ -19,6 +19,7 @@ import com.gnostrenoff.cdb.dao.exceptions.DaoException;
 import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
 import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
+import com.gnostrenoff.cdb.dao.utils.StatementCreator;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -29,9 +30,8 @@ public class ComputerDaoImpl implements ComputerDao {
 	private static final String SQL_GET_ONE = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE computer.id=?";
 	private static final String SQL_DELETE = "delete from computer where id=?";
 	private static final String SQL_UPDATE = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
-	private static final String SQL_GET_MANY = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id LIMIT %d OFFSET %d";
-	private static final String SQL_GET_MANY_BY_ID = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE company_id=?";
 	private static final String SQL_GET_ROWCOUNT = "SELECT COUNT(*) FROM computer;";
+	private static final String SQL_GET_ROWCOUNT_SEARCH = "SELECT COUNT(*) FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? OR company.name LIKE ?";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoImpl.class);
 
 	private static ComputerDaoImpl computerDaoImpl = new ComputerDaoImpl();
@@ -177,12 +177,12 @@ public class ComputerDaoImpl implements ComputerDao {
 
 		String query = SQL_DELETE;
 		boolean ownConnection = false;
-		
-		if(conn == null){
+
+		if (conn == null) {
 			conn = jdbcConnection.getConnection();
 			ownConnection = true;
 		}
-		
+
 		PreparedStatement ps = null;
 
 		try {
@@ -202,33 +202,18 @@ public class ComputerDaoImpl implements ComputerDao {
 	public List<Computer> getList(QueryParams params, Connection conn) throws DaoException {
 
 		List<Computer> computerList = new ArrayList<>();
-		String query;	
 		boolean ownConnection = false;
-		
-		if(conn == null){
-			conn = jdbcConnection.getConnection();
-			ownConnection = true;
-		}
-		
-		long companyId = params.getCompanyId();
-		
-		if(companyId != 0){
-			query = SQL_GET_MANY_BY_ID;
-		}
-		else{
-			query = String.format(SQL_GET_MANY, params.getNbElements(), params.getOffset());
-		}
-
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		if (conn == null) {
+			conn = jdbcConnection.getConnection();
+			ownConnection = true;
+		}
+
+		ps = StatementCreator.create(params, conn);
+
 		try {
-			ps = conn.prepareStatement(query);
-			
-			if(companyId != 0){
-				ps.setLong(1, companyId);
-			}
-			
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				computerList.add(ComputerDaoMapper.map(rs));
@@ -244,17 +229,31 @@ public class ComputerDaoImpl implements ComputerDao {
 	}
 
 	@Override
-	public int count() throws DaoException {
+	public int count(QueryParams params) throws DaoException {
 
 		Connection conn = jdbcConnection.getConnection();
-		String query = SQL_GET_ROWCOUNT;
+		String query, search;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int rowCount = 0;
-
+		
+		search = params.getSearch();
+		if(search != null && !search.isEmpty()){
+			query = SQL_GET_ROWCOUNT_SEARCH;
+		}	
+		else{
+			query = SQL_GET_ROWCOUNT;
+		}	
+		
 		try {
 			conn.setAutoCommit(true);
 			ps = conn.prepareStatement(query);
+			
+			if(search != null && !search.isEmpty()){
+				ps.setString(1, "%" + search + "%");
+				ps.setString(2, "%" + search + "%");
+			}
+			
 			rs = ps.executeQuery();
 			rs.next();
 			rowCount = rs.getInt(1);

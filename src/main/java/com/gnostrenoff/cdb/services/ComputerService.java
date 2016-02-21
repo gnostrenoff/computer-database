@@ -47,6 +47,6 @@ public interface ComputerService {
 	 * get row count of computer table
 	 * @return row count
 	 */
-	public int count();
+	public int count(QueryParams params);
 
 }

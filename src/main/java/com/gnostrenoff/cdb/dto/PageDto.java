@@ -26,6 +26,11 @@ public class PageDto {
 	private int nbTotalPages;
 	
 	/**
+	 * search parameter
+	 */
+	private String search;
+	
+	/**
 	 * start page
 	 */
 	private int pageStart;
@@ -95,5 +100,13 @@ public class PageDto {
 
 	public void setPageEnd(int pageEnd) {
 		this.pageEnd = pageEnd;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 }
