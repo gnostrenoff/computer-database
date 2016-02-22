@@ -18,7 +18,7 @@ public class ComputerDtoMapper {
 	/**
 	 * format for dates
 	 */
-	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	/**
 	 * converts a dto in computer

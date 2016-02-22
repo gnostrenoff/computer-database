@@ -67,6 +67,6 @@
 	<script src="js/lib/bootstrap.min.js"></script>
 	<script src="js/lib/jquery.validate.js"></script>
 	<script src="js/lib/jquery.validate.additional.js"></script>
-	<script src="js/addComputer.js"></script>
+	<!-- <script src="js/addComputer.js"></script> -->
 </body>
 </html>

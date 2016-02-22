@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.services.validator;
+package com.gnostrenoff.cdb.services.utils;
 
 import java.time.LocalDate;
 
@@ -25,9 +25,13 @@ public class ComputerValidator{
 		}
 		if(introduced != null && discontinued != null){
 			if(!computer.getDiscontinued().isAfter(computer.getIntroduced())){
-				LOGGER.error("computer cannot be discontinued before being introduced!");
-				throw new ComputerValidatorException("computer cannot be discontinued before being introduced!");
+				LOGGER.error("invalid dates order");
+				throw new ComputerValidatorException("invalid dates order");
 			}
+		}
+		if(introduced == null && discontinued != null){
+			LOGGER.error("no introduced date");
+			throw new ComputerValidatorException("no introduced date");
 		}
 	}
 

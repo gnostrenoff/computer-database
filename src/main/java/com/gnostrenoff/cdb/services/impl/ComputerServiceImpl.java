@@ -11,7 +11,7 @@ import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException;
-import com.gnostrenoff.cdb.services.validator.ComputerValidator;
+import com.gnostrenoff.cdb.services.utils.ComputerValidator;
 
 /**
  * implementation of a computer service
