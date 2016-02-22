@@ -31,6 +31,11 @@ public class PageDto {
 	private String search;
 	
 	/**
+	 * order by parameter
+	 */
+	private String orderBy;
+
+	/**
 	 * start page
 	 */
 	private int pageStart;
@@ -108,5 +113,13 @@ public class PageDto {
 
 	public void setSearch(String search) {
 		this.search = search;
+	}
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
 }

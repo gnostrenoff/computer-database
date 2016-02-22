@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gnostrenoff.cdb.controllers.utils.PageCreator;
+import com.gnostrenoff.cdb.dao.utils.OrderBy;
 import com.gnostrenoff.cdb.dto.PageDto;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -44,15 +45,20 @@ public class DashboardController extends HttpServlet {
 		// create a default page
 		QueryParams queryParams = new QueryParams(1, 10);
 		queryParams.setOffset(0);
+		queryParams.setOrderBy(OrderBy.NAME);	
 		
 		// get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
 		String strPageIndex = request.getParameter("pageIndex");
 		String search = request.getParameter("search");
-		
+		String orderBy = request.getParameter("orderBy");
+
 		//set search parameter if present
 		if(search != null && !search.isEmpty()){
 			queryParams.setSearch(search);
+		}
+		if(orderBy != null && !orderBy.isEmpty()){
+			queryParams.setOrderBy(orderBy);
 		}
 
 		//retrieve nb of computers

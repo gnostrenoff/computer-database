@@ -21,6 +21,7 @@ public class PageCreator {
     	pageDto.setNbTotalPages(totalPages);
     	pageDto.setComputerList(ComputerDtoMapper.toDtoList(computerList));
     	pageDto.setSearch(queryParams.getSearch());
+    	pageDto.setOrderBy(queryParams.getOrderBy().toString());
 		
 		int pgStart = Math.max(queryParams.getIndex() - 5, 1);
         int pgEnd = pgStart + 10;
