@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,17 +23,17 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${nbTotalComputers} Computers found</h1>
+			<h1 id="homeTitle">${nbTotalComputers}	Computer(s)	found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
-					<form id="searchForm" action="dashboard" method="GET" class="form-inline">
+					<form id="searchForm" action="dashboard" method="GET"
+						class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" /> 
-							<input type="hidden" name="nbElementPerPage" value="${page.nbElements}">
-							<input type="hidden" name="pageIndex" value="${page.index}">
-							<input
-							type="submit" id="searchsubmit" value="Filter by name"
+							class="form-control" placeholder="Search name" /> <input
+							type="hidden" name="nbElementPerPage" value="${page.nbElements}">
+						<input type="hidden" name="pageIndex" value="${page.index}">
+						<input type="submit" id="searchsubmit" value="Filter by name"
 							class="btn btn-primary" />
 					</form>
 				</div>
@@ -63,12 +63,18 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th><a href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="computer.name"/>">Computer name</a> </th>
-						<th><a href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="introduced"/>">Introduced date</a></th>
+						<th><a
+							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="computer.name" order="${page.orderBy == 'computer.name' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>">Computer
+								name</a></th>
+						<th><a
+							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="introduced" order="${page.orderBy == 'introduced' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>">Introduced
+								date</a></th>
 						<!-- Table header for Discontinued Date -->
-						<th><a href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="discontinued"/>">Discontinued</a></th>
+						<th><a
+							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="discontinued" order="${page.orderBy == 'discontinued' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>">Discontinued</a></th>
 						<!-- Table header for Company -->
-						<th><a href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="company.name"/>">Company</a></th>
+						<th><a
+							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="company.name" order="${page.orderBy == 'company.name' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>">Company</a></th>
 
 
 					</tr>
@@ -93,7 +99,7 @@
 
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
-			<t:pagination uri="dashboard" page="${page}"/>
+			<t:pagination uri="dashboard" page="${page}" />
 		</div>
 	</footer>
 	<script src="js/lib/jquery.min.js"></script>

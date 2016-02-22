@@ -37,6 +37,7 @@ public class StatementCreator {
 		long companyId = params.getCompanyId();
 		String search = params.getSearch();
 		String orderBy = params.getOrderBy();
+		String order = params.getOrder();
 
 		if (companyId != 0) {
 			query = SQL_GET_MANY_BY_ID;
@@ -46,12 +47,9 @@ public class StatementCreator {
 			query = SQL_GET_MANY;
 		}
 
-		if (orderBy != null && !orderBy.isEmpty()) {
-			if(orderBy.equals(OrderBy.NAME) || orderBy.equals(OrderBy.COMPANY)){
-				query = String.format(query, orderBy, "ASC");
-			}
-			else if (orderBy.equals(OrderBy.INTRODUCED) || orderBy.equals(OrderBy.DISCONTINUED)){
-				query = String.format(query, orderBy, "DESC");
+		if (orderBy != null && !orderBy.isEmpty() && order != null && !order.isEmpty()) {
+			if(orderBy.equals(OrderBy.NAME) || orderBy.equals(OrderBy.COMPANY) || orderBy.equals(OrderBy.INTRODUCED) || orderBy.equals(OrderBy.DISCONTINUED)){
+				query = String.format(query, orderBy, order);
 			}
 			else{
 				LOGGER.error("Order by parameter not valid");

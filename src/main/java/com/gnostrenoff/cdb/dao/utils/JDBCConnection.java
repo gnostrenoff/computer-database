@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gnostrenoff.cdb.controllers.exceptions.ConnectionException;
-import com.gnostrenoff.cdb.dao.exceptions.ConnectionPropertiesFileNotFoundException;
+import com.gnostrenoff.cdb.dao.exceptions.PropertiesFileNotFoundException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
@@ -40,7 +40,7 @@ public class JDBCConnection {
 			LOGGER.info("loading properties file ...");
 			InputStream file = getClass().getClassLoader().getResourceAsStream("db.properties");
 			if (file == null) {
-				throw new ConnectionPropertiesFileNotFoundException("properties file not found");
+				throw new PropertiesFileNotFoundException("properties file not found");
 			}
 			Properties props = new Properties();
 			props.load(file);

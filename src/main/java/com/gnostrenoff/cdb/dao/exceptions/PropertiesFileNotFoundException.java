@@ -6,11 +6,11 @@ package com.gnostrenoff.cdb.dao.exceptions;
  * 
  * @author excilys
  */
-public class ConnectionPropertiesFileNotFoundException extends RuntimeException {
+public class PropertiesFileNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ConnectionPropertiesFileNotFoundException(String message) {
+	public PropertiesFileNotFoundException(String message) {
 		super(message);
 	}
 

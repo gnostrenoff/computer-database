@@ -23,31 +23,32 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 @WebServlet("/edit")
 public class EditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ComputerService computerService;
 	private CompanyService companyService;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditController() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public EditController() {
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		companyService = CompanyServiceImpl.getInstance();
-		computerService = ComputerServiceImpl.getInstance();	
+		computerService = ComputerServiceImpl.getInstance();
 		long id;
-		
-		//get parameter
-		String strId = request.getParameter("id");			
-		id = (long)Integer.parseInt(strId);
-		
-		//retrieve computer
+
+		// get parameter
+		String strId = request.getParameter("id");
+		id = (long) Integer.parseInt(strId);
+
+		// retrieve computer
 		Computer computer = computerService.get(id);
 		ComputerDto computerDto = ComputerDtoMapper.toDto(computer);
 		ComputerDtoValidator.validate(computerDto);
@@ -58,36 +59,38 @@ public class EditController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		companyService = CompanyServiceImpl.getInstance();
 		computerService = ComputerServiceImpl.getInstance();
 
-		//get parameters
+		// get parameters
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String introduced = request.getParameter("introduced");
 		String discontinued = request.getParameter("discontinued");
 		String strCompanyId = request.getParameter("company-id");
-		
+
 		Long companyId = null;
 		String companyName = null;
-		
-		if(strCompanyId == null || strCompanyId.equals("0")){
-			companyId = (long) 0;		
-		}else{
+
+		if (strCompanyId == null || strCompanyId.equals("0")) {
+			companyId = (long) 0;
+		} else {
 			companyId = Long.parseLong(strCompanyId);
 			companyName = companyService.get(companyId).getName();
 		}
-		
-		//create dto accordingly
+
+		// create dto accordingly
 		ComputerDto dto = new ComputerDto(name, introduced, discontinued, companyName, companyId);
 		dto.setId(Long.parseLong(id));
 		ComputerDtoValidator.validate(dto);
 		Computer computer = ComputerDtoMapper.toComputer(dto);
 
-		//then save computer into database
+		// then save computer into database
 		computerService.update(computer);
 
 		response.sendRedirect("/computer-database/dashboard");

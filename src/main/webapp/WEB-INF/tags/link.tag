@@ -7,6 +7,8 @@
 	description="search parameter"%>
 <%@ attribute name="orderBy" type="java.lang.String"
 	description="orderby parameter"%>
+	<%@ attribute name="order" type="java.lang.String"
+	description="order parameter"%>
 
 <c:url value="${uri}" var="generatedUrl">
 	<c:if test="${not empty search}">
@@ -14,6 +16,9 @@
 	</c:if>
 	<c:if test="${not empty orderBy}">
 		<c:param name="orderBy" value="${orderBy}" />
+	</c:if>
+	<c:if test="${not empty order}">
+		<c:param name="order" value="${order}" />
 	</c:if>
 	<c:param name="pageIndex" value="${page}" />
 	<c:param name="nbElementPerPage" value="${number}" />

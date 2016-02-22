@@ -22,10 +22,10 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
  */
 @WebServlet("/dashboard")
 public class DashboardController extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
 	private ComputerService computerService;
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -45,25 +45,30 @@ public class DashboardController extends HttpServlet {
 		// create a default page
 		QueryParams queryParams = new QueryParams(1, 10);
 		queryParams.setOffset(0);
-		queryParams.setOrderBy(OrderBy.NAME);	
-		
+		queryParams.setOrderBy(OrderBy.NAME);
+		queryParams.setOrder("ASC");
+
 		// get attributes
 		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
 		String strPageIndex = request.getParameter("pageIndex");
 		String search = request.getParameter("search");
 		String orderBy = request.getParameter("orderBy");
+		String order = request.getParameter("order");
 
-		//set search parameter if present
-		if(search != null && !search.isEmpty()){
+		// set search parameter if present
+		if (search != null && !search.isEmpty()) {
 			queryParams.setSearch(search);
 		}
-		if(orderBy != null && !orderBy.isEmpty()){
+		if (orderBy != null && !orderBy.isEmpty()) {
 			queryParams.setOrderBy(orderBy);
 		}
+		if (order != null && !order.isEmpty()) {
+			queryParams.setOrder(order);
+		}
 
-		//retrieve nb of computers
+		// retrieve nb of computers
 		int nbTotalComputers = computerService.count(queryParams);
-		
+
 		// get computers depending on parameters if present, get default page
 		// otherwise
 		if (StrNbElementPerPage != null && strPageIndex != null) {

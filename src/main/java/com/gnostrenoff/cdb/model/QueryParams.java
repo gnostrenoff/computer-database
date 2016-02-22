@@ -1,7 +1,5 @@
 package com.gnostrenoff.cdb.model;
 
-import com.gnostrenoff.cdb.dao.utils.OrderBy;
-
 public class QueryParams {
 	
 	/**
@@ -34,6 +32,11 @@ public class QueryParams {
 	 */
 	private String orderBy;
 	
+	/**
+	 * order parameter
+	 */
+	private String order;
+
 	public QueryParams() {
 	}
 	
@@ -98,5 +101,13 @@ public class QueryParams {
 
 	public void setOrderBy(String name) {
 		this.orderBy = name;
-	} 
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
 }

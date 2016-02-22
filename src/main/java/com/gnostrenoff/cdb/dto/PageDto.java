@@ -19,32 +19,37 @@ public class PageDto {
 	 * number of elements in this page
 	 */
 	private int nbElements;
-	
+
 	/**
 	 * number total of page
 	 */
 	private int nbTotalPages;
-	
+
 	/**
 	 * search parameter
 	 */
 	private String search;
-	
+
 	/**
-	 * order by parameter
+	 * orderby parameter
 	 */
 	private String orderBy;
+	
+	/**
+	 * order parameter
+	 */
+	private String order;
 
 	/**
 	 * start page
 	 */
 	private int pageStart;
-	
+
 	/**
 	 * end page
 	 */
 	private int pageEnd;
-	
+
 	/**
 	 * list of computers present in this page
 	 */
@@ -121,5 +126,13 @@ public class PageDto {
 
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 }
