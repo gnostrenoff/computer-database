@@ -250,6 +250,7 @@ public class ComputerDaoImpl implements ComputerDao {
       while (rs.next()) {
         computerList.add(ComputerDaoMapper.map(rs));
       }
+      
     } catch (SQLException e) {
       LOGGER.error("failed to get computer list");
       throw new DaoException("failed to get computer list");
@@ -292,7 +293,6 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     try {
-      conn.setAutoCommit(true);
       ps = conn.prepareStatement(query);
 
       if (search != null && !search.isEmpty()) {

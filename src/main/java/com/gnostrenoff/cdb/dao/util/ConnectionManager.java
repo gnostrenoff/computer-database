@@ -74,9 +74,9 @@ public class ConnectionManager {
       config.setJdbcUrl(url);
       config.setUsername(username);
       config.setPassword(password);
-      config.setMinConnectionsPerPartition(5);
-      config.setMaxConnectionsPerPartition(10);
-      config.setPartitionCount(2);
+      config.setMinConnectionsPerPartition(1);
+      config.setMaxConnectionsPerPartition(5);
+      config.setPartitionCount(1);
       connectionPool = new BoneCP(config);
 
     } catch (ClassNotFoundException e1) {

@@ -94,9 +94,7 @@ public class ComputerDtoMapper {
 
     List<Computer> computerList = new ArrayList<>();
 
-    for (ComputerDto dto : dtoList) {
-      computerList.add(toComputer(dto));
-    }
+    dtoList.forEach(dto -> computerList.add(toComputer(dto)));
 
     return computerList;
   }
@@ -112,9 +110,7 @@ public class ComputerDtoMapper {
 
     List<ComputerDto> dtoList = new ArrayList<>();
 
-    for (Computer computer : computerList) {
-      dtoList.add(toDto(computer));
-    }
+    computerList.forEach(computer -> dtoList.add(toDto(computer)));
 
     return dtoList;
   }

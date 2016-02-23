@@ -76,6 +76,7 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to get company list");
     } finally {
       ObjectCloser.close(ps, rs);
+      tm.closeConnection();
     }
 
     return companyList;
@@ -94,7 +95,6 @@ public class CompanyDaoImpl implements CompanyDao {
     ResultSet rs = null;
 
     try {
-      conn.setAutoCommit(true);
       ps = conn.prepareStatement(query);
       ps.setLong(1, companyId);
       rs = ps.executeQuery();
@@ -109,6 +109,7 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to get company");
     } finally {
       ObjectCloser.close(ps, rs);
+      tm.closeConnection();
     }
 
     return company;
@@ -133,6 +134,7 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to delete company");
     } finally {
       ObjectCloser.close(ps);
+      tm.closeConnection();
     }
   }
 
