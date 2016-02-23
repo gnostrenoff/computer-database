@@ -1,16 +1,16 @@
 package com.gnostrenoff.cdb.cli;
 
-import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
-import com.gnostrenoff.cdb.dao.utils.Order;
-import com.gnostrenoff.cdb.dao.utils.OrderBy;
+import com.gnostrenoff.cdb.dao.util.ConnectionManager;
+import com.gnostrenoff.cdb.dao.util.Order;
+import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
-import com.gnostrenoff.cdb.services.CompanyService;
-import com.gnostrenoff.cdb.services.ComputerService;
-import com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException;
-import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
-import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.service.CompanyService;
+import com.gnostrenoff.cdb.service.ComputerService;
+import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
+import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

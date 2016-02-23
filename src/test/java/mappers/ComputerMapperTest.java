@@ -3,7 +3,7 @@ package mappers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
+import com.gnostrenoff.cdb.dao.mapper.ComputerDaoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 
 import org.junit.After;

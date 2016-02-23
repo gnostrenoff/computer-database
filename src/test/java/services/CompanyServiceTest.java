@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.services.CompanyService;
-import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
+import com.gnostrenoff.cdb.service.CompanyService;
+import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -28,19 +28,19 @@
 						name="addcomputer-form">
 						<fieldset>
 							<div class="form-group">
-								<label for="computerName">Name *</label> <input
-									type="text" class="form-control" id="computerName"
+								<label for="computerName">Name *</label> <input type="text"
+									class="form-control" id="computerName"
 									placeholder="Computer name" name="name">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									placeholder="YYYY/MM/DD" name="introduced">
+									placeholder="YYYY-MM-DD" name="introduced">
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									placeholder="YYYY/MM/DD" name="discontinued">
+									placeholder="YYYY-MM-DD" name="discontinued">
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
@@ -55,8 +55,7 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Add" class="btn btn-primary">
-							or
-							<a href="dashboard" class="btn btn-default">Cancel</a>
+							or <a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
 					</form>
 				</div>

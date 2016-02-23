@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.dao;
+package com.gnostrenoff.cdb.service;
 
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -7,11 +7,11 @@ import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
- * interface for computer entity DAO.
+ * service for computers.
  *
  * @author excilys
  */
-public interface ComputerDao {
+public interface ComputerService {
 
   /**
    * save the given computer in database.
@@ -32,7 +32,7 @@ public interface ComputerDao {
    * load the complete list of existing computers in database.
    *
    * @param params          TODO
-   * @return list of computers
+   * @return TODO
    */
   public List<Computer> getList(QueryParams params);
 

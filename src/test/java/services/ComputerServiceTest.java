@@ -7,9 +7,9 @@ import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
-import com.gnostrenoff.cdb.services.ComputerService;
-import com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException;
-import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.service.ComputerService;
+import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

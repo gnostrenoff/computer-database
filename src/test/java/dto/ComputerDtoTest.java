@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
-import com.gnostrenoff.cdb.dto.mappers.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 

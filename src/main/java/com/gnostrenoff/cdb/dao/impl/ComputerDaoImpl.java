@@ -1,14 +1,14 @@
 package com.gnostrenoff.cdb.dao.impl;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.exceptions.DaoException;
-import com.gnostrenoff.cdb.dao.mappers.ComputerDaoMapper;
-import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
-import com.gnostrenoff.cdb.dao.utils.StatementCreator;
+import com.gnostrenoff.cdb.dao.exception.DaoException;
+import com.gnostrenoff.cdb.dao.mapper.ComputerDaoMapper;
+import com.gnostrenoff.cdb.dao.util.ObjectCloser;
+import com.gnostrenoff.cdb.dao.util.StatementCreator;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
-import com.gnostrenoff.cdb.services.utils.TransactionManager;
+import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -259,29 +259,30 @@ public class ComputerDaoImpl implements ComputerDao {
     return computerList;
   }
 
+  /**
+   * Count.
+   *
+   * @param search the search
+   * @return the int
+   * @throws DaoException the dao exception
+   */
   /*
    * (non-Javadoc)
    * 
    * @see com.gnostrenoff.cdb.dao.ComputerDao#count(com.gnostrenoff.cdb.model.QueryParams)
    */
   @Override
-  public int count(QueryParams params) throws DaoException {
+  public int count(String search) throws DaoException {
 
     TransactionManager tm = TransactionManager.getInstance();
     Connection conn = tm.getConnection();
     String query = null;
-    String search = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     int rowCount = 0;
 
-    if (params != null) {
-      search = params.getSearch();
-      if (search != null && !search.isEmpty()) {
-        query = SQL_GET_ROWCOUNT_SEARCH;
-      } else {
-        query = SQL_GET_ROWCOUNT;
-      }
+    if (search != null && !search.isEmpty()) {
+      query = SQL_GET_ROWCOUNT_SEARCH;
     } else {
       query = SQL_GET_ROWCOUNT;
     }

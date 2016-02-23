@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
-import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
+import com.gnostrenoff.cdb.dao.util.ConnectionManager;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 

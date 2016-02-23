@@ -1,11 +1,11 @@
 package com.gnostrenoff.cdb.dao.impl;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.exceptions.DaoException;
-import com.gnostrenoff.cdb.dao.mappers.CompanyDaoMapper;
-import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
+import com.gnostrenoff.cdb.dao.exception.DaoException;
+import com.gnostrenoff.cdb.dao.mapper.CompanyDaoMapper;
+import com.gnostrenoff.cdb.dao.util.ObjectCloser;
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.services.utils.TransactionManager;
+import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

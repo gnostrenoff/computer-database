@@ -6,19 +6,19 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 	<display-name>Archetype Created Web Application</display-name>
 	<error-page>
-		<exception-type>com.gnostrenoff.cdb.dao.exceptions.DaoException</exception-type>
+		<exception-type>com.gnostrenoff.cdb.dao.exception.DaoException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
 	<error-page>
-		<exception-type>com.gnostrenoff.cdb.servlets.exceptions.InvalidComputerException</exception-type>
+		<exception-type>com.gnostrenoff.cdb.servlet.exception.InvalidComputerException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
 	<error-page>
-		<exception-type>com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException</exception-type>
+		<exception-type>com.gnostrenoff.cdb.service.exception.ComputerValidatorException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
 	<error-page>
-		<exception-type>com.gnostrenoff.cdb.controllers.exceptions.InvalidComputerException</exception-type>
+		<exception-type>com.gnostrenoff.cdb.controller.exception.InvalidComputerException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
 </web-app>
