@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.dao;
 
-import java.sql.Connection;
 import java.util.List;
 
 import com.gnostrenoff.cdb.model.Computer;
@@ -38,7 +37,7 @@ public interface ComputerDao {
 	 * @param conn TODO
 	 * @return list of computers
 	 */
-	public List<Computer> getList(QueryParams params, Connection conn);
+	public List<Computer> getList(QueryParams params);
 
 	/**
 	 * updates the given computer in database
@@ -55,7 +54,7 @@ public interface ComputerDao {
 	 *            id of the computer to delete
 	 * @param conn TODO
 	 */
-	public void delete(long computerId, Connection conn);
+	public void delete(long computerId);
 
 	/**
 	 * get row count of computer table

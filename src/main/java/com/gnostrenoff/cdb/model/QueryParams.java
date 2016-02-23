@@ -49,10 +49,11 @@ public class QueryParams {
 		this.nbElements = nbElements;
 	}
 	
-	public QueryParams(int index, int nbElements, String search) {
-		this.index = index;
+	public QueryParams(int nbElements, int offset, String orderBy, String order) {
 		this.nbElements = nbElements;
-		this.search = search;
+		this.offset = offset;
+		this.orderBy = orderBy;
+		this.order = order;
 	}
 
 	public int getIndex() {

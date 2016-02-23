@@ -20,10 +20,10 @@ import com.jolbox.bonecp.BoneCPConfig;
  * 
  * @author excilys
  */
-public class JDBCConnection {
+public class ConnectionManager {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCConnection.class);
-	private static JDBCConnection jdbcConn = new JDBCConnection();
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
+	private static ConnectionManager jdbcConn = new ConnectionManager();
 	BoneCP connectionPool = null;
 	private static String driver;
 	private static String url;
@@ -34,7 +34,7 @@ public class JDBCConnection {
 	 * constructor makes sure there is only one instance at a time, and prepares
 	 * properties for connections.
 	 */
-	private JDBCConnection() {
+	private ConnectionManager() {
 		try {
 			// load properties file
 			LOGGER.info("loading properties file ...");
@@ -80,7 +80,7 @@ public class JDBCConnection {
 	 * 
 	 * @return an instance of this class
 	 */
-	public static JDBCConnection getInstance() {
+	public static ConnectionManager getInstance() {
 		return jdbcConn;
 	}
 

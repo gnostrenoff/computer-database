@@ -6,7 +6,9 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
+import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
+import com.gnostrenoff.cdb.dao.utils.Order;
+import com.gnostrenoff.cdb.dao.utils.OrderBy;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -18,7 +20,7 @@ import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
 
 public class Listener {
 
-	public static final JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+	public static final ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 	public static final ComputerService computerService = ComputerServiceImpl.getInstance();
 	public static final CompanyService companyService = CompanyServiceImpl.getInstance();
 
@@ -93,13 +95,25 @@ public class Listener {
 	}
 
 	private void listComputers() {
-		QueryParams queryParams = new QueryParams(1, 10);
-		queryParams.setOffset(0);
-		List<Computer> list = computerService.getList(queryParams);
-		for (int i = 0; i < list.size(); i++) {
-			Computer comp = list.get(i);
-			System.out.println(comp.toString());
-		}
+		int initialNbComputers = computerService.count(null);
+		int nbComputers = initialNbComputers;
+		do {	
+			System.out.println(nbComputers);
+			QueryParams queryParams = new QueryParams(nbComputers < 10 ? nbComputers : 10, initialNbComputers - nbComputers, OrderBy.NAME, Order.ASC);;
+			List<Computer> list = computerService.getList(queryParams);
+			for (int i = 0; i < list.size(); i++) {
+				Computer comp = list.get(i);
+				System.out.println(comp.toString());
+			}
+			
+			if(nbComputers < 10){
+				System.out.println("\n	No more computer \n");
+				break;
+			}
+			
+			nbComputers -= 10;
+			System.out.println("continue (1) ?");
+		} while (scanIn.nextInt() == 1);
 	}
 
 	private void create() {
@@ -165,12 +179,13 @@ public class Listener {
 		computerService.delete(id);
 		System.out.println("computer " + id + " has been succesfully deleted from database");
 	}
-	
+
 	private void deleteByCompanyId() {
 		System.out.println("please enter a id :");
 		long id = scanIn.nextLong();
 		companyService.delete(id);
-		System.out.println("company " + id + ", and all the related computers have been succesfully deleted from database");
+		System.out.println(
+				"company " + id + ", and all the related computers have been succesfully deleted from database");
 	}
 
 	private LocalDate waitForValidDate(Computer computer) {

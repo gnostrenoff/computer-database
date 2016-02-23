@@ -28,12 +28,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
-import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
+import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(JDBCConnection.class)
+@PrepareForTest(ConnectionManager.class)
 @Ignore
 public class ComputerDaoTest {
 
@@ -44,7 +44,7 @@ public class ComputerDaoTest {
 	@BeforeClass
 	public static void init() {
 
-		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 		try {
 			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(),
 					"src/test/java/db-test/SCHEMA_TEST.sql", Charset.forName("UTF8"), false);
@@ -72,7 +72,7 @@ public class ComputerDaoTest {
 	}
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
-		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(),
 				jdbcConnection.getUsername(), jdbcConnection.getPassword());
 		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
@@ -83,7 +83,7 @@ public class ComputerDaoTest {
 	@Test
 	public void getAllComputers() {
 
-		List<Computer> list = computerDao.getList(null, null);
+		List<Computer> list = computerDao.getList(null);
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
 		Computer computer0 = new Computer(3, "macbook", LocalDate.of(2015, 03, 12), LocalDate.of(2015, 8, 12),
@@ -108,7 +108,7 @@ public class ComputerDaoTest {
 	@Test
 	public void deleteComputer() {
 
-		computerDao.delete(4, null);
+		computerDao.delete(4);
 
 		try {
 			IDataSet dataSet = databaseTester.getConnection().createDataSet();

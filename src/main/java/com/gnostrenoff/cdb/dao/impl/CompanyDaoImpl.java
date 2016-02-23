@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.exceptions.DaoException;
 import com.gnostrenoff.cdb.dao.mappers.CompanyDaoMapper;
-import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
 import com.gnostrenoff.cdb.dao.utils.ObjectCloser;
 import com.gnostrenoff.cdb.model.Company;
+import com.gnostrenoff.cdb.services.utils.TransactionManager;
 
 /**
  * implementation of CompanyDao interface
@@ -29,10 +29,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	private static final String SQL_DELETE = "delete from company where id=?";
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
 	private static CompanyDaoImpl companyDaoImp = new CompanyDaoImpl();
-	private JDBCConnection jdbcConnection;
 
 	private CompanyDaoImpl() {
-		this.jdbcConnection = JDBCConnection.getInstance();
 	}
 
 	public static CompanyDaoImpl getInstance() {
@@ -44,7 +42,8 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		List<Company> companyList = new ArrayList<>();
 		String query = "select * from company";
-		Connection conn = jdbcConnection.getConnection();
+		TransactionManager tm = TransactionManager.getInstance();
+		Connection conn = tm.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -58,7 +57,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			LOGGER.error("failed to get company list");
 			throw new DaoException("failed to get company list");
 		} finally {
-			ObjectCloser.close(conn, ps, rs);
+			ObjectCloser.close(ps, rs);
 		}
 
 		return companyList;
@@ -67,7 +66,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Company get(long companyId) throws DaoException {
 		String query = SQL_GET_ONE;
-		Connection conn = jdbcConnection.getConnection();
+		TransactionManager tm = TransactionManager.getInstance();
+		Connection conn = tm.getConnection();
 		PreparedStatement ps = null;
 		Company company = null;
 		ResultSet rs = null;
@@ -87,22 +87,17 @@ public class CompanyDaoImpl implements CompanyDao {
 			LOGGER.error("failed to get company");
 			throw new DaoException("failed to get company");
 		} finally {
-			ObjectCloser.close(conn, ps, rs);
+			ObjectCloser.close(ps, rs);
 		}
 
 		return company;
 	}
 
 	@Override
-	public void delete(long id, Connection conn) {
+	public void delete(long id) {
 		String query = SQL_DELETE;
-		boolean ownConnection = false;
-		
-		if(conn == null){
-			conn = jdbcConnection.getConnection();
-			ownConnection = true;
-		}
-		
+		TransactionManager tm = TransactionManager.getInstance();
+		Connection conn = tm.getConnection();
 		PreparedStatement ps = null;
 
 		try {
@@ -113,7 +108,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			LOGGER.error("failed to delete company");
 			throw new DaoException("failed to delete company");
 		} finally {
-			ObjectCloser.close(ownConnection ? conn : null, ps);
+			ObjectCloser.close(ps);
 		}
 	}
 

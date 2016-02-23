@@ -25,11 +25,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
-import com.gnostrenoff.cdb.dao.utils.JDBCConnection;
+import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
 import com.gnostrenoff.cdb.model.Company;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(JDBCConnection.class)
+@PrepareForTest(ConnectionManager.class)
 @Ignore
 public class CompanyDaoTest {
 
@@ -40,7 +40,7 @@ public class CompanyDaoTest {
 	@BeforeClass
 	public static void init() {
 
-		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 		try {
 			RunScript.execute(jdbcConnection.getUrl(), jdbcConnection.getUsername(), jdbcConnection.getPassword(),
 					"src/test/java/db-test/SCHEMA_TEST.sql", Charset.forName("UTF8"), false);
@@ -68,7 +68,7 @@ public class CompanyDaoTest {
 	}
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
-		JDBCConnection jdbcConnection = JDBCConnection.getInstance();
+		ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 		databaseTester = new JdbcDatabaseTester(jdbcConnection.getDriver(), jdbcConnection.getUrl(),
 				jdbcConnection.getUsername(), jdbcConnection.getPassword());
 		databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);

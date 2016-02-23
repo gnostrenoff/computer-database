@@ -25,8 +25,11 @@ public class StatementCreator {
 
 	/**
 	 * method creates prepared statement, depending on given parameters
-	 * @param params parameters
-	 * @param conn connection to use
+	 * 
+	 * @param params
+	 *            parameters
+	 * @param conn
+	 *            connection to use
 	 * @return built prepared statement
 	 */
 	public static PreparedStatement create(QueryParams params, Connection conn) {
@@ -48,14 +51,16 @@ public class StatementCreator {
 		}
 
 		if (orderBy != null && !orderBy.isEmpty() && order != null && !order.isEmpty()) {
-			if(orderBy.equals(OrderBy.NAME) || orderBy.equals(OrderBy.COMPANY) || orderBy.equals(OrderBy.INTRODUCED) || orderBy.equals(OrderBy.DISCONTINUED)){
+			if (orderBy.equals(OrderBy.NAME) || orderBy.equals(OrderBy.COMPANY) || orderBy.equals(OrderBy.INTRODUCED)
+					|| orderBy.equals(OrderBy.DISCONTINUED)) {
 				query = String.format(query, orderBy, order);
-			}
-			else{
+			} else {
 				LOGGER.error("Order by parameter not valid");
 				throw new DaoException("Order by parameter not valid");
 			}
-			
+
+		} else {
+			query = String.format(query, OrderBy.NAME, Order.ASC);
 		}
 
 		try {
