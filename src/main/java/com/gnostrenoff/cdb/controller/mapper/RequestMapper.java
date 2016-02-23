@@ -24,6 +24,7 @@ public class RequestMapper {
 
     // create params object with default values
     QueryParams params = new QueryParams(10, 0, OrderBy.NAME, Order.ASC);
+    params.setIndex(1);
 
     // get attributes
     String StrNbElementPerPage = request.getParameter("nbElementPerPage");

@@ -16,14 +16,16 @@ public interface ComputerDao {
   /**
    * save the given computer in database.
    *
-   * @param computer          to save
+   * @param computer
+   *          to save
    */
   public void create(Computer computer);
 
   /**
    * retrieves a computer by id form database.
    *
-   * @param computerId          id of computer to retrieve
+   * @param computerId
+   *          id of computer to retrieve
    * @return computer computer retrieved
    */
   public Computer get(long computerId);
@@ -31,7 +33,8 @@ public interface ComputerDao {
   /**
    * load the complete list of existing computers in database.
    *
-   * @param params          TODO
+   * @param params
+   *          TODO
    * @return list of computers
    */
   public List<Computer> getList(QueryParams params);
@@ -39,21 +42,32 @@ public interface ComputerDao {
   /**
    * updates the given computer in database.
    *
-   * @param computer          computer to update
+   * @param computer
+   *          computer to update
    */
   public void update(Computer computer);
 
   /**
    * deletes the computer with the given id.
    *
-   * @param computerId          id of the computer to delete
+   * @param computerId
+   *          id of the computer to delete
    */
   public void delete(long computerId);
 
   /**
+   * deletes all the computers related to the given company id.
+   *
+   * @param computerId
+   *          id of the computer to delete
+   */
+  public void deleteByCompanyId(long companyId);
+
+  /**
    * get row count of computer table.
    *
-   * @param params the params
+   * @param params
+   *          the params
    * @return row count
    */
   public int count(String search);

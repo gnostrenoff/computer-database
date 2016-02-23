@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class QueryParams.
  */
@@ -59,7 +58,7 @@ public class QueryParams {
    * Instantiates a new query params.
    *
    * @param index
-   *          the index
+   *          the index.html
    * @param nbElements
    *          the nb elements
    */
@@ -141,5 +140,12 @@ public class QueryParams {
 
   public void setOrder(String order) {
     this.order = order;
+  }
+
+  @Override
+  public String toString() {
+    return "QueryParams [index=" + index + ", nbElements=" + nbElements + ", offset=" + offset
+        + ", companyId=" + companyId + ", search=" + search + ", orderBy=" + orderBy + ", order="
+        + order + "]";
   }
 }

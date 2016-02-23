@@ -55,6 +55,8 @@ public class DashboardController extends HttpServlet {
 
     // create a QueryParams from the request
     QueryParams params = RequestMapper.toParams(request);
+    
+    System.out.println(params);
 
     // get computers list
     List<Computer> list = computerService.getList(params);

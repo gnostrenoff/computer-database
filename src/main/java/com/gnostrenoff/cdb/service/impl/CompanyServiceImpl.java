@@ -74,13 +74,9 @@ public class CompanyServiceImpl implements CompanyService {
     tm.startTransaction();
 
     // first delete the related computers
+    LOGGER.info("deleting the related computers");
     ComputerDao computerDao = ComputerDaoImpl.getInstance();
-    QueryParams params = new QueryParams(id);
-    List<Computer> list = computerDao.getList(params);
-    for (Computer computer : list) {
-      LOGGER.info("deleting related computer " + computer.getName() + "(" + computer.getId() + ")");
-      computerDao.delete(computer.getId());
-    }
+    computerDao.deleteByCompanyId(id);
 
     // then delete company
     LOGGER.info("deleting company " + id);

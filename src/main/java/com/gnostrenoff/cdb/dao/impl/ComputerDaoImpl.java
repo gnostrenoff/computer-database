@@ -24,7 +24,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ComputerDaoImpl.
  */
@@ -38,6 +37,9 @@ public class ComputerDaoImpl implements ComputerDao {
 
   /** The Constant SQL_DELETE. */
   private static final String SQL_DELETE = "delete from computer where id=?";
+
+  /** The Constant SQL_DELETE_BY_ID. */
+  private static final String SQL_DELETE_BY_ID = "delete from computer where company_id=?";
 
   /** The Constant SQL_UPDATE. */
   private static final String SQL_UPDATE = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE id=?";
@@ -75,7 +77,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#create(com.gnostrenoff.cdb.model.Computer)
    */
   @Override
-  public void create(Computer computer) throws DaoException {
+  public void create(Computer computer) {
 
     String query = SQL_CREATE;
     TransactionManager tm = TransactionManager.getInstance();
@@ -127,7 +129,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#get(long)
    */
   @Override
-  public Computer get(long computerId) throws DaoException {
+  public Computer get(long computerId) {
 
     String query = SQL_GET_ONE;
     TransactionManager tm = TransactionManager.getInstance();
@@ -159,7 +161,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#update(com.gnostrenoff.cdb.model.Computer)
    */
   @Override
-  public void update(Computer computer) throws DaoException {
+  public void update(Computer computer) {
 
     String query = SQL_UPDATE;
     TransactionManager tm = TransactionManager.getInstance();
@@ -208,7 +210,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#delete(long)
    */
   @Override
-  public void delete(long computerId) throws DaoException {
+  public void delete(long computerId) {
 
     String query = SQL_DELETE;
     TransactionManager tm = TransactionManager.getInstance();
@@ -235,7 +237,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#getList(com.gnostrenoff.cdb.model.QueryParams)
    */
   @Override
-  public List<Computer> getList(QueryParams params) throws DaoException {
+  public List<Computer> getList(QueryParams params) {
 
     List<Computer> computerList = new ArrayList<>();
     ResultSet rs = null;
@@ -262,9 +264,11 @@ public class ComputerDaoImpl implements ComputerDao {
   /**
    * Count.
    *
-   * @param search the search
+   * @param search
+   *          the search
    * @return the int
-   * @throws DaoException the dao exception
+   * @throws DaoException
+   *           the dao exception
    */
   /*
    * (non-Javadoc)
@@ -272,7 +276,7 @@ public class ComputerDaoImpl implements ComputerDao {
    * @see com.gnostrenoff.cdb.dao.ComputerDao#count(com.gnostrenoff.cdb.model.QueryParams)
    */
   @Override
-  public int count(String search) throws DaoException {
+  public int count(String search) {
 
     TransactionManager tm = TransactionManager.getInstance();
     Connection conn = tm.getConnection();
@@ -309,6 +313,28 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     return rowCount;
+  }
+
+  @Override
+  public void deleteByCompanyId(long companyId) {
+
+    String query = SQL_DELETE_BY_ID;
+    TransactionManager tm = TransactionManager.getInstance();
+    Connection conn = tm.getConnection();
+    PreparedStatement ps = null;
+
+    try {
+      ps = conn.prepareStatement(query);
+      ps.setLong(1, companyId);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      LOGGER.error("failed to delete computer");
+      throw new DaoException("failed to delete computer");
+    } finally {
+      ObjectCloser.close(ps);
+      tm.closeConnection();
+    }
+
   }
 
 }
