@@ -1,17 +1,23 @@
 package com.gnostrenoff.cdb.dao.exceptions;
 
+// TODO: Auto-generated Javadoc
 /**
- * Exception thrown when properties files is not found while configuring
- * connection
- * 
+ * Exception thrown when properties files is not found while configuring connection.
+ *
  * @author excilys
  */
 public class PropertiesFileNotFoundException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+  /** The Constant serialVersionUID. */
+  private static final long serialVersionUID = 1L;
 
-	public PropertiesFileNotFoundException(String message) {
-		super(message);
-	}
+  /**
+   * Instantiates a new properties file not found exception.
+   *
+   * @param message the message
+   */
+  public PropertiesFileNotFoundException(String message) {
+    super(message);
+  }
 
 }

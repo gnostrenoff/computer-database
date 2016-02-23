@@ -2,137 +2,218 @@ package com.gnostrenoff.cdb.dto;
 
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
- * class model for Page
- * 
- * @author excilys
+ * class model for Page.
  *
+ * @author excilys
  */
 public class PageDto {
 
-	/**
-	 * index of page
-	 */
-	private int index;
+  /** index of page. */
+  private int index;
 
-	/**
-	 * number of elements in this page
-	 */
-	private int nbElements;
+  /** number of elements in this page. */
+  private int nbElements;
 
-	/**
-	 * number total of page
-	 */
-	private int nbTotalPages;
+  /** number total of page. */
+  private int nbTotalPages;
 
-	/**
-	 * search parameter
-	 */
-	private String search;
+  /** search parameter. */
+  private String search;
 
-	/**
-	 * orderby parameter
-	 */
-	private String orderBy;
-	
-	/**
-	 * order parameter
-	 */
-	private String order;
+  /** orderby parameter. */
+  private String orderBy;
 
-	/**
-	 * start page
-	 */
-	private int pageStart;
+  /** order parameter. */
+  private String order;
 
-	/**
-	 * end page
-	 */
-	private int pageEnd;
+  /** start page. */
+  private int pageStart;
 
-	/**
-	 * list of computers present in this page
-	 */
-	private List<ComputerDto> computerList;
+  /** end page. */
+  private int pageEnd;
 
-	public PageDto() {
-	}
+  /** list of computers present in this page. */
+  private List<ComputerDto> computerList;
 
-	public PageDto(int index, int nbElements) {
-		super();
-		this.index = index;
-		this.nbElements = nbElements;
-	}
+  /**
+   * Instantiates a new page dto.
+   */
+  public PageDto() {
+  }
 
-	public int getIndex() {
-		return index;
-	}
+  /**
+   * Instantiates a new page dto.
+   *
+   * @param index the index
+   * @param nbElements the nb elements
+   */
+  public PageDto(int index, int nbElements) {
+    super();
+    this.index = index;
+    this.nbElements = nbElements;
+  }
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
+  /**
+   * Gets the index.
+   *
+   * @return the index
+   */
+  public int getIndex() {
+    return index;
+  }
 
-	public int getNbElements() {
-		return nbElements;
-	}
+  /**
+   * Sets the index.
+   *
+   * @param index the new index
+   */
+  public void setIndex(int index) {
+    this.index = index;
+  }
 
-	public void setNbElements(int nbElements) {
-		this.nbElements = nbElements;
-	}
+  /**
+   * Gets the nb elements.
+   *
+   * @return the nb elements
+   */
+  public int getNbElements() {
+    return nbElements;
+  }
 
-	public List<ComputerDto> getComputerList() {
-		return computerList;
-	}
+  /**
+   * Sets the nb elements.
+   *
+   * @param nbElements the new nb elements
+   */
+  public void setNbElements(int nbElements) {
+    this.nbElements = nbElements;
+  }
 
-	public void setComputerList(List<ComputerDto> comuterList) {
-		this.computerList = comuterList;
-	}
+  /**
+   * Gets the computer list.
+   *
+   * @return the computer list
+   */
+  public List<ComputerDto> getComputerList() {
+    return computerList;
+  }
 
-	public int getNbTotalPages() {
-		return nbTotalPages;
-	}
+  /**
+   * Sets the computer list.
+   *
+   * @param comuterList the new computer list
+   */
+  public void setComputerList(List<ComputerDto> comuterList) {
+    this.computerList = comuterList;
+  }
 
-	public void setNbTotalPages(int nbTotalPages) {
-		this.nbTotalPages = nbTotalPages;
-	}
+  /**
+   * Gets the nb total pages.
+   *
+   * @return the nb total pages
+   */
+  public int getNbTotalPages() {
+    return nbTotalPages;
+  }
 
-	public int getPageStart() {
-		return pageStart;
-	}
+  /**
+   * Sets the nb total pages.
+   *
+   * @param nbTotalPages the new nb total pages
+   */
+  public void setNbTotalPages(int nbTotalPages) {
+    this.nbTotalPages = nbTotalPages;
+  }
 
-	public void setPageStart(int pageStart) {
-		this.pageStart = pageStart;
-	}
+  /**
+   * Gets the page start.
+   *
+   * @return the page start
+   */
+  public int getPageStart() {
+    return pageStart;
+  }
 
-	public int getPageEnd() {
-		return pageEnd;
-	}
+  /**
+   * Sets the page start.
+   *
+   * @param pageStart the new page start
+   */
+  public void setPageStart(int pageStart) {
+    this.pageStart = pageStart;
+  }
 
-	public void setPageEnd(int pageEnd) {
-		this.pageEnd = pageEnd;
-	}
+  /**
+   * Gets the page end.
+   *
+   * @return the page end
+   */
+  public int getPageEnd() {
+    return pageEnd;
+  }
 
-	public String getSearch() {
-		return search;
-	}
+  /**
+   * Sets the page end.
+   *
+   * @param pageEnd the new page end
+   */
+  public void setPageEnd(int pageEnd) {
+    this.pageEnd = pageEnd;
+  }
 
-	public void setSearch(String search) {
-		this.search = search;
-	}
+  /**
+   * Gets the search.
+   *
+   * @return the search
+   */
+  public String getSearch() {
+    return search;
+  }
 
-	public String getOrderBy() {
-		return orderBy;
-	}
+  /**
+   * Sets the search.
+   *
+   * @param search the new search
+   */
+  public void setSearch(String search) {
+    this.search = search;
+  }
 
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
+  /**
+   * Gets the order by.
+   *
+   * @return the order by
+   */
+  public String getOrderBy() {
+    return orderBy;
+  }
 
-	public String getOrder() {
-		return order;
-	}
+  /**
+   * Sets the order by.
+   *
+   * @param orderBy the new order by
+   */
+  public void setOrderBy(String orderBy) {
+    this.orderBy = orderBy;
+  }
 
-	public void setOrder(String order) {
-		this.order = order;
-	}
+  /**
+   * Gets the order.
+   *
+   * @return the order
+   */
+  public String getOrder() {
+    return order;
+  }
+
+  /**
+   * Sets the order.
+   *
+   * @param order the new order
+   */
+  public void setOrder(String order) {
+    this.order = order;
+  }
 }

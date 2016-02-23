@@ -1,10 +1,5 @@
 package com.gnostrenoff.cdb.services.impl;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
@@ -13,62 +8,112 @@ import com.gnostrenoff.cdb.services.ComputerService;
 import com.gnostrenoff.cdb.services.exceptions.ComputerValidatorException;
 import com.gnostrenoff.cdb.services.utils.ComputerValidator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+// TODO: Auto-generated Javadoc
 /**
- * implementation of a computer service
- * 
+ * implementation of a computer service.
+ *
  * @author excilys
  */
 public class ComputerServiceImpl implements ComputerService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
-	private static ComputerServiceImpl computerService = new ComputerServiceImpl();
-	private static ComputerDao computerDao;
+  /** The Constant LOGGER. */
+  private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
 
-	private ComputerServiceImpl() {
-		computerDao = ComputerDaoImpl.getInstance();
-	}
+  /** The computer service. */
+  private static ComputerServiceImpl computerService = new ComputerServiceImpl();
 
-	public static ComputerServiceImpl getInstance() {
-		return computerService;
-	}
+  /** The computer dao. */
+  private static ComputerDao computerDao;
 
-	@Override
-	public void create(Computer computer) {
+  /**
+   * Instantiates a new computer service impl.
+   */
+  private ComputerServiceImpl() {
+    computerDao = ComputerDaoImpl.getInstance();
+  }
 
-		ComputerValidator.validate(computer);
-		computerDao.create(computer);
+  /**
+   * Gets the single instance of ComputerServiceImpl.
+   *
+   * @return single instance of ComputerServiceImpl
+   */
+  public static ComputerServiceImpl getInstance() {
+    return computerService;
+  }
 
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.gnostrenoff.cdb.services.ComputerService#create(com.gnostrenoff.cdb.model.Computer)
+   */
+  @Override
+  public void create(Computer computer) {
 
-	@Override
-	public Computer get(long computerId) {
-		return computerDao.get(computerId);
-	}
+    ComputerValidator.validate(computer);
+    computerDao.create(computer);
 
-	@Override
-	public List<Computer> getList(QueryParams params) {
-		return computerDao.getList(params);
-	}
+  }
 
-	@Override
-	public void update(Computer computer) {
-		ComputerValidator.validate(computer);
-		computerDao.update(computer);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.gnostrenoff.cdb.services.ComputerService#get(long)
+   */
+  @Override
+  public Computer get(long computerId) {
+    return computerDao.get(computerId);
+  }
 
-	@Override
-	public void delete(long computerId) {
-		if (computerId != 0)
-			computerDao.delete(computerId);
-		else{
-			LOGGER.error("delete computer failed : invalid id");
-			throw new ComputerValidatorException("delete computer failed : invalid id");
-		}
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.gnostrenoff.cdb.services.ComputerService#getList(com.gnostrenoff.cdb.model.QueryParams)
+   */
+  @Override
+  public List<Computer> getList(QueryParams params) {
+    return computerDao.getList(params);
+  }
 
-	@Override
-	public int count(QueryParams params) {
-		return computerDao.count(params);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.gnostrenoff.cdb.services.ComputerService#update(com.gnostrenoff.cdb.model.Computer)
+   */
+  @Override
+  public void update(Computer computer) {
+    ComputerValidator.validate(computer);
+    computerDao.update(computer);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.gnostrenoff.cdb.services.ComputerService#delete(long)
+   */
+  @Override
+  public void delete(long computerId) {
+    if (computerId != 0) {
+      computerDao.delete(computerId);
+    } else {
+      LOGGER.error("delete computer failed : invalid id");
+      throw new ComputerValidatorException("delete computer failed : invalid id");
+    }
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.gnostrenoff.cdb.services.ComputerService#count(com.gnostrenoff.cdb.model.QueryParams)
+   */
+  @Override
+  public int count(QueryParams params) {
+    return computerDao.count(params);
+  }
 
 }

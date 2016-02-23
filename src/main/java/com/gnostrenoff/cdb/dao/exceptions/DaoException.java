@@ -1,16 +1,24 @@
 package com.gnostrenoff.cdb.dao.exceptions;
 
+// TODO: Auto-generated Javadoc
 /**
- * generic exception for dao special behevior
- * 
+ * generic exception for dao special behevior.
+ *
  * @author excilys
  */
 public class DaoException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+  /** The Constant serialVersionUID. */
+  private static final long serialVersionUID = 1L;
 
-	public DaoException(String message) {
-		super(message);
-	}
+  /**
+   * Instantiates a new dao exception.
+   *
+   * @param message
+   *          the message
+   */
+  public DaoException(String message) {
+    super(message);
+  }
 
 }

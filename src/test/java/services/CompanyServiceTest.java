@@ -2,8 +2,11 @@ package services;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.gnostrenoff.cdb.dao.CompanyDao;
+import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
+import com.gnostrenoff.cdb.model.Company;
+import com.gnostrenoff.cdb.services.CompanyService;
+import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,33 +18,43 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
-import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.services.CompanyService;
-import com.gnostrenoff.cdb.services.impl.CompanyServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CompanyServiceTest.
+ */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(CompanyDaoImpl.class)
 @PowerMockIgnore({ "javax.management.*" })
 public class CompanyServiceTest {
 
-	private static CompanyDao dao;
+  /** The dao. */
+  private static CompanyDao dao;
 
-	@BeforeClass
-	public static void init() {
-		dao = Mockito.mock(CompanyDaoImpl.class);
-		Mockito.when(dao.getList()).thenReturn(new ArrayList<Company>());
+  /**
+   * Inits the.
+   */
+  @BeforeClass
+  public static void init() {
+    dao = Mockito.mock(CompanyDaoImpl.class);
+    Mockito.when(dao.getList()).thenReturn(new ArrayList<Company>());
 
-		PowerMockito.mockStatic(CompanyDaoImpl.class);
-		BDDMockito.given(CompanyDaoImpl.getInstance()).willReturn((CompanyDaoImpl) dao);
+    PowerMockito.mockStatic(CompanyDaoImpl.class);
+    BDDMockito.given(CompanyDaoImpl.getInstance()).willReturn((CompanyDaoImpl) dao);
 
-	}
+  }
 
-	@Test
-	public void getAllComputers() {
-		CompanyService companyService = CompanyServiceImpl.getInstance();
-		assertTrue(companyService.getList() instanceof List<?>);
-	}
+  /**
+   * Gets the all computers.
+   *
+   * @return the all computers
+   */
+  @Test
+  public void getAllComputers() {
+    CompanyService companyService = CompanyServiceImpl.getInstance();
+    assertTrue(companyService.getList() instanceof List<?>);
+  }
 
 }

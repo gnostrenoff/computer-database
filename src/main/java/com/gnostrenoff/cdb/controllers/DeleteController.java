@@ -1,56 +1,72 @@
 package com.gnostrenoff.cdb.controllers;
 
+import com.gnostrenoff.cdb.services.ComputerService;
+import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gnostrenoff.cdb.services.ComputerService;
-import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
-
+// TODO: Auto-generated Javadoc
 /**
- * Servlet implementation class DeleteController
+ * Servlet implementation class DeleteController.
  */
 @WebServlet("/delete")
 public class DeleteController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  
+  /** The Constant serialVersionUID. */
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public DeleteController() {
-		super();
-	}
+  /**
+   * Instantiates a new delete controller.
+   *
+   * @see HttpServlet#HttpServlet()
+   */
+  public DeleteController() {
+    super();
+  }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	}
+  /**
+   * Do get.
+   *
+   * @param request the request
+   * @param response the response
+   * @throws ServletException the servlet exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+  }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+  /**
+   * Do post.
+   *
+   * @param request the request
+   * @param response the response
+   * @throws ServletException the servlet exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
-		ComputerService computerService = ComputerServiceImpl.getInstance();
-		String selection = request.getParameter("selection");
-		String[] idTable = selection.split(",");
+    ComputerService computerService = ComputerServiceImpl.getInstance();
+    String selection = request.getParameter("selection");
+    String[] idTable = selection.split(",");
 
-		if (idTable != null && idTable.length > 0) {
-			for (String id : idTable) {
-				computerService.delete(Long.parseLong(id));
-			}
-		}
+    if (idTable != null && idTable.length > 0) {
+      for (String id : idTable) {
+        computerService.delete(Long.parseLong(id));
+      }
+    }
 
-		response.sendRedirect("/computer-database/dashboard");
+    response.sendRedirect("/computer-database/dashboard");
 
-	}
+  }
 
 }

@@ -1,5 +1,13 @@
 package com.gnostrenoff.cdb.controllers;
 
+import com.gnostrenoff.cdb.controllers.utils.PageCreator;
+import com.gnostrenoff.cdb.dao.utils.OrderBy;
+import com.gnostrenoff.cdb.dto.PageDto;
+import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.model.QueryParams;
+import com.gnostrenoff.cdb.services.ComputerService;
+import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -9,94 +17,110 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gnostrenoff.cdb.controllers.utils.PageCreator;
-import com.gnostrenoff.cdb.dao.utils.OrderBy;
-import com.gnostrenoff.cdb.dto.PageDto;
-import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.QueryParams;
-import com.gnostrenoff.cdb.services.ComputerService;
-import com.gnostrenoff.cdb.services.impl.ComputerServiceImpl;
-
+// TODO: Auto-generated Javadoc
 /**
- * Servlet implementation class ComputerServlet
+ * Servlet implementation class ComputerServlet.
  */
 @WebServlet("/dashboard")
 public class DashboardController extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	private ComputerService computerService;
+  /** The Constant serialVersionUID. */
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default constructor.
-	 */
-	public DashboardController() {
-	}
+  /** The computer service. */
+  private ComputerService computerService;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+  /**
+   * Default constructor.
+   */
+  public DashboardController() {
+  }
 
-		computerService = ComputerServiceImpl.getInstance();
-		List<Computer> list = null;
+  /**
+   * Do get.
+   *
+   * @param request
+   *          the request
+   * @param response
+   *          the response
+   * @throws ServletException
+   *           the servlet exception
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
-		// create a default page
-		QueryParams queryParams = new QueryParams(1, 10);
-		queryParams.setOffset(0);
-		queryParams.setOrderBy(OrderBy.NAME);
-		queryParams.setOrder("ASC");
+    computerService = ComputerServiceImpl.getInstance();
+    List<Computer> list = null;
 
-		// get attributes
-		String StrNbElementPerPage = request.getParameter("nbElementPerPage");
-		String strPageIndex = request.getParameter("pageIndex");
-		String search = request.getParameter("search");
-		String orderBy = request.getParameter("orderBy");
-		String order = request.getParameter("order");
+    // create a default page
+    QueryParams queryParams = new QueryParams(1, 10);
+    queryParams.setOffset(0);
+    queryParams.setOrderBy(OrderBy.NAME);
+    queryParams.setOrder("ASC");
 
-		// set search parameter if present
-		if (search != null && !search.isEmpty()) {
-			queryParams.setSearch(search);
-		}
-		if (orderBy != null && !orderBy.isEmpty()) {
-			queryParams.setOrderBy(orderBy);
-		}
-		if (order != null && !order.isEmpty()) {
-			queryParams.setOrder(order);
-		}
+    // get attributes
+    String StrNbElementPerPage = request.getParameter("nbElementPerPage");
+    String strPageIndex = request.getParameter("pageIndex");
+    String search = request.getParameter("search");
+    String orderBy = request.getParameter("orderBy");
+    String order = request.getParameter("order");
 
-		// retrieve nb of computers
-		int nbTotalComputers = computerService.count(queryParams);
+    // set search parameter if present
+    if (search != null && !search.isEmpty()) {
+      queryParams.setSearch(search);
+    }
+    if (orderBy != null && !orderBy.isEmpty()) {
+      queryParams.setOrderBy(orderBy);
+    }
+    if (order != null && !order.isEmpty()) {
+      queryParams.setOrder(order);
+    }
 
-		// get computers depending on parameters if present, get default page
-		// otherwise
-		if (StrNbElementPerPage != null && strPageIndex != null) {
-			int nbElementPerPage = Integer.parseInt(StrNbElementPerPage);
-			int pageIndex = Integer.parseInt(strPageIndex);
-			queryParams.setIndex(pageIndex);
-			queryParams.setNbElements(nbElementPerPage);
-			queryParams.setOffset((pageIndex - 1) * nbElementPerPage);
-			list = computerService.getList(queryParams);
-		} else // default page
-			list = computerService.getList(queryParams);
+    // retrieve nb of computers
+    int nbTotalComputers = computerService.count(queryParams);
 
-		PageDto page = PageCreator.create(list, queryParams, nbTotalComputers);
+    // get computers depending on parameters if present, get default page
+    // otherwise
+    if (StrNbElementPerPage != null && strPageIndex != null) {
+      int nbElementPerPage = Integer.parseInt(StrNbElementPerPage);
+      int pageIndex = Integer.parseInt(strPageIndex);
+      queryParams.setIndex(pageIndex);
+      queryParams.setNbElements(nbElementPerPage);
+      queryParams.setOffset((pageIndex - 1) * nbElementPerPage);
+      list = computerService.getList(queryParams);
+    } else {
+      // default page
+      list = computerService.getList(queryParams);
+    }
 
-		// set attributes
-		request.setAttribute("nbTotalComputers", nbTotalComputers);
-		request.setAttribute("page", page);
+    PageDto page = PageCreator.create(list, queryParams, nbTotalComputers);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
-	}
+    // set attributes
+    request.setAttribute("nbTotalComputers", nbTotalComputers);
+    request.setAttribute("page", page);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
+    request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
+  }
+
+  /**
+   * Do post.
+   *
+   * @param request
+   *          the request
+   * @param response
+   *          the response
+   * @throws ServletException
+   *           the servlet exception
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    doGet(request, response);
+  }
 
 }

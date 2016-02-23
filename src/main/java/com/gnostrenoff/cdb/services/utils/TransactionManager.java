@@ -1,89 +1,126 @@
 package com.gnostrenoff.cdb.services.utils;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
+import com.gnostrenoff.cdb.services.exceptions.TransactionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gnostrenoff.cdb.dao.utils.ConnectionManager;
-import com.gnostrenoff.cdb.services.exceptions.TransactionException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TransactionManager.
+ */
 public class TransactionManager {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(TransactionManager.class);
-	public static TransactionManager instance = new TransactionManager();
-	public final ThreadLocal<Connection> CONTEXT = new ThreadLocal<Connection>();
-	
-	private TransactionManager(){
-	}
-	
-	public static TransactionManager getInstance(){
-		return instance;
-	}
+  /** The Constant LOGGER. */
+  public static final Logger LOGGER = LoggerFactory.getLogger(TransactionManager.class);
+  
+  /** The instance. */
+  public static TransactionManager instance = new TransactionManager();
+  
+  /** The context. */
+  public final ThreadLocal<Connection> context = new ThreadLocal<Connection>();
 
-	public Connection getConnection() {
-		Connection conn = CONTEXT.get();
-		if (conn == null) {
-			conn = ConnectionManager.getInstance().getConnection();
-			CONTEXT.set(conn);
-		}
-		return conn;
-	}
+  /**
+   * Instantiates a new transaction manager.
+   */
+  private TransactionManager() {
+  }
 
-	public void closeConnection() {
-		Connection conn = CONTEXT.get();
-		try {
-			if (conn != null && conn.getAutoCommit()) {
-				conn.close();
-				CONTEXT.remove();
-			}
-		} catch (SQLException e) {
-			LOGGER.error("failed to close connection");
-			throw new TransactionException("failed to close connection");
-		}
+  /**
+   * Gets the single instance of TransactionManager.
+   *
+   * @return single instance of TransactionManager
+   */
+  public static TransactionManager getInstance() {
+    return instance;
+  }
 
-	}
+  /**
+   * Gets the connection.
+   *
+   * @return the connection
+   */
+  public Connection getConnection() {
+    Connection conn = context.get();
+    if (conn == null) {
+      conn = ConnectionManager.getInstance().getConnection();
+      context.set(conn);
+    }
+    return conn;
+  }
 
-	public void startTransaction() {
-		try {
-			getConnection().setAutoCommit(false);
-			LOGGER.info("transaction has started");
-		} catch (SQLException e) {
-			LOGGER.error("failed to start transaction");
-			throw new TransactionException("failed to start transaction");
-		}
-	}
+  /**
+   * Close connection.
+   */
+  public void closeConnection() {
+    Connection conn = context.get();
+    try {
+      if (conn != null && conn.getAutoCommit()) {
+        conn.close();
+        context.remove();
+      }
+    } catch (SQLException e) {
+      LOGGER.error("failed to close connection");
+      throw new TransactionException("failed to close connection");
+    }
 
-	public void commitTransaction() {
-		try {
-			CONTEXT.get().commit();
-			LOGGER.info("successfully commited");
-		} catch (SQLException e) {
-			LOGGER.error("failed to commit transaction");
-			throw new TransactionException("failed to commit transaction");
-		}
-	}
+  }
 
-	public void rollbackTransaction() {
-		try {
-			CONTEXT.get().rollback();
-			LOGGER.info("transaction rolled back");
-		} catch (SQLException e) {
-			LOGGER.error("failed to rollback transaction");
-			throw new TransactionException("failed to rollback transaction");
-		}
-	}
+  /**
+   * Start transaction.
+   */
+  public void startTransaction() {
+    try {
+      getConnection().setAutoCommit(false);
+      LOGGER.info("transaction has started");
+    } catch (SQLException e) {
+      LOGGER.error("failed to start transaction");
+      throw new TransactionException("failed to start transaction");
+    }
+  }
 
-	public  void endTransaction() {
-		try {
-			CONTEXT.get().close();
-			LOGGER.info("transaction has ended");
-		} catch (SQLException e) {
-			LOGGER.error("failed to end transaction");
-			throw new TransactionException("failed to end transaction");
-		}
-		CONTEXT.remove();
-	}
+  /**
+   * Commit transaction.
+   */
+  public void commitTransaction() {
+    try {
+      context.get().commit();
+      LOGGER.info("successfully commited");
+    } catch (SQLException e) {
+      LOGGER.error("failed to commit transaction");
+      throw new TransactionException("failed to commit transaction");
+    }
+  }
+
+  /**
+   * Rollback transaction.
+   */
+  public void rollbackTransaction() {
+    try {
+      context.get().rollback();
+      LOGGER.info("transaction rolled back");
+    } catch (SQLException e) {
+      LOGGER.error("failed to rollback transaction");
+      throw new TransactionException("failed to rollback transaction");
+    }
+  }
+
+  /**
+   * End transaction.
+   */
+  public void endTransaction() {
+    try {
+      context.get().close();
+      LOGGER.info("transaction has ended");
+    } catch (SQLException e) {
+      LOGGER.error("failed to end transaction");
+      throw new TransactionException("failed to end transaction");
+    }
+    context.remove();
+  }
 
 }

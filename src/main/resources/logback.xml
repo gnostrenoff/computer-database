@@ -7,7 +7,7 @@
 			by default -->
 		<encoder>
 			<pattern>
-			%d{HH:mm:ss} [%thread] %-5level %logger{5} - %msg%n
+				%d{HH:mm:ss} [%thread] %-5level %logger{5} - %msg%n
 			</pattern>
 		</encoder>
 	</appender>
