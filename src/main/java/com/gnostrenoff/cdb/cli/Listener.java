@@ -18,7 +18,6 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Listener.
  */
@@ -55,33 +54,33 @@ public class Listener {
       input = scanIn.nextInt();
 
       switch (input) {
-      case 1:
-        listCompanies();
-        break;
-      case 2:
-        listComputers();
-         break;
-      case 3:
-        create();
-        break;
-      case 4:
-        readDetails();
-        break;
-      case 5:
-        update();
-        break;
-      case 6:
-        deleteSingleComputer();
-        break;
-      case 7:
-        deleteByCompanyId();
-        break;
-      case 8:
-        exit = true;
-        break;
-      default:
-        System.out.println("command not reconized");
-        break;
+        case 1:
+          listCompanies();
+          break;
+        case 2:
+          listComputers();
+          break;
+        case 3:
+          create();
+          break;
+        case 4:
+          readDetails();
+          break;
+        case 5:
+          update();
+          break;
+        case 6:
+          deleteSingleComputer();
+          break;
+        case 7:
+          deleteByCompanyId();
+          break;
+        case 8:
+          exit = true;
+          break;
+        default:
+          System.out.println("command not reconized");
+          break;
       }
     }
     scanIn.close();
@@ -126,7 +125,6 @@ public class Listener {
     int initialNbComputers = computerService.count(null);
     int nbComputers = initialNbComputers;
     do {
-      System.out.println(nbComputers);
       QueryParams queryParams = new QueryParams(nbComputers < 10 ? nbComputers : 10,
           initialNbComputers - nbComputers, OrderBy.NAME, Order.ASC);
       ;
@@ -137,11 +135,12 @@ public class Listener {
       }
 
       if (nbComputers < 10) {
-        System.out.println("\n	No more computer \n");
+        System.out.println("\nNo more computer\n");
         break;
       }
 
       nbComputers -= 10;
+      System.out.println("computers left : " + nbComputers + "\n");
       System.out.println("continue (1) ?");
     } while (scanIn.nextInt() == 1);
   }
@@ -173,7 +172,7 @@ public class Listener {
           .println("computer " + newComputer.getId() + " has been succesfully added to database");
     } catch (ComputerValidatorException e) {
       System.out.println("computer " + newComputer.getId()
-          + " was NOT added to database because the computer cannot be discontinued before being introduced");
+          + " was NOT added to database because the dates are not correct");
     }
 
   }
@@ -214,7 +213,7 @@ public class Listener {
           .println("computer " + computer.getId() + " has been succesfully updated to database");
     } catch (ComputerValidatorException e) {
       System.out.println("computer " + computer.getId()
-          + " was NOT updated in database because the computer cannot be discontinued before being introduced");
+          + " was NOT updated in database because the dates are not correct");
     }
   }
 

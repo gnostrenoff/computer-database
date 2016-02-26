@@ -1,4 +1,4 @@
-package mappers;
+package com.gnostrenoff.cdbtests.junit.mapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

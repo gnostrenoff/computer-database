@@ -1,4 +1,4 @@
-package dto;
+package com.gnostrenoff.cdbtests.junit.dto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

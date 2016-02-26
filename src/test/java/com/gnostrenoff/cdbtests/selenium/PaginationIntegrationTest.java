@@ -1,4 +1,4 @@
-package selenium;
+package com.gnostrenoff.cdbtests.selenium;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -21,24 +22,26 @@ import java.util.concurrent.TimeUnit;
  * The Class PaginationTest.
  */
 @Ignore
-public class PaginationTest {
-  
+@Category(IntegrationTest.class)
+public class PaginationIntegrationTest {
+
   /** The driver. */
   private WebDriver driver;
-  
+
   /** The base url. */
   private String baseUrl;
-  
+
   /** The accept next alert. */
   private boolean acceptNextAlert = true;
-  
+
   /** The verification errors. */
   private StringBuffer verificationErrors = new StringBuffer();
 
   /**
    * Sets the up.
    *
-   * @throws Exception the exception
+   * @throws Exception
+   *           the exception
    */
   @Before
   public void setUp() throws Exception {
@@ -50,7 +53,8 @@ public class PaginationTest {
   /**
    * Test pagination.
    *
-   * @throws Exception the exception
+   * @throws Exception
+   *           the exception
    */
   @Test
   public void testPagination() throws Exception {
@@ -70,7 +74,8 @@ public class PaginationTest {
   /**
    * Tear down.
    *
-   * @throws Exception the exception
+   * @throws Exception
+   *           the exception
    */
   @After
   public void tearDown() throws Exception {
@@ -84,7 +89,8 @@ public class PaginationTest {
   /**
    * Checks if is element present.
    *
-   * @param by the by
+   * @param by
+   *          the by
    * @return true, if is element present
    */
   private boolean isElementPresent(By by) {

@@ -1,4 +1,4 @@
-package dao;
+package com.gnostrenoff.cdbtests.junit.dao;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -1,4 +1,4 @@
-package services;
+package com.gnostrenoff.cdbtests.junit.service;
 
 import static org.junit.Assert.assertTrue;
 
