@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Company.
  */
@@ -22,8 +21,10 @@ public class Company {
   /**
    * Instantiates a new company.
    *
-   * @param id the id
-   * @param name the name
+   * @param id
+   *          the id
+   * @param name
+   *          the name
    */
   public Company(long id, String name) {
     super();
@@ -43,7 +44,8 @@ public class Company {
   /**
    * Sets the name.
    *
-   * @param name the new name
+   * @param name
+   *          the new name
    */
   public void setName(String name) {
     this.name = name;
@@ -61,15 +63,14 @@ public class Company {
   /**
    * Sets the id.
    *
-   * @param id the new id
+   * @param id
+   *          the new id
    */
   public void setId(long id) {
     this.id = id;
   }
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
+  @Override
   public String toString() {
     StringBuilder compString = new StringBuilder(Long.toString(id));
     compString.append("\t - \t").append(name);
@@ -77,9 +78,6 @@ public class Company {
     return compString.toString();
   }
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -89,9 +87,6 @@ public class Company {
     return result;
   }
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)

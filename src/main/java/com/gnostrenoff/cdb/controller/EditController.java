@@ -9,6 +9,7 @@ import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import java.io.IOException;
 
@@ -57,8 +58,10 @@ public class EditController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    companyService = CompanyServiceImpl.getInstance();
-    computerService = ComputerServiceImpl.getInstance();
+    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
+        CompanyServiceImpl.class);
+    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
+        ComputerServiceImpl.class);
     long id;
 
     // get parameter
@@ -90,8 +93,10 @@ public class EditController extends HttpServlet {
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    companyService = CompanyServiceImpl.getInstance();
-    computerService = ComputerServiceImpl.getInstance();
+    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
+        CompanyServiceImpl.class);
+    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
+        ComputerServiceImpl.class);
 
     // create computer dto from request
     ComputerDto dto = RequestMapper.toComputerDto(request);

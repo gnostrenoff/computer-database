@@ -7,6 +7,7 @@ import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +52,8 @@ public class DashboardController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    computerService = ComputerServiceImpl.getInstance();
+    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
+        ComputerServiceImpl.class);
 
     // create a QueryParams from the request
     QueryParams params = RequestMapper.toParams(request);

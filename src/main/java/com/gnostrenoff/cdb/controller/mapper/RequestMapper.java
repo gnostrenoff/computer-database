@@ -5,6 +5,7 @@ import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,7 +65,7 @@ public class RequestMapper {
    */
   public static ComputerDto toComputerDto(HttpServletRequest request) {
 
-    CompanyServiceImpl companyService = CompanyServiceImpl.getInstance();
+    CompanyServiceImpl companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService", CompanyServiceImpl.class);
 
     // get parameters
     String id = request.getParameter("id");

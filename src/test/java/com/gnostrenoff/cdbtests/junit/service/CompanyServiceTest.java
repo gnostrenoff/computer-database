@@ -2,49 +2,27 @@ package com.gnostrenoff.cdbtests.junit.service;
 
 import static org.junit.Assert.assertTrue;
 
-import com.gnostrenoff.cdb.dao.CompanyDao;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
-import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.service.CompanyService;
-import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CompanyServiceTest.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(CompanyDaoImpl.class)
-@PowerMockIgnore({ "javax.management.*" })
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/application-context-test.xml" })
 public class CompanyServiceTest {
 
-  /** The dao. */
-  private static CompanyDao dao;
-
-  /**
-   * Inits the.
-   */
-  @BeforeClass
-  public static void init() {
-    dao = Mockito.mock(CompanyDaoImpl.class);
-    Mockito.when(dao.getList()).thenReturn(new ArrayList<Company>());
-
-    PowerMockito.mockStatic(CompanyDaoImpl.class);
-    BDDMockito.given(CompanyDaoImpl.getInstance()).willReturn((CompanyDaoImpl) dao);
-
-  }
+  /** The service. */
+  @Autowired
+  private CompanyService companyService;
 
   /**
    * Gets the all computers.
@@ -53,7 +31,6 @@ public class CompanyServiceTest {
    */
   @Test
   public void getAllComputers() {
-    CompanyService companyService = CompanyServiceImpl.getInstance();
     assertTrue(companyService.getList() instanceof List<?>);
   }
 

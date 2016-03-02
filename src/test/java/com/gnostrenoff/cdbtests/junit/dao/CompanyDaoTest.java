@@ -7,6 +7,7 @@ import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.dao.util.ConnectionManager;
 import com.gnostrenoff.cdb.model.Company;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -67,7 +68,7 @@ public class CompanyDaoTest {
     dataSource.setUser(jdbcConnection.getUsername());
     dataSource.setPassword(jdbcConnection.getPassword());
 
-    companyDao = CompanyDaoImpl.getInstance();
+    companyDao = ApplicationContextProvider.getApplicationContext().getBean("companyDao", CompanyDaoImpl.class);
   }
 
   /**

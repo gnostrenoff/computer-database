@@ -5,10 +5,11 @@ import com.gnostrenoff.cdb.dao.exception.DaoException;
 import com.gnostrenoff.cdb.dao.mapper.CompanyDaoMapper;
 import com.gnostrenoff.cdb.dao.util.ObjectCloser;
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,13 +18,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+import javax.sql.DataSource;
+
 /**
  * implementation of CompanyDao interface.
  *
  * @author excilys
  */
+@Repository("companyDao")
 public class CompanyDaoImpl implements CompanyDao {
+  
+  @Autowired
+  private DataSource dataSource;
 
   /** The Constant SQL_GET_ONE. */
   private static final String SQL_GET_ONE = "SELECT * FROM company WHERE id=?";
@@ -33,9 +39,6 @@ public class CompanyDaoImpl implements CompanyDao {
   
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
-  
-  /** The company dao imp. */
-  private static CompanyDaoImpl companyDaoImp = new CompanyDaoImpl();
 
   /**
    * Instantiates a new company dao impl.
@@ -43,29 +46,17 @@ public class CompanyDaoImpl implements CompanyDao {
   private CompanyDaoImpl() {
   }
 
-  /**
-   * Gets the single instance of CompanyDaoImpl.
-   *
-   * @return single instance of CompanyDaoImpl
-   */
-  public static CompanyDaoImpl getInstance() {
-    return companyDaoImp;
-  }
-
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.dao.CompanyDao#getList()
-   */
   @Override
   public List<Company> getList() throws DaoException {
 
     List<Company> companyList = new ArrayList<>();
     String query = "select * from company";
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       rs = ps.executeQuery();
       while (rs.next()) {
@@ -76,25 +67,21 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to get company list");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
     return companyList;
   }
 
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.dao.CompanyDao#get(long)
-   */
   @Override
   public Company get(long companyId) throws DaoException {
     String query = SQL_GET_ONE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
     Company company = null;
     ResultSet rs = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setLong(1, companyId);
       rs = ps.executeQuery();
@@ -109,23 +96,19 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to get company");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
     return company;
   }
 
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.dao.CompanyDao#delete(long)
-   */
   @Override
   public void delete(long id) {
     String query = SQL_DELETE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setLong(1, id);
       ps.executeUpdate();
@@ -134,7 +117,6 @@ public class CompanyDaoImpl implements CompanyDao {
       throw new DaoException("failed to delete company");
     } finally {
       ObjectCloser.close(ps);
-      tm.closeConnection();
     }
   }
 

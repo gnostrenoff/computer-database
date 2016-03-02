@@ -9,6 +9,7 @@ import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import java.io.IOException;
 
@@ -24,13 +25,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/new")
 public class NewComputerController extends HttpServlet {
-  
+
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 1L;
 
   /** The computer service. */
   private ComputerService computerService;
-  
+
   /** The company service. */
   private CompanyService companyService;
 
@@ -46,16 +47,21 @@ public class NewComputerController extends HttpServlet {
   /**
    * Do get.
    *
-   * @param request the request
-   * @param response the response
-   * @throws ServletException the servlet exception
-   * @throws IOException Signals that an I/O exception has occurred.
+   * @param request
+   *          the request
+   * @param response
+   *          the response
+   * @throws ServletException
+   *           the servlet exception
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    companyService = CompanyServiceImpl.getInstance();
+    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
+        CompanyServiceImpl.class);
 
     request.setAttribute("companies", companyService.getList());
     request.getRequestDispatcher("/WEB-INF/jsp/addComputer.jsp").forward(request, response);
@@ -64,25 +70,31 @@ public class NewComputerController extends HttpServlet {
   /**
    * Do post.
    *
-   * @param request the request
-   * @param response the response
-   * @throws ServletException the servlet exception
-   * @throws IOException Signals that an I/O exception has occurred.
+   * @param request
+   *          the request
+   * @param response
+   *          the response
+   * @throws ServletException
+   *           the servlet exception
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    companyService = CompanyServiceImpl.getInstance();
-    computerService = ComputerServiceImpl.getInstance();
+    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
+        CompanyServiceImpl.class);
+    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
+        ComputerServiceImpl.class);
 
     // create computer dto from request
     ComputerDto dto = RequestMapper.toComputerDto(request);
-    
-    //validation
+
+    // validation
     ComputerDtoValidator.validate(dto);
-    
-    //get computer from dto
+
+    // get computer from dto
     Computer computer = ComputerDtoMapper.toComputer(dto);
 
     // then save computer into database

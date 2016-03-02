@@ -11,6 +11,7 @@ import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,10 +28,12 @@ public class Listener {
   public static final ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 
   /** The Constant computerService. */
-  public static final ComputerService computerService = ComputerServiceImpl.getInstance();
+  public static final ComputerService computerService = ApplicationContextProvider
+      .getApplicationContext().getBean("computerService", ComputerServiceImpl.class);
 
   /** The Constant companyService. */
-  public static final CompanyService companyService = CompanyServiceImpl.getInstance();
+  public static final CompanyService companyService = ApplicationContextProvider
+      .getApplicationContext().getBean("companyService", CompanyServiceImpl.class);
 
   /** The Constant scanIn. */
   public static final Scanner scanIn = new Scanner(System.in);

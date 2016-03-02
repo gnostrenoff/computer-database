@@ -3,58 +3,48 @@ package com.gnostrenoff.cdbtests.junit.service;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ComputerServiceTest.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ComputerDaoImpl.class)
-@PowerMockIgnore({ "javax.management.*" })
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/application-context-test.xml" })
 public class ComputerServiceTest {
 
-  /** The dao. */
-  private static ComputerDao dao;
-  
   /** The good computer. */
   private static Computer goodComputer;
-  
+
   /** The bad computer3. */
   private static Computer badComputer, badComputer2, badComputer3;
-  
+
   /** The computer service. */
-  private static ComputerService computerService;
+  @Autowired
+  private ComputerService computerService;
 
   /**
    * Inits the.
    */
   @BeforeClass
   public static void init() {
-    dao = Mockito.mock(ComputerDaoImpl.class);
-    Mockito.when(dao.getList(null)).thenReturn(new ArrayList<Computer>());
-    Mockito.when(dao.get((long) 2)).thenReturn(new Computer());
 
     goodComputer = Mockito.mock(Computer.class);
     Mockito.when(goodComputer.getName()).thenReturn("goodOne");
@@ -70,9 +60,6 @@ public class ComputerServiceTest {
     Mockito.when(badComputer3.getIntroduced()).thenReturn(LocalDate.of(2015, 02, 15));
     Mockito.when(badComputer3.getDiscontinued()).thenReturn(LocalDate.of(2015, 02, 14));
 
-    PowerMockito.mockStatic(ComputerDaoImpl.class);
-    BDDMockito.given(ComputerDaoImpl.getInstance()).willReturn((ComputerDaoImpl) dao);
-
   }
 
   /**
@@ -80,7 +67,8 @@ public class ComputerServiceTest {
    */
   @Before
   public void eachTimeInit() {
-    computerService = ComputerServiceImpl.getInstance();
+    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
+        ComputerServiceImpl.class);
   }
 
   /**
@@ -184,7 +172,6 @@ public class ComputerServiceTest {
    */
   @Test
   public void getOneComputer() {
-    ComputerService computerService = ComputerServiceImpl.getInstance();
     assertTrue(computerService.get((long) 2) instanceof Computer);
   }
 
@@ -195,7 +182,6 @@ public class ComputerServiceTest {
    */
   @Test
   public void getAllComputers() {
-    ComputerService computerService = ComputerServiceImpl.getInstance();
     List<Computer> computerList;
     QueryParams queryParams = new QueryParams(1, 10);
     queryParams.setOffset(0);

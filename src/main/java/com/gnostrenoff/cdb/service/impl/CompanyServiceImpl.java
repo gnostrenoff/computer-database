@@ -2,71 +2,52 @@ package com.gnostrenoff.cdb.service.impl;
 
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
-import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * implementation of a company service.
  *
  * @author excilys
  */
+@Service("companyService")
 public class CompanyServiceImpl implements CompanyService {
 
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
   
-  /** The company service impl. */
-  private static CompanyServiceImpl companyServiceImpl = new CompanyServiceImpl();
+  /** The company dao. */
+  @Autowired
+  private CompanyDao companyDao;
   
   /** The company dao. */
-  private static CompanyDao companyDao;
+  @Autowired
+  private ComputerDao computerDao;
 
   /**
    * Instantiates a new company service impl.
    */
   private CompanyServiceImpl() {
-    companyDao = CompanyDaoImpl.getInstance();
   }
 
-  /**
-   * Gets the single instance of CompanyServiceImpl.
-   *
-   * @return single instance of CompanyServiceImpl
-   */
-  public static CompanyServiceImpl getInstance() {
-    return companyServiceImpl;
-  }
-
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.services.CompanyService#getList()
-   */
   @Override
   public List<Company> getList() {
     return companyDao.getList();
   }
 
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.services.CompanyService#get(long)
-   */
   @Override
   public Company get(long companyId) {
     return companyDao.get(companyId);
   }
 
-  /* (non-Javadoc)
-   * @see com.gnostrenoff.cdb.services.CompanyService#delete(long)
-   */
   @Override
   public void delete(long id) {
 
@@ -75,7 +56,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     // first delete the related computers
     LOGGER.info("deleting the related computers");
-    ComputerDao computerDao = ComputerDaoImpl.getInstance();
     computerDao.deleteByCompanyId(id);
 
     // then delete company

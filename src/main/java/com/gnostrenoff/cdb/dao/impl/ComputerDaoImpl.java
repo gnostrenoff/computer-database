@@ -8,10 +8,11 @@ import com.gnostrenoff.cdb.dao.util.StatementCreator;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
-import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,9 +25,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 /**
  * The Class ComputerDaoImpl.
  */
+@Repository("computerDao")
 public class ComputerDaoImpl implements ComputerDao {
 
   /** The Constant SQL_CREATE. */
@@ -53,8 +57,8 @@ public class ComputerDaoImpl implements ComputerDao {
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoImpl.class);
 
-  /** The computer dao impl. */
-  private static ComputerDaoImpl computerDaoImpl = new ComputerDaoImpl();
+  @Autowired
+  private DataSource dataSource;
 
   /**
    * Instantiates a new computer dao impl.
@@ -62,30 +66,16 @@ public class ComputerDaoImpl implements ComputerDao {
   private ComputerDaoImpl() {
   }
 
-  /**
-   * Gets the single instance of ComputerDaoImpl.
-   *
-   * @return single instance of ComputerDaoImpl
-   */
-  public static ComputerDaoImpl getInstance() {
-    return computerDaoImpl;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#create(com.gnostrenoff.cdb.model.Computer)
-   */
   @Override
   public void create(Computer computer) {
 
     String query = SQL_CREATE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, computer.getName());
 
@@ -118,27 +108,21 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to create computer");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#get(long)
-   */
   @Override
   public Computer get(long computerId) {
 
     String query = SQL_GET_ONE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
     Computer computer = null;
     ResultSet rs = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setLong(1, computerId);
       rs = ps.executeQuery();
@@ -149,26 +133,20 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to get computer");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
     return computer;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#update(com.gnostrenoff.cdb.model.Computer)
-   */
   @Override
   public void update(Computer computer) {
 
     String query = SQL_UPDATE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setString(1, computer.getName());
 
@@ -200,24 +178,18 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to update computer");
     } finally {
       ObjectCloser.close(ps);
-      tm.closeConnection();
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#delete(long)
-   */
   @Override
   public void delete(long computerId) {
 
     String query = SQL_DELETE;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setLong(1, computerId);
       ps.executeUpdate();
@@ -226,37 +198,31 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to delete computer");
     } finally {
       ObjectCloser.close(ps);
-      tm.closeConnection();
     }
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#getList(com.gnostrenoff.cdb.model.QueryParams)
-   */
   @Override
   public List<Computer> getList(QueryParams params) {
 
     List<Computer> computerList = new ArrayList<>();
     ResultSet rs = null;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
-    PreparedStatement ps = StatementCreator.create(params, conn);
+    Connection conn = null;
+    PreparedStatement ps = null;
 
     try {
+      conn = dataSource.getConnection();
+      ps = StatementCreator.create(params, conn);
       rs = ps.executeQuery();
       while (rs.next()) {
         computerList.add(ComputerDaoMapper.map(rs));
       }
-      
+
     } catch (SQLException e) {
       LOGGER.error("failed to get computer list");
       throw new DaoException("failed to get computer list");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
     return computerList;
@@ -271,16 +237,10 @@ public class ComputerDaoImpl implements ComputerDao {
    * @throws DaoException
    *           the dao exception
    */
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.gnostrenoff.cdb.dao.ComputerDao#count(com.gnostrenoff.cdb.model.QueryParams)
-   */
   @Override
   public int count(String search) {
 
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     String query = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -293,6 +253,7 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
 
       if (search != null && !search.isEmpty()) {
@@ -309,7 +270,6 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to get row count");
     } finally {
       ObjectCloser.close(ps, rs);
-      tm.closeConnection();
     }
 
     return rowCount;
@@ -319,11 +279,11 @@ public class ComputerDaoImpl implements ComputerDao {
   public void deleteByCompanyId(long companyId) {
 
     String query = SQL_DELETE_BY_ID;
-    TransactionManager tm = TransactionManager.getInstance();
-    Connection conn = tm.getConnection();
+    Connection conn = null;
     PreparedStatement ps = null;
 
     try {
+      conn = dataSource.getConnection();
       ps = conn.prepareStatement(query);
       ps.setLong(1, companyId);
       ps.executeUpdate();
@@ -332,7 +292,6 @@ public class ComputerDaoImpl implements ComputerDao {
       throw new DaoException("failed to delete computer");
     } finally {
       ObjectCloser.close(ps);
-      tm.closeConnection();
     }
 
   }

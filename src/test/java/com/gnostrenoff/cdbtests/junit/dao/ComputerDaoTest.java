@@ -4,10 +4,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.gnostrenoff.cdb.dao.ComputerDao;
+import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.dao.util.ConnectionManager;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
+import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -43,10 +45,10 @@ public class ComputerDaoTest {
 
   /** The computer dao. */
   private static ComputerDao computerDao;
-  
+
   /** The data source. */
   private static JdbcDataSource dataSource;
-  
+
   /** The database tester. */
   private static IDatabaseTester databaseTester;
 
@@ -71,13 +73,16 @@ public class ComputerDaoTest {
     dataSource.setUser(jdbcConnection.getUsername());
     dataSource.setPassword(jdbcConnection.getPassword());
 
-    computerDao = ComputerDaoImpl.getInstance();
+    computerDao = ApplicationContextProvider.getApplicationContext().getBean("computerDao",
+        ComputerDaoImpl.class);
+    ;
   }
 
   /**
    * Import data set.
    *
-   * @throws Exception the exception
+   * @throws Exception
+   *           the exception
    */
   @Before
   public void importDataSet() throws Exception {
@@ -89,7 +94,8 @@ public class ComputerDaoTest {
    * Read data set.
    *
    * @return the i data set
-   * @throws Exception the exception
+   * @throws Exception
+   *           the exception
    */
   private IDataSet readDataSet() throws Exception {
     return new FlatXmlDataSetBuilder().build(new File("src/test/java/db-test/dataset.xml"));
@@ -98,8 +104,10 @@ public class ComputerDaoTest {
   /**
    * Cleanly insert.
    *
-   * @param dataSet the data set
-   * @throws Exception the exception
+   * @param dataSet
+   *          the data set
+   * @throws Exception
+   *           the exception
    */
   private void cleanlyInsert(IDataSet dataSet) throws Exception {
     ConnectionManager jdbcConnection = ConnectionManager.getInstance();
@@ -204,7 +212,7 @@ public class ComputerDaoTest {
       int index = 0;
       while (!cTable.getValue(index, "id").toString().equals("3")) {
         index++;
-      }      
+      }
       assertTrue(cTable.getValue(index, "name").equals("macbook++"));
     } catch (Exception e) {
       e.printStackTrace();

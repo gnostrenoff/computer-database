@@ -21,4 +21,16 @@
 		<exception-type>com.gnostrenoff.cdb.controller.exception.InvalidComputerException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/application-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
 </web-app>
