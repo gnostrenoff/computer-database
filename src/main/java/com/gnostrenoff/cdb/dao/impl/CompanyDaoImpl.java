@@ -64,7 +64,7 @@ public class CompanyDaoImpl implements CompanyDao {
       }
     } catch (SQLException e) {
       LOGGER.error("failed to get company list");
-      throw new DaoException("failed to get company list");
+      throw new DaoException("failed to get company list", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -93,7 +93,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
     } catch (SQLException e) {
       LOGGER.error("failed to get company");
-      throw new DaoException("failed to get company");
+      throw new DaoException("failed to get company", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -114,7 +114,7 @@ public class CompanyDaoImpl implements CompanyDao {
       ps.executeUpdate();
     } catch (SQLException e) {
       LOGGER.error("failed to delete company");
-      throw new DaoException("failed to delete company");
+      throw new DaoException("failed to delete company", e);
     } finally {
       ObjectCloser.close(ps);
     }

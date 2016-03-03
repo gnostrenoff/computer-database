@@ -29,6 +29,7 @@
 		<spring-core.version>4.2.5.RELEASE</spring-core.version>
 		<spring-beans.version>4.2.5.RELEASE</spring-beans.version>
 		<spring-jdbc.version>4.2.5.RELEASE</spring-jdbc.version>
+		<spring-tx.version>4.2.5.RELEASE</spring-tx.version>
 		<spring-test.version>4.2.5.RELEASE</spring-test.version>
 	</properties>
 
@@ -127,6 +128,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring-jdbc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring-tx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

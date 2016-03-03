@@ -4,12 +4,12 @@ import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.service.CompanyService;
-import com.gnostrenoff.cdb.service.util.TransactionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,15 +19,16 @@ import java.util.List;
  * @author excilys
  */
 @Service("companyService")
+@Transactional
 public class CompanyServiceImpl implements CompanyService {
 
   /** The Constant LOGGER. */
-  private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
-  
+  private static final Logger LOGGER = LoggerFactory.getLogger(CompanyServiceImpl.class);
+
   /** The company dao. */
   @Autowired
   private CompanyDao companyDao;
-  
+
   /** The company dao. */
   @Autowired
   private ComputerDao computerDao;
@@ -49,10 +50,8 @@ public class CompanyServiceImpl implements CompanyService {
   }
 
   @Override
+  @Transactional
   public void delete(long id) {
-
-    TransactionManager tm = TransactionManager.getInstance();
-    tm.startTransaction();
 
     // first delete the related computers
     LOGGER.info("deleting the related computers");
@@ -61,9 +60,6 @@ public class CompanyServiceImpl implements CompanyService {
     // then delete company
     LOGGER.info("deleting company " + id);
     companyDao.delete(id);
-
-    tm.commitTransaction();
-    tm.endTransaction();
 
   }
 

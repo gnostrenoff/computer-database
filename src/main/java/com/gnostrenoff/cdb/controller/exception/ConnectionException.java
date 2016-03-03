@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.controller.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ConnectionException.
  */
@@ -12,10 +11,15 @@ public class ConnectionException extends RuntimeException {
   /**
    * Instantiates a new connection exception.
    *
-   * @param message the message
+   * @param message
+   *          the message
    */
   public ConnectionException(String message) {
     super(message);
+  }
+
+  public ConnectionException(String message, Throwable cause) {
+    super(message, cause);
   }
 
 }

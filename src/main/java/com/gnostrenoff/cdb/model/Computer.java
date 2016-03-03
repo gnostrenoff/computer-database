@@ -2,7 +2,6 @@ package com.gnostrenoff.cdb.model;
 
 import java.time.LocalDate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Computer.
  */
@@ -29,13 +28,22 @@ public class Computer {
   public Computer() {
   }
 
+  public Computer(String name) {
+    super();
+    this.name = name;
+  }
+
   /**
    * Instantiates a new computer.
    *
-   * @param name the name
-   * @param introduced the introduced
-   * @param discontinued the discontinued
-   * @param company the company
+   * @param name
+   *          the name
+   * @param introduced
+   *          the introduced
+   * @param discontinued
+   *          the discontinued
+   * @param company
+   *          the company
    */
   public Computer(String name, LocalDate introduced, LocalDate discontinued, Company company) {
     this.name = name;
@@ -47,11 +55,16 @@ public class Computer {
   /**
    * Instantiates a new computer.
    *
-   * @param id the id
-   * @param name the name
-   * @param introduced the introduced
-   * @param discontinued the discontinued
-   * @param company the company
+   * @param id
+   *          the id
+   * @param name
+   *          the name
+   * @param introduced
+   *          the introduced
+   * @param discontinued
+   *          the discontinued
+   * @param company
+   *          the company
    */
   public Computer(long id, String name, LocalDate introduced, LocalDate discontinued,
       Company company) {
@@ -74,7 +87,8 @@ public class Computer {
   /**
    * Sets the name.
    *
-   * @param name the new name
+   * @param name
+   *          the new name
    */
   public void setName(String name) {
     this.name = name;
@@ -92,7 +106,8 @@ public class Computer {
   /**
    * Sets the introduced.
    *
-   * @param introduced the new introduced
+   * @param introduced
+   *          the new introduced
    */
   public void setIntroduced(LocalDate introduced) {
     this.introduced = introduced;
@@ -110,7 +125,8 @@ public class Computer {
   /**
    * Sets the discontinued.
    *
-   * @param discontinued the new discontinued
+   * @param discontinued
+   *          the new discontinued
    */
   public void setDiscontinued(LocalDate discontinued) {
     this.discontinued = discontinued;
@@ -128,7 +144,8 @@ public class Computer {
   /**
    * Sets the company.
    *
-   * @param company the new company
+   * @param company
+   *          the new company
    */
   public void setCompany(Company company) {
     this.company = company;
@@ -146,13 +163,16 @@ public class Computer {
   /**
    * Sets the id.
    *
-   * @param id the new id
+   * @param id
+   *          the new id
    */
   public void setId(long id) {
     this.id = id;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#toString()
    */
   @Override
@@ -162,7 +182,9 @@ public class Computer {
         + ((company == null) ? "" : company.getName()) + "]";
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -177,7 +199,9 @@ public class Computer {
     return result;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override

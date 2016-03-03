@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.dao.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * Exception thrown when properties files is not found while configuring connection.
  *
@@ -14,10 +13,15 @@ public class PropertiesFileNotFoundException extends RuntimeException {
   /**
    * Instantiates a new properties file not found exception.
    *
-   * @param message the message
+   * @param message
+   *          the message
    */
   public PropertiesFileNotFoundException(String message) {
     super(message);
+  }
+
+  public PropertiesFileNotFoundException(String message, Throwable cause) {
+    super(message, cause);
   }
 
 }

@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.service.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * Exception thrown when properties files is not found while configuring connection.
  *
@@ -18,6 +17,10 @@ public class ComputerValidatorException extends RuntimeException {
    */
   public ComputerValidatorException(String message) {
     super(message);
+  }
+  
+  public ComputerValidatorException(String message, Throwable cause) {
+    super(message, cause);
   }
 
 }

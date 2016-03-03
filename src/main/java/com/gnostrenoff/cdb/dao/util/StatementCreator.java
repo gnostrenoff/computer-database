@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * class providing sql PreparedStatement.
  *
@@ -20,21 +19,23 @@ public class StatementCreator {
 
   /** The Constant SQL_GET_MANY. */
   private static final String SQL_GET_MANY = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id ORDER BY %s %s LIMIT ? OFFSET ?";
-  
+
   /** The Constant SQL_GET_MANY_WITH_SEARCH. */
   private static final String SQL_GET_MANY_WITH_SEARCH = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? OR company.name LIKE ? ORDER BY %s %s LIMIT ? OFFSET ?";
-  
+
   /** The Constant SQL_GET_MANY_BY_ID. */
   private static final String SQL_GET_MANY_BY_ID = "SELECT * FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE company_id=? ORDER BY %s %s";
-  
+
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(StatementCreator.class);
 
   /**
    * method creates prepared statement, depending on given parameters.
    *
-   * @param params          parameters
-   * @param conn          connection to use
+   * @param params
+   *          parameters
+   * @param conn
+   *          connection to use
    * @return built prepared statement
    */
   public static PreparedStatement create(QueryParams params, Connection conn) {
@@ -84,7 +85,7 @@ public class StatementCreator {
 
     } catch (SQLException e) {
       LOGGER.error("failed to get a statement");
-      throw new DaoException("failed to get a statement");
+      throw new DaoException("failed to get a statement", e);
     }
 
     return ps;

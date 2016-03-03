@@ -1,7 +1,6 @@
 package com.gnostrenoff.cdb.dao.mapper;
 
 import com.gnostrenoff.cdb.dao.exception.DaoException;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
@@ -12,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is providing a static method to convert a resultset to a computer object.
  *
@@ -21,7 +19,7 @@ import java.sql.Timestamp;
 public class ComputerDaoMapper {
 
   /** The Constant LOGGER. */
-  private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoMapper.class);
 
   /**
    * converts a resulset to a computer object.
@@ -49,7 +47,7 @@ public class ComputerDaoMapper {
 
     } catch (SQLException e) {
       LOGGER.error("failed to convert into computer");
-      throw new DaoException("failed to convert into computer");
+      throw new DaoException("failed to convert into computer", e);
     }
     return computer;
   }

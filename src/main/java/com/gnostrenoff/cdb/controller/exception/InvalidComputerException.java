@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.controller.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * Exception thrown when dto computer has not valid data.
  *
@@ -20,4 +19,8 @@ public class InvalidComputerException extends RuntimeException {
     super(message);
   }
 
+  public InvalidComputerException(String message, Throwable cause) {
+    super(message, cause);
+  }
+  
 }

@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.dao.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TransactionException.
  */
@@ -12,10 +11,15 @@ public class TransactionException extends RuntimeException {
   /**
    * Instantiates a new transaction exception.
    *
-   * @param message the message
+   * @param message
+   *          the message
    */
   public TransactionException(String message) {
     super(message);
+  }
+
+  public TransactionException(String message, Throwable cause) {
+    super(message, cause);
   }
 
 }

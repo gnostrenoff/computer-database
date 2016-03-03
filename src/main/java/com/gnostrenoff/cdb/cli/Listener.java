@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.cli;
 
-import com.gnostrenoff.cdb.dao.util.ConnectionManager;
 import com.gnostrenoff.cdb.dao.util.Order;
 import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.model.Company;
@@ -23,9 +22,6 @@ import java.util.Scanner;
  * The Class Listener.
  */
 public class Listener {
-
-  /** The Constant jdbcConnection. */
-  public static final ConnectionManager jdbcConnection = ConnectionManager.getInstance();
 
   /** The Constant computerService. */
   public static final ComputerService computerService = ApplicationContextProvider

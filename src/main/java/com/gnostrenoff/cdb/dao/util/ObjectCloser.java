@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * class providing static methods to close objects.
  *
@@ -40,7 +39,7 @@ public class ObjectCloser {
       }        
     } catch (SQLException e) {
       LOGGER.error("failed to close object");
-      throw new DaoException("failed to close object");
+      throw new DaoException("failed to close object", e);
     }
   }
 
@@ -56,7 +55,7 @@ public class ObjectCloser {
       }       
     } catch (SQLException e) {
       LOGGER.error("failed to close object");
-      throw new DaoException("failed to close object");
+      throw new DaoException("failed to close object", e);
     }
   }
 

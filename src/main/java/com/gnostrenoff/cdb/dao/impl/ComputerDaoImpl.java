@@ -105,7 +105,7 @@ public class ComputerDaoImpl implements ComputerDao {
       computer.setId(rs.getLong(1));
     } catch (Exception e) {
       LOGGER.error("failed to create computer");
-      throw new DaoException("failed to create computer");
+      throw new DaoException("failed to create computer", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -130,7 +130,7 @@ public class ComputerDaoImpl implements ComputerDao {
       computer = ComputerDaoMapper.map(rs);
     } catch (SQLException e) {
       LOGGER.error("failed to get computer");
-      throw new DaoException("failed to get computer");
+      throw new DaoException("failed to get computer", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -175,7 +175,7 @@ public class ComputerDaoImpl implements ComputerDao {
       ps.executeUpdate();
     } catch (Exception e) {
       LOGGER.error("failed to update computer");
-      throw new DaoException("failed to update computer");
+      throw new DaoException("failed to update computer", e);
     } finally {
       ObjectCloser.close(ps);
     }
@@ -195,7 +195,7 @@ public class ComputerDaoImpl implements ComputerDao {
       ps.executeUpdate();
     } catch (SQLException e) {
       LOGGER.error("failed to delete computer");
-      throw new DaoException("failed to delete computer");
+      throw new DaoException("failed to delete computer", e);
     } finally {
       ObjectCloser.close(ps);
     }
@@ -220,7 +220,7 @@ public class ComputerDaoImpl implements ComputerDao {
 
     } catch (SQLException e) {
       LOGGER.error("failed to get computer list");
-      throw new DaoException("failed to get computer list");
+      throw new DaoException("failed to get computer list", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -267,7 +267,7 @@ public class ComputerDaoImpl implements ComputerDao {
 
     } catch (SQLException e) {
       LOGGER.error("failed to get row count");
-      throw new DaoException("failed to get row count");
+      throw new DaoException("failed to get row count", e);
     } finally {
       ObjectCloser.close(ps, rs);
     }
@@ -289,7 +289,7 @@ public class ComputerDaoImpl implements ComputerDao {
       ps.executeUpdate();
     } catch (SQLException e) {
       LOGGER.error("failed to delete computer");
-      throw new DaoException("failed to delete computer");
+      throw new DaoException("failed to delete computer", e);
     } finally {
       ObjectCloser.close(ps);
     }

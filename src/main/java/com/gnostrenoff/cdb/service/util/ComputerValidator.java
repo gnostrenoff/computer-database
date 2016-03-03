@@ -2,21 +2,19 @@ package com.gnostrenoff.cdb.service.util;
 
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
-import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ComputerValidator.
  */
 public class ComputerValidator {
 
   /** The Constant LOGGER. */
-  private static final Logger LOGGER = LoggerFactory.getLogger(ComputerServiceImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ComputerValidator.class);
 
   /**
    * Validate.

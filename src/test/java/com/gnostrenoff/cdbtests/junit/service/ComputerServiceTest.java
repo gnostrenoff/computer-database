@@ -1,14 +1,12 @@
 package com.gnostrenoff.cdbtests.junit.service;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.gnostrenoff.cdb.dao.exception.DaoException;
+import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
-import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
-import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,55 +18,64 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
-import java.util.List;
 
-// TODO: Auto-generated Javadoc
+import javax.sql.DataSource;
+
 /**
  * The Class ComputerServiceTest.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/application-context-test.xml" })
+@ContextConfiguration(locations = { "classpath:/application-context-test.xml" })
 public class ComputerServiceTest {
 
-  /** The good computer. */
-  private static Computer goodComputer;
-
-  /** The bad computer3. */
-  private static Computer badComputer, badComputer2, badComputer3;
+  /** The computers. */
+  private static Computer goodComputer, badComputer, badComputer2, badComputer3;
 
   /** The computer service. */
   @Autowired
   private ComputerService computerService;
 
+  /** The computer dao mock. */
+  @Autowired
+  private ComputerDaoImpl computerDaoMock;
+
   /**
-   * Inits the.
+   * Initialiation, executed once.
    */
   @BeforeClass
-  public static void init() {
+  public static void initOnce() {
+    goodComputer = new Computer("goodOne");
+    goodComputer.setId(8);
 
-    goodComputer = Mockito.mock(Computer.class);
-    Mockito.when(goodComputer.getName()).thenReturn("goodOne");
+    badComputer = new Computer("");
 
-    badComputer = Mockito.mock(Computer.class);
-    Mockito.when(badComputer.getName()).thenReturn("");
+    badComputer2 = new Computer(null);
 
-    badComputer2 = Mockito.mock(Computer.class);
-    Mockito.when(badComputer2.getName()).thenReturn(null);
-
-    badComputer3 = Mockito.mock(Computer.class);
-    Mockito.when(badComputer3.getName()).thenReturn("ok");
-    Mockito.when(badComputer3.getIntroduced()).thenReturn(LocalDate.of(2015, 02, 15));
-    Mockito.when(badComputer3.getDiscontinued()).thenReturn(LocalDate.of(2015, 02, 14));
-
+    badComputer3 = new Computer("ok");
+    badComputer3.setIntroduced(LocalDate.of(2015, 02, 15));
+    badComputer3.setDiscontinued(LocalDate.of(2015, 02, 14));
   }
 
   /**
-   * Each time init.
+   * Initialiation for each test.
    */
   @Before
-  public void eachTimeInit() {
-    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
-        ComputerServiceImpl.class);
+  public void initTests() {
+
+    // init dao mock
+    Mockito.doNothing().when(computerDaoMock).create(goodComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer2);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer3);
+
+    Mockito.doNothing().when(computerDaoMock).update(goodComputer);
+
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer2);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer3);
+
+    Mockito.doNothing().when(computerDaoMock).delete(1);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).delete(0);
   }
 
   /**
@@ -105,7 +112,6 @@ public class ComputerServiceTest {
     } catch (ComputerValidatorException e) {
       fail();
     }
-
   }
 
   /**
@@ -163,29 +169,5 @@ public class ComputerServiceTest {
     } catch (ComputerValidatorException e) {
       fail();
     }
-  }
-
-  /**
-   * Gets the one computer.
-   *
-   * @return the one computer
-   */
-  @Test
-  public void getOneComputer() {
-    assertTrue(computerService.get((long) 2) instanceof Computer);
-  }
-
-  /**
-   * Gets the all computers.
-   *
-   * @return the all computers
-   */
-  @Test
-  public void getAllComputers() {
-    List<Computer> computerList;
-    QueryParams queryParams = new QueryParams(1, 10);
-    queryParams.setOffset(0);
-    computerList = computerService.getList(queryParams);
-    assertTrue(computerList instanceof List<?>);
   }
 }

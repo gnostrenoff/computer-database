@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.dao.util;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Order.
  */

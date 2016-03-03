@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.service.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TransactionException.
  */
@@ -16,5 +15,9 @@ public class TransactionException extends RuntimeException {
    */
   public TransactionException(String message) {
     super(message);
+  }
+  
+  public TransactionException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

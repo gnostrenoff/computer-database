@@ -65,7 +65,8 @@ public class RequestMapper {
    */
   public static ComputerDto toComputerDto(HttpServletRequest request) {
 
-    CompanyServiceImpl companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService", CompanyServiceImpl.class);
+    CompanyServiceImpl companyService = ApplicationContextProvider.getApplicationContext()
+        .getBean("companyService", CompanyServiceImpl.class);
 
     // get parameters
     String id = request.getParameter("id");

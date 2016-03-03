@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ComputerDtoValidator.
  */
