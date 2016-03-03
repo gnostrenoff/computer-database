@@ -19,8 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 
-import javax.sql.DataSource;
-
 /**
  * The Class ComputerServiceTest.
  */
@@ -54,6 +52,7 @@ public class ComputerServiceTest {
     badComputer3 = new Computer("ok");
     badComputer3.setIntroduced(LocalDate.of(2015, 02, 15));
     badComputer3.setDiscontinued(LocalDate.of(2015, 02, 14));
+
   }
 
   /**
