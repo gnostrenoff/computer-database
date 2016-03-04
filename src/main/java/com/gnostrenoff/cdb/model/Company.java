@@ -1,9 +1,13 @@
 package com.gnostrenoff.cdb.model;
 
+import java.io.Serializable;
+
 /**
  * The Class Company.
  */
-public class Company {
+public class Company implements Serializable {
+
+  private static final long serialVersionUID = 8080712197594541733L;
 
   /** company id. */
   private long id;

@@ -6,28 +6,25 @@ import com.gnostrenoff.cdb.model.Computer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 /**
  * This class is providing a static method to convert a resultset to a computer object.
  *
  * @author excilys
  */
-public class ComputerDaoMapper {
+public class ComputerDaoMapper implements RowMapper<Computer> {
 
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoMapper.class);
 
-  /**
-   * converts a resulset to a computer object.
-   *
-   * @param rs          resultset to convert
-   * @return computer obtained
-   */
-  public static Computer map(ResultSet rs) {
+  @Override
+  public Computer mapRow(ResultSet rs, int arg1) throws SQLException {
     Computer computer = new Computer();
     try {
       computer.setId(rs.getLong("computer.id"));
@@ -50,6 +47,35 @@ public class ComputerDaoMapper {
       throw new DaoException("failed to convert into computer", e);
     }
     return computer;
+  }
+
+  /**
+   * Gets the args.
+   *
+   * @param computer
+   *          the computer
+   * @return the args
+   */
+  public static Object[] getRequiredArgs(Computer computer) {
+
+    Object[] args = new Object[4];
+    args[0] = computer.getName();
+
+    LocalDate localDate = computer.getIntroduced();
+    if (localDate != null) {
+      args[1] = computer.getIntroduced();
+    }
+    localDate = computer.getDiscontinued();
+    if (localDate != null) {
+      args[2] = computer.getDiscontinued();
+    }
+
+    Company company = computer.getCompany();
+    if (company != null && company.getId() >= 0) {
+      args[3] = computer.getCompany().getId();
+    }
+
+    return args;
   }
 
 }

@@ -5,6 +5,7 @@ import com.gnostrenoff.cdb.model.Company;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,18 +15,13 @@ import java.sql.SQLException;
  *
  * @author excilys
  */
-public class CompanyDaoMapper {
-  
+public class CompanyDaoMapper implements RowMapper<Company> {
+
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(CompanyDaoMapper.class);
 
-  /**
-   * converts a resulset to a company object.
-   *
-   * @param rs          resultset to convert
-   * @return company obtained
-   */
-  public static Company map(ResultSet rs) {
+  @Override
+  public Company mapRow(ResultSet rs, int arg1) throws SQLException {
     Company company = new Company();
     try {
       company.setId(rs.getLong("id"));

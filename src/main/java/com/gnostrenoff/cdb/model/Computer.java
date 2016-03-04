@@ -1,11 +1,14 @@
 package com.gnostrenoff.cdb.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * The Class Computer.
  */
-public class Computer {
+public class Computer implements Serializable {
+
+  private static final long serialVersionUID = 4027018618232051841L;
 
   /** id of computer. */
   private long id;
