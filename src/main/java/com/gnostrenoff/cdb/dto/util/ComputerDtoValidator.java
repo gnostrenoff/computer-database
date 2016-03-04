@@ -1,4 +1,4 @@
-package com.gnostrenoff.cdb.controller.util;
+package com.gnostrenoff.cdb.dto.util;
 
 import com.gnostrenoff.cdb.controller.exception.InvalidComputerException;
 import com.gnostrenoff.cdb.dto.ComputerDto;

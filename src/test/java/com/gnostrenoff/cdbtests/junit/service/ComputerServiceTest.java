@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import com.gnostrenoff.cdb.dao.exception.DaoException;
 import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
+import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
@@ -27,7 +28,12 @@ import java.time.LocalDate;
 public class ComputerServiceTest {
 
   /** The computers. */
-  private static Computer goodComputer, badComputer, badComputer2, badComputer3;
+  private static Computer goodComputer;
+  private static Computer badComputer;
+  private static Computer badComputer2;
+  private static Computer badComputer3;
+  private static Computer badComputer4;
+  private static Computer badComputer5;
 
   /** The computer service. */
   @Autowired
@@ -46,12 +52,17 @@ public class ComputerServiceTest {
     goodComputer.setId(8);
 
     badComputer = new Computer("");
-
     badComputer2 = new Computer(null);
 
     badComputer3 = new Computer("ok");
     badComputer3.setIntroduced(LocalDate.of(2015, 02, 15));
     badComputer3.setDiscontinued(LocalDate.of(2015, 02, 14));
+    
+    badComputer4 = new Computer("ok");
+    badComputer4.setDiscontinued(LocalDate.of(2015, 02, 14));
+    
+    badComputer5 = new Computer("ok");
+    badComputer5.setCompany(new Company(-1, "badOne"));
 
   }
 
@@ -100,6 +111,22 @@ public class ComputerServiceTest {
   public void createBad3() {
     computerService.create(badComputer3);
   }
+  
+  /**
+   * Creates the bad4.
+   */
+  @Test(expected = ComputerValidatorException.class)
+  public void createBad4() {
+    computerService.create(badComputer4);
+  }
+  
+  /**
+   * Creates the bad5.
+   */
+  @Test(expected = ComputerValidatorException.class)
+  public void createBad5() {
+    computerService.create(badComputer5);
+  }
 
   /**
    * Creates the good.
@@ -114,7 +141,7 @@ public class ComputerServiceTest {
   }
 
   /**
-   * Update bad.
+   * Updates bad.
    */
   @Test(expected = ComputerValidatorException.class)
   public void updateBad() {
@@ -122,7 +149,7 @@ public class ComputerServiceTest {
   }
 
   /**
-   * Update bad2.
+   * Updates bad2.
    */
   @Test(expected = ComputerValidatorException.class)
   public void updateBad2() {
@@ -130,15 +157,31 @@ public class ComputerServiceTest {
   }
 
   /**
-   * Update bad3.
+   * Updates bad3.
    */
   @Test(expected = ComputerValidatorException.class)
   public void updateBad3() {
     computerService.update(badComputer3);
   }
+  
+  /**
+   * Updates the bad4.
+   */
+  @Test(expected = ComputerValidatorException.class)
+  public void updateBad4() {
+    computerService.create(badComputer4);
+  }
+  
+  /**
+   * Updates the bad5.
+   */
+  @Test(expected = ComputerValidatorException.class)
+  public void updateBad5() {
+    computerService.create(badComputer5);
+  }
 
   /**
-   * Update good.
+   * Updates good.
    */
   @Test
   public void updateGood() {
@@ -151,15 +194,23 @@ public class ComputerServiceTest {
   }
 
   /**
-   * Delete bad.
+   * Deletes bad.
    */
   @Test(expected = ComputerValidatorException.class)
   public void deleteBad() {
     computerService.delete(0);
   }
+  
+  /**
+   * Deletes bad2.
+   */
+  @Test(expected = ComputerValidatorException.class)
+  public void deleteBad2() {
+    computerService.delete(-1);
+  }
 
   /**
-   * Delete good.
+   * Deletes good.
    */
   @Test
   public void deleteGood() {

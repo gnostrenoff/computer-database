@@ -1,9 +1,9 @@
 package com.gnostrenoff.cdb.controller;
 
 import com.gnostrenoff.cdb.controller.mapper.RequestMapper;
-import com.gnostrenoff.cdb.controller.util.ComputerDtoValidator;
 import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.util.ComputerDtoValidator;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;

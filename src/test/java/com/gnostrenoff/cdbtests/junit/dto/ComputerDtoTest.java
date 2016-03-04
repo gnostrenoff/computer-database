@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ComputerDtoTest.
  */

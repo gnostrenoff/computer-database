@@ -61,7 +61,7 @@ public class ComputerServiceImpl implements ComputerService {
 
   @Override
   public void delete(long computerId) {
-    if (computerId != 0) {
+    if (computerId > 0) {
       computerDao.delete(computerId);
     } else {
       LOGGER.error("delete computer failed : invalid id");

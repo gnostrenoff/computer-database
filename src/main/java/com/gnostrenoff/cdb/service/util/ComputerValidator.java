@@ -1,5 +1,6 @@
 package com.gnostrenoff.cdb.service.util;
 
+import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
 
@@ -19,13 +20,15 @@ public class ComputerValidator {
   /**
    * Validate.
    *
-   * @param computer the computer
+   * @param computer
+   *          the computer
    */
   public static void validate(Computer computer) {
 
     String name = computer.getName();
     LocalDate introduced = computer.getIntroduced();
     LocalDate discontinued = computer.getDiscontinued();
+    Company company = computer.getCompany();
 
     if (name == null || name.equals("")) {
       LOGGER.error("no name found in computer");
@@ -40,6 +43,12 @@ public class ComputerValidator {
     if (introduced == null && discontinued != null) {
       LOGGER.error("no introduced date");
       throw new ComputerValidatorException("no introduced date");
+    }
+    if (company != null) {
+      if (company.getId() < 0) {
+        LOGGER.error("invalid company");
+        throw new ComputerValidatorException("invalid company");
+      }
     }
   }
 
