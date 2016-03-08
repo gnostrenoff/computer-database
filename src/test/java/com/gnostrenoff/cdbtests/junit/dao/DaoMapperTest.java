@@ -1,5 +1,13 @@
 package com.gnostrenoff.cdbtests.junit.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import com.gnostrenoff.cdb.dao.mapper.ComputerDaoMapper;
+import com.gnostrenoff.cdb.model.Company;
+import com.gnostrenoff.cdb.model.Computer;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +29,15 @@ public class DaoMapperTest {
   /** The rs2. */
   private static ResultSet rs;
   private static ResultSet rs2;
+  private static ComputerDaoMapper computerDaoMapper;
 
   /**
    * Inits the.
    */
   @BeforeClass
   public static void init() {
+
+    computerDaoMapper = new ComputerDaoMapper();
 
     rs = Mockito.mock(ResultSet.class);
     rs2 = Mockito.mock(ResultSet.class);
@@ -62,19 +73,24 @@ public class DaoMapperTest {
   @Test
   public void test1() {
 
-    // Computer computer = ComputerDaoMapper.computerList(rs);
-    //
-    // assertEquals(computer.getName(), "nameOfComputer");
-    // assertEquals(computer.getId(), 1L);
-    // assertEquals(computer.getIntroduced(),
-    // (new Timestamp(2014, 3, 21, 0, 0, 0, 0)).toLocalDateTime().toLocalDate());
-    // assertEquals(computer.getDiscontinued(),
-    // (new Timestamp(2015, 8, 14, 0, 0, 0, 0)).toLocalDateTime().toLocalDate());
-    //
-    // Company company = computer.getCompany();
-    // assertNotNull(company);
-    // assertEquals(company.getName(), "companyNameOfComputer");
-    // assertEquals(company.getId(), 1L);
+    Computer computer = null;
+    try {
+      computer = computerDaoMapper.mapRow(rs, 0);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    assertEquals(computer.getName(), "nameOfComputer");
+    assertEquals(computer.getId(), 1L);
+    assertEquals(computer.getIntroduced(),
+        (new Timestamp(2014, 3, 21, 0, 0, 0, 0)).toLocalDateTime().toLocalDate());
+    assertEquals(computer.getDiscontinued(),
+        (new Timestamp(2015, 8, 14, 0, 0, 0, 0)).toLocalDateTime().toLocalDate());
+
+    Company company = computer.getCompany();
+    assertNotNull(company);
+    assertEquals(company.getName(), "companyNameOfComputer");
+    assertEquals(company.getId(), 1L);
   }
 
   /**
@@ -83,16 +99,21 @@ public class DaoMapperTest {
   @Test
   public void test2() {
 
-    // Computer computer = ComputerDaoMapper.map(rs2);
-    //
-    // assertEquals(computer.getName(), "nameOfComputer");
-    // assertEquals(computer.getId(), 1L);
-    // assertNull(computer.getIntroduced());
-    // assertNull(computer.getDiscontinued());
-    //
-    // Company company = computer.getCompany();
-    // assertNotNull(company);
-    // assertNull(company.getName());
-    // assertEquals(company.getId(), 0);
+    Computer computer = null;
+    try {
+      computer = computerDaoMapper.mapRow(rs2, 0);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    assertEquals(computer.getName(), "nameOfComputer");
+    assertEquals(computer.getId(), 1L);
+    assertNull(computer.getIntroduced());
+    assertNull(computer.getDiscontinued());
+
+    Company company = computer.getCompany();
+    assertNotNull(company);
+    assertNull(company.getName());
+    assertEquals(company.getId(), 0);
   }
 }

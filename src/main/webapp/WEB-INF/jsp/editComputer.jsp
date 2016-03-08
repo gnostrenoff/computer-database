@@ -8,9 +8,9 @@
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="css/main.css" rel="stylesheet" media="screen">
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="resources/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="resources/css/main.css" rel="stylesheet" media="screen">
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
@@ -64,10 +64,10 @@
 			</div>
 		</div>
 	</section>
-	<script src="js/lib/jquery-1.11.1.js"></script>
-	<script src="js/lib/bootstrap.min.js"></script>
-	<script src="js/lib/jquery.validate.js"></script>
-	<script src="js/lib/jquery.validate.additional.js"></script>
-	<script src="js/editComputer.js"></script>
+	<script src="resources/js/lib/jquery-1.11.1.js"></script>
+	<script src="resources/js/lib/bootstrap.min.js"></script>
+	<script src="resources/js/lib/jquery.validate.js"></script>
+	<script src="resources/js/lib/jquery.validate.additional.js"></script>
+	<script src="resources/js/editComputer.js"></script>
 </body>
 </html>

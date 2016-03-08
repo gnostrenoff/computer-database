@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd 
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:property-placeholder location="classpath:db-cli.properties" />
+
+	<bean id="applicationContextProvder" class="com.gnostrenoff.cdb.spring.ApplicationContextProvider" />
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="${db-cli.DRIVER_CLASS}" />
+		<property name="url" value="${db-cli.URL}" />
+		<property name="username" value="${db-cli.USERNAME}" />
+		<property name="password" value="${db-cli.PASSWORD}" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.gnostrenoff.cdb.dao.impl" />
+	<context:component-scan base-package="com.gnostrenoff.cdb.service.impl" />
+
+</beans>

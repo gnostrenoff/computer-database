@@ -3,7 +3,6 @@ package com.gnostrenoff.cdb.dao.impl;
 import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.exception.DaoException;
 import com.gnostrenoff.cdb.dao.mapper.CompanyDaoMapper;
-import com.gnostrenoff.cdb.dao.mapper.ComputerDaoMapper;
 import com.gnostrenoff.cdb.model.Company;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,39 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
 	<display-name>Archetype Created Web Application</display-name>
+
+	<display-name>Spring MVC Application</display-name>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>mcvConfigLocation</param-name>
+			<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/application-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
 	<error-page>
 		<exception-type>com.gnostrenoff.cdb.dao.exception.DaoException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
@@ -21,16 +53,5 @@
 		<exception-type>com.gnostrenoff.cdb.controller.exception.InvalidComputerException</exception-type>
 		<location>/WEB-INF/jsp/500.jsp</location>
 	</error-page>
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/application-context.xml</param-value>
-	</context-param>
-
-	<listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
-	</listener>
 
 </web-app>

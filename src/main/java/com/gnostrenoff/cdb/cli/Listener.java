@@ -10,7 +10,9 @@ import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
-import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,13 +25,9 @@ import java.util.Scanner;
  */
 public class Listener {
 
-  /** The Constant computerService. */
-  public static final ComputerService computerService = ApplicationContextProvider
-      .getApplicationContext().getBean("computerService", ComputerServiceImpl.class);
-
-  /** The Constant companyService. */
-  public static final CompanyService companyService = ApplicationContextProvider
-      .getApplicationContext().getBean("companyService", CompanyServiceImpl.class);
+  /** The application context. */
+  public static final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+      "classpath:/application-context-cli.xml");
 
   /** The Constant scanIn. */
   public static final Scanner scanIn = new Scanner(System.in);
@@ -43,10 +41,17 @@ public class Listener {
   /** The input. */
   public static int input;
 
+  private CompanyService companyService;
+  private ComputerService computerService;
+
   /**
    * Listen.
    */
   public void listen() {
+
+    companyService = applicationContext.getBean("companyService", CompanyServiceImpl.class);
+    computerService = applicationContext.getBean("computerService", ComputerServiceImpl.class);
+
     while (!exit) {
 
       displayMenu();
@@ -92,18 +97,19 @@ public class Listener {
    */
   private void displayMenu() {
     System.out.println("\n\n");
-    System.out.println("\t############################");
-    System.out.println("\t# what do you want to do ?");
-    System.out.println("\t#");
-    System.out.println("\t#  * 1 - list all companies");
-    System.out.println("\t#  * 2 - list all computers");
-    System.out.println("\t#  * 3 - create computer");
-    System.out.println("\t#  * 4 - read detail computer");
-    System.out.println("\t#  * 5 - update computer");
-    System.out.println("\t#  * 6 - delete computer");
-    System.out.println("\t#  * 7 - delete computer by company id");
-    System.out.println("\t#  * 8 - exit");
-    System.out.println("\t############################");
+    System.out.println("\t===========================================");
+    System.out.println("\t|   SELECT YOUR OPTION                    |");
+    System.out.println("\t===========================================");
+    System.out.println("\t| Options:                                |");
+    System.out.println("\t|        1. list all companies            |");
+    System.out.println("\t|        2. list all computers            |");
+    System.out.println("\t|        3. create computer               |");
+    System.out.println("\t|        4. read detail computer          |");
+    System.out.println("\t|        5. update computer               |");
+    System.out.println("\t|        6. delete computer               |");
+    System.out.println("\t|        7. delete computer by company id |");
+    System.out.println("\t|        8. exit                          |");
+    System.out.println("\t===========================================");
   }
 
   /**

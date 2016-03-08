@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.cli;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Launcher.
  */

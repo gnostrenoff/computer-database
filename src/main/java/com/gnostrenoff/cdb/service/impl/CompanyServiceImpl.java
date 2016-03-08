@@ -19,7 +19,6 @@ import java.util.List;
  * @author excilys
  */
 @Service("companyService")
-@Transactional
 public class CompanyServiceImpl implements CompanyService {
 
   /** The Constant LOGGER. */

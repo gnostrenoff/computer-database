@@ -23,6 +23,10 @@ public class ComputerDaoMapper implements RowMapper<Computer> {
   /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDaoMapper.class);
 
+  public ComputerDaoMapper() {
+    super();
+  }
+
   @Override
   public Computer mapRow(ResultSet rs, int arg1) throws SQLException {
     Computer computer = new Computer();

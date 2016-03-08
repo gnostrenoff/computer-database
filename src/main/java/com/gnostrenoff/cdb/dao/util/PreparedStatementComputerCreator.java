@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * class providing sql PreparedStatement.
  *

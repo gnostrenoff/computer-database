@@ -26,6 +26,7 @@
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<jcl.slf4j.version>1.7.18</jcl.slf4j.version>
 		<spring-web>4.2.5.RELEASE</spring-web>
+		<spring-webmvc.version>4.2.5.RELEASE</spring-webmvc.version>
 		<spring-core.version>4.2.5.RELEASE</spring-core.version>
 		<spring-beans.version>4.2.5.RELEASE</spring-beans.version>
 		<spring-jdbc.version>4.2.5.RELEASE</spring-jdbc.version>
@@ -118,6 +119,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring-web}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-webmvc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
