@@ -7,10 +7,8 @@ import com.gnostrenoff.cdb.dto.util.ComputerDtoValidator;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
-import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
-import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,9 +31,11 @@ public class EditController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /** The computer service. */
+  @Autowired
   private ComputerService computerService;
 
   /** The company service. */
+  @Autowired
   private CompanyService companyService;
 
   /**
@@ -63,10 +63,6 @@ public class EditController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
-        CompanyServiceImpl.class);
-    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
-        ComputerServiceImpl.class);
     long id;
 
     // get parameter
@@ -99,11 +95,7 @@ public class EditController extends HttpServlet {
   @RequestMapping(method = RequestMethod.POST)
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    companyService = ApplicationContextProvider.getApplicationContext().getBean("companyService",
-        CompanyServiceImpl.class);
-    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
-        ComputerServiceImpl.class);
-
+    
     // create computer dto from request
     ComputerDto dto = RequestMapper.toComputerDto(request);
 

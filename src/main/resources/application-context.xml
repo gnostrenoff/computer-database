@@ -32,5 +32,6 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.gnostrenoff.cdb.dao.impl" />
 	<context:component-scan base-package="com.gnostrenoff.cdb.service.impl" />
+	<context:component-scan base-package="com.gnostrenoff.cdb.dto" />
 
 </beans>

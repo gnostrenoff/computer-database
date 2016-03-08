@@ -1,6 +1,5 @@
 package com.gnostrenoff.cdb.dto;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ComputerDto.
  */
@@ -8,19 +7,19 @@ public class ComputerDto {
 
   /** The id. */
   private long id;
-  
+
   /** The name. */
   private String name;
-  
+
   /** The introduced. */
   private String introduced;
-  
+
   /** The discontinued. */
   private String discontinued;
-  
+
   /** The company name. */
   private String companyName;
-  
+
   /** The company id. */
   private long companyId;
 
@@ -33,11 +32,16 @@ public class ComputerDto {
   /**
    * Instantiates a new computer dto.
    *
-   * @param name the name
-   * @param introduced the introduced
-   * @param discontinued the discontinued
-   * @param companyName the company name
-   * @param companyId the company id
+   * @param name
+   *          the name
+   * @param introduced
+   *          the introduced
+   * @param discontinued
+   *          the discontinued
+   * @param companyName
+   *          the company name
+   * @param companyId
+   *          the company id
    */
   public ComputerDto(String name, String introduced, String discontinued, String companyName,
       long companyId) {
@@ -61,7 +65,8 @@ public class ComputerDto {
   /**
    * Sets the company id.
    *
-   * @param companyId the new company id
+   * @param companyId
+   *          the new company id
    */
   public void setCompanyId(long companyId) {
     this.companyId = companyId;
@@ -79,7 +84,8 @@ public class ComputerDto {
   /**
    * Sets the id.
    *
-   * @param id the new id
+   * @param id
+   *          the new id
    */
   public void setId(long id) {
     this.id = id;
@@ -97,7 +103,8 @@ public class ComputerDto {
   /**
    * Sets the name.
    *
-   * @param name the new name
+   * @param name
+   *          the new name
    */
   public void setName(String name) {
     this.name = name;
@@ -115,7 +122,8 @@ public class ComputerDto {
   /**
    * Sets the introduced.
    *
-   * @param introduced the new introduced
+   * @param introduced
+   *          the new introduced
    */
   public void setIntroduced(String introduced) {
     this.introduced = introduced;
@@ -133,7 +141,8 @@ public class ComputerDto {
   /**
    * Sets the discontinued.
    *
-   * @param discontinued the new discontinued
+   * @param discontinued
+   *          the new discontinued
    */
   public void setDiscontinued(String discontinued) {
     this.discontinued = discontinued;
@@ -151,7 +160,8 @@ public class ComputerDto {
   /**
    * Sets the company name.
    *
-   * @param companyName the new company name
+   * @param companyName
+   *          the new company name
    */
   public void setCompanyName(String companyName) {
     this.companyName = companyName;

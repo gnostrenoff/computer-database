@@ -32,6 +32,8 @@
 		<spring-jdbc.version>4.2.5.RELEASE</spring-jdbc.version>
 		<spring-tx.version>4.2.5.RELEASE</spring-tx.version>
 		<spring-test.version>4.2.5.RELEASE</spring-test.version>
+		<validation-api.version>1.1.0.Final</validation-api.version>
+		<hibernate-validation>5.2.4.Final</hibernate-validation>
 	</properties>
 
 	<dependencies>
@@ -150,6 +152,18 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<!-- validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${validation-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validation}</version>
 		</dependency>
 
 		<!--Logging for spring -->

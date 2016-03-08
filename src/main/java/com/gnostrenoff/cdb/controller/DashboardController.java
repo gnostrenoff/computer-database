@@ -6,9 +6,8 @@ import com.gnostrenoff.cdb.dto.PageDto;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
-import com.gnostrenoff.cdb.spring.ApplicationContextProvider;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// TODO: Auto-generated Javadoc
 /**
  * Servlet implementation class ComputerServlet.
  */
@@ -33,6 +31,7 @@ public class DashboardController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /** The computer service. */
+  @Autowired
   private ComputerService computerService;
 
   /**
@@ -58,9 +57,6 @@ public class DashboardController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    computerService = ApplicationContextProvider.getApplicationContext().getBean("computerService",
-        ComputerServiceImpl.class);
-
     // create a QueryParams from the request
     QueryParams params = RequestMapper.toParams(request);
     // get computers list
@@ -78,7 +74,7 @@ public class DashboardController extends HttpServlet {
   }
 
   /**
-   * Do post.
+   * Do post : delete a computer
    *
    * @param request
    *          the request
@@ -93,7 +89,18 @@ public class DashboardController extends HttpServlet {
   @RequestMapping(method = RequestMethod.POST)
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    doGet(request, response);
+
+    String selection = request.getParameter("selection");
+    String[] idTable = selection.split(",");
+
+    if (idTable != null && idTable.length > 0) {
+      for (String id : idTable) {
+        computerService.delete(Long.parseLong(id));
+      }
+    }
+
+    response.sendRedirect("/computer-database/dashboard");
+
   }
 
 }
