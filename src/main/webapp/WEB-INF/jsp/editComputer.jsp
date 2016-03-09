@@ -73,6 +73,7 @@
 							or <a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
 					</sf:form>
+					<sf:errors path="computerDto" cssclass="error"></sf:errors>
 				</div>
 			</div>
 		</div>

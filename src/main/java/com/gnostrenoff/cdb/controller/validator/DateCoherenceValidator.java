@@ -27,7 +27,10 @@ public class DateCoherenceValidator implements ConstraintValidator<DateCoherence
       if (introduced == null || introduced.isEmpty()) {
         return false;
       } else {
-        // check if dates order is correct
+        // check if dates order is correct (check only if syntax is correct
+        if (!DateFormat.checkSyntax(discontinued) || !DateFormat.checkSyntax(introduced)) {
+          return true;
+        }
         return LocalDate.parse(introduced, FORMATTER)
             .isBefore(LocalDate.parse(discontinued, FORMATTER));
       }

@@ -2,8 +2,8 @@ package com.gnostrenoff.cdbtests.junit.dto;
 
 import static org.junit.Assert.fail;
 
-import com.gnostrenoff.cdb.controller.exception.InvalidComputerException;
 import com.gnostrenoff.cdb.dto.ComputerDto;
+import com.gnostrenoff.cdb.dto.exception.DtoInvalidComputerException;
 import com.gnostrenoff.cdb.dto.util.ComputerDtoValidator;
 
 import org.junit.BeforeClass;
@@ -59,7 +59,7 @@ public class ValidatorDtoTest {
   public void validateGood1() {
     try {
       ComputerDtoValidator.validate(goodDto1);
-    } catch (InvalidComputerException e) {
+    } catch (DtoInvalidComputerException e) {
       fail();
     }
   }
@@ -71,7 +71,7 @@ public class ValidatorDtoTest {
   public void validateGood2() {
     try {
       ComputerDtoValidator.validate(goodDto2);
-    } catch (InvalidComputerException e) {
+    } catch (DtoInvalidComputerException e) {
       fail();
     }
   }
@@ -83,7 +83,7 @@ public class ValidatorDtoTest {
   public void validateGood3() {
     try {
       ComputerDtoValidator.validate(goodDto3);
-    } catch (InvalidComputerException e) {
+    } catch (DtoInvalidComputerException e) {
       fail();
     }
   }
@@ -91,7 +91,7 @@ public class ValidatorDtoTest {
   /**
    * Validate bad1.
    */
-  @Test(expected = InvalidComputerException.class)
+  @Test(expected = DtoInvalidComputerException.class)
   public void validateBad1() {
     ComputerDtoValidator.validate(badDto1);
   }
@@ -99,7 +99,7 @@ public class ValidatorDtoTest {
   /**
    * Validate bad2.
    */
-  @Test(expected = InvalidComputerException.class)
+  @Test(expected = DtoInvalidComputerException.class)
   public void validateBad2() {
     ComputerDtoValidator.validate(badDto2);
   }
@@ -107,7 +107,7 @@ public class ValidatorDtoTest {
   /**
    * Validate bad3.
    */
-  @Test(expected = InvalidComputerException.class)
+  @Test(expected = DtoInvalidComputerException.class)
   public void validateBad3() {
     ComputerDtoValidator.validate(badDto3);
   }
@@ -115,7 +115,7 @@ public class ValidatorDtoTest {
   /**
    * Validate bad4.
    */
-  @Test(expected = InvalidComputerException.class)
+  @Test(expected = DtoInvalidComputerException.class)
   public void validateBad4() {
     ComputerDtoValidator.validate(badDto4);
   }

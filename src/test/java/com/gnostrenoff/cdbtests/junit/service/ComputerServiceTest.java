@@ -7,7 +7,7 @@ import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -91,7 +91,7 @@ public class ComputerServiceTest {
   /**
    * Creates the bad.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void createBad() {
     computerService.create(badComputer);
   }
@@ -99,7 +99,7 @@ public class ComputerServiceTest {
   /**
    * Creates the bad2.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void createBad2() {
     computerService.create(badComputer2);
   }
@@ -107,7 +107,7 @@ public class ComputerServiceTest {
   /**
    * Creates the bad3.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void createBad3() {
     computerService.create(badComputer3);
   }
@@ -115,7 +115,7 @@ public class ComputerServiceTest {
   /**
    * Creates the bad4.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void createBad4() {
     computerService.create(badComputer4);
   }
@@ -123,7 +123,7 @@ public class ComputerServiceTest {
   /**
    * Creates the bad5.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void createBad5() {
     computerService.create(badComputer5);
   }
@@ -135,7 +135,7 @@ public class ComputerServiceTest {
   public void createGood() {
     try {
       computerService.create(goodComputer);
-    } catch (ComputerValidatorException e) {
+    } catch (ServiceValidatorException e) {
       fail();
     }
   }
@@ -143,7 +143,7 @@ public class ComputerServiceTest {
   /**
    * Updates bad.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void updateBad() {
     computerService.update(badComputer);
   }
@@ -151,7 +151,7 @@ public class ComputerServiceTest {
   /**
    * Updates bad2.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void updateBad2() {
     computerService.update(badComputer2);
   }
@@ -159,7 +159,7 @@ public class ComputerServiceTest {
   /**
    * Updates bad3.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void updateBad3() {
     computerService.update(badComputer3);
   }
@@ -167,7 +167,7 @@ public class ComputerServiceTest {
   /**
    * Updates the bad4.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void updateBad4() {
     computerService.create(badComputer4);
   }
@@ -175,7 +175,7 @@ public class ComputerServiceTest {
   /**
    * Updates the bad5.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void updateBad5() {
     computerService.create(badComputer5);
   }
@@ -187,7 +187,7 @@ public class ComputerServiceTest {
   public void updateGood() {
     try {
       computerService.update(goodComputer);
-    } catch (ComputerValidatorException e) {
+    } catch (ServiceValidatorException e) {
       fail();
     }
 
@@ -196,7 +196,7 @@ public class ComputerServiceTest {
   /**
    * Deletes bad.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void deleteBad() {
     computerService.delete(0);
   }
@@ -204,7 +204,7 @@ public class ComputerServiceTest {
   /**
    * Deletes bad2.
    */
-  @Test(expected = ComputerValidatorException.class)
+  @Test(expected = ServiceValidatorException.class)
   public void deleteBad2() {
     computerService.delete(-1);
   }
@@ -216,7 +216,7 @@ public class ComputerServiceTest {
   public void deleteGood() {
     try {
       computerService.delete(1);
-    } catch (ComputerValidatorException e) {
+    } catch (ServiceValidatorException e) {
       fail();
     }
   }

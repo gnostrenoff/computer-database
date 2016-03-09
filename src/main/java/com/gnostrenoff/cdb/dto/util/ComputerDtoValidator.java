@@ -1,7 +1,7 @@
 package com.gnostrenoff.cdb.dto.util;
 
-import com.gnostrenoff.cdb.controller.exception.InvalidComputerException;
 import com.gnostrenoff.cdb.dto.ComputerDto;
+import com.gnostrenoff.cdb.dto.exception.DtoInvalidComputerException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class ComputerDtoValidator {
 
     String name = computer.getName();
     if (name == null || name.isEmpty()) {
-      throw new InvalidComputerException("computer has no name");
+      throw new DtoInvalidComputerException("computer has no name");
     }
 
     String introduced = computer.getIntroduced();
@@ -48,7 +48,7 @@ public class ComputerDtoValidator {
 
     if (!hasIntroduced && hasDiscontinued) {
       LOGGER.error("no introduced date");
-      throw new InvalidComputerException("no introduced date");
+      throw new DtoInvalidComputerException("no introduced date");
     }
 
   }
@@ -67,7 +67,7 @@ public class ComputerDtoValidator {
       dateFormat.parse(date.trim());
     } catch (ParseException pe) {
       LOGGER.error("date invalid");
-      throw new InvalidComputerException("date invalid");
+      throw new DtoInvalidComputerException("date invalid");
     }
 
   }

@@ -5,7 +5,7 @@ package com.gnostrenoff.cdb.service.exception;
  *
  * @author excilys
  */
-public class ComputerValidatorException extends RuntimeException {
+public class ServiceValidatorException extends RuntimeException {
 
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 1L;
@@ -15,11 +15,11 @@ public class ComputerValidatorException extends RuntimeException {
    *
    * @param message the message
    */
-  public ComputerValidatorException(String message) {
+  public ServiceValidatorException(String message) {
     super(message);
   }
   
-  public ComputerValidatorException(String message, Throwable cause) {
+  public ServiceValidatorException(String message, Throwable cause) {
     super(message, cause);
   }
 

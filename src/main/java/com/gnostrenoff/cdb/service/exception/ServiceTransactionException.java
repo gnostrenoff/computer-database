@@ -3,7 +3,7 @@ package com.gnostrenoff.cdb.service.exception;
 /**
  * The Class TransactionException.
  */
-public class TransactionException extends RuntimeException {
+public class ServiceTransactionException extends RuntimeException {
 
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 1L;
@@ -13,11 +13,11 @@ public class TransactionException extends RuntimeException {
    *
    * @param message the message
    */
-  public TransactionException(String message) {
+  public ServiceTransactionException(String message) {
     super(message);
   }
   
-  public TransactionException(String message, Throwable cause) {
+  public ServiceTransactionException(String message, Throwable cause) {
     super(message, cause);
   }
 }

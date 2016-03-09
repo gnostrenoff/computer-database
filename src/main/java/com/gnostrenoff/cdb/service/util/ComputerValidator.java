@@ -2,7 +2,7 @@ package com.gnostrenoff.cdb.service.util;
 
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class ComputerValidator {
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerValidator.class);
 
   /**
-   * Validate.
+   * Validate the computer.
    *
    * @param computer
    *          the computer
@@ -32,22 +32,22 @@ public class ComputerValidator {
 
     if (name == null || name.equals("")) {
       LOGGER.error("no name found in computer");
-      throw new ComputerValidatorException("no name found in computer");
+      throw new ServiceValidatorException("no name found in computer");
     }
     if (introduced != null && discontinued != null) {
       if (!computer.getDiscontinued().isAfter(computer.getIntroduced())) {
         LOGGER.error("invalid dates order");
-        throw new ComputerValidatorException("invalid dates order");
+        throw new ServiceValidatorException("invalid dates order");
       }
     }
     if (introduced == null && discontinued != null) {
       LOGGER.error("no introduced date");
-      throw new ComputerValidatorException("no introduced date");
+      throw new ServiceValidatorException("no introduced date");
     }
     if (company != null) {
       if (company.getId() < 0) {
         LOGGER.error("invalid company");
-        throw new ComputerValidatorException("invalid company");
+        throw new ServiceValidatorException("invalid company");
       }
     }
   }

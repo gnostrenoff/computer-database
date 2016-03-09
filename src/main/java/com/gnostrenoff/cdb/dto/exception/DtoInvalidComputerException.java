@@ -1,11 +1,11 @@
-package com.gnostrenoff.cdb.controller.exception;
+package com.gnostrenoff.cdb.dto.exception;
 
 /**
  * Exception thrown when dto computer has not valid data.
  *
  * @author excilys
  */
-public class InvalidComputerException extends RuntimeException {
+public class DtoInvalidComputerException extends RuntimeException {
 
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 1L;
@@ -15,11 +15,11 @@ public class InvalidComputerException extends RuntimeException {
    *
    * @param message the message
    */
-  public InvalidComputerException(String message) {
+  public DtoInvalidComputerException(String message) {
     super(message);
   }
 
-  public InvalidComputerException(String message, Throwable cause) {
+  public DtoInvalidComputerException(String message, Throwable cause) {
     super(message, cause);
   }
   

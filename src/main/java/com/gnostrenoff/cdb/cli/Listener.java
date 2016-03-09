@@ -7,7 +7,7 @@ import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
 import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
 
@@ -175,7 +175,7 @@ public class Listener {
       computerService.create(newComputer);
       System.out
           .println("computer " + newComputer.getId() + " has been succesfully added to database");
-    } catch (ComputerValidatorException e) {
+    } catch (ServiceValidatorException e) {
       System.out.println("computer " + newComputer.getId()
           + " was NOT added to database because the dates are not correct");
     }
@@ -216,7 +216,7 @@ public class Listener {
       computerService.update(computer);
       System.out
           .println("computer " + computer.getId() + " has been succesfully updated to database");
-    } catch (ComputerValidatorException e) {
+    } catch (ServiceValidatorException e) {
       System.out.println("computer " + computer.getId()
           + " was NOT updated in database because the dates are not correct");
     }

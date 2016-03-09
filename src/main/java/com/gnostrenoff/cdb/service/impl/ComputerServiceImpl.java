@@ -4,7 +4,7 @@ import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.exception.ComputerValidatorException;
+import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 import com.gnostrenoff.cdb.service.util.ComputerValidator;
 
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class ComputerServiceImpl implements ComputerService {
       computerDao.delete(computerId);
     } else {
       LOGGER.error("delete computer failed : invalid id");
-      throw new ComputerValidatorException("delete computer failed : invalid id");
+      throw new ServiceValidatorException("delete computer failed : invalid id");
     }
   }
 
