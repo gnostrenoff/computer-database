@@ -9,9 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
 <!-- Bootstrap -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="resources/css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="resources/css/main.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/resources/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet" media="screen">
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +26,7 @@
 			<h1 id="homeTitle">${nbTotalComputers}	Computer(s)	found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
-					<form id="searchForm" action="dashboard" method="GET"
+					<form id="searchForm" action="${pageContext.request.contextPath}/dashboard" method="GET"
 						class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
@@ -38,14 +38,14 @@
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="new">Add
+					<a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/new">Add
 						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="dashboard" method="POST">
+		<form id="deleteForm" action="${pageContext.request.contextPath}/dashboard/delete" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -85,7 +85,7 @@
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="${computer.id}"></td>
-							<td><a href="edit?id=${computer.id}" onclick=""><c:out
+							<td><a href="${pageContext.request.contextPath}/edit/${computer.id}" onclick=""><c:out
 										value="${computer.name}" /></a></td>
 							<td><c:out value="${computer.introduced}" /></td>
 							<td><c:out value="${computer.discontinued}" /></td>
@@ -102,9 +102,9 @@
 			<t:pagination uri="dashboard" page="${page}" />
 		</div>
 	</footer>
-	<script src="resources/js/lib/jquery.min.js"></script>
-	<script src="resources/js/lib/bootstrap.min.js"></script>
-	<script src="resources/js/lib/jquery.validate.min.js"></script>
-	<script src="resources/js/dashboard.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/lib/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/dashboard.js"></script>
 </body>
 </html>

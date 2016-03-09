@@ -9,13 +9,13 @@ import com.gnostrenoff.cdb.service.ComputerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,21 +41,17 @@ public class DashboardController extends HttpServlet {
   }
 
   /**
-   * Do get.
+   * Do get : get list of computers.
    *
+   * @param model
+   *          the model
    * @param request
    *          the request
-   * @param response
-   *          the response
-   * @throws ServletException
-   *           the servlet exception
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
+   * @return the string
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   @RequestMapping(method = RequestMethod.GET)
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  public String displayComputerUpdateForm(ModelMap model, HttpServletRequest request) {
 
     // create a QueryParams from the request
     QueryParams params = RequestMapper.toParams(request);
@@ -67,30 +63,22 @@ public class DashboardController extends HttpServlet {
     PageDto page = PageCreator.create(list, params, nbTotalComputers);
 
     // set attributes
-    request.setAttribute("nbTotalComputers", nbTotalComputers);
-    request.setAttribute("page", page);
+    model.addAttribute("nbTotalComputers", nbTotalComputers);
+    model.addAttribute("page", page);
 
-    request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
+    return "dashboard";
   }
-
+  
   /**
-   * Do post : delete a computer
+   * Delete computer.
    *
-   * @param request
-   *          the request
-   * @param response
-   *          the response
-   * @throws ServletException
-   *           the servlet exception
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * @param selection
+   *          the selection
+   * @return the string
    */
-  @RequestMapping(method = RequestMethod.POST)
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  public String deleteComputer(@RequestParam("selection") String selection) {
 
-    String selection = request.getParameter("selection");
     String[] idTable = selection.split(",");
 
     if (idTable != null && idTable.length > 0) {
@@ -98,9 +86,6 @@ public class DashboardController extends HttpServlet {
         computerService.delete(Long.parseLong(id));
       }
     }
-
-    response.sendRedirect("/computer-database/dashboard");
-
+    return "redirect:/dashboard";
   }
-
 }

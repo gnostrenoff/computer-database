@@ -1,20 +1,32 @@
 package com.gnostrenoff.cdb.dto;
 
+import com.gnostrenoff.cdb.controller.validator.ComputerDate;
+import com.gnostrenoff.cdb.controller.validator.DateCoherence;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * The Class ComputerDto.
  */
+@DateCoherence
 public class ComputerDto {
 
   /** The id. */
   private long id;
 
   /** The name. */
+  @NotNull
+  @NotEmpty
   private String name;
 
   /** The introduced. */
+  @ComputerDate
   private String introduced;
 
   /** The discontinued. */
+  @ComputerDate
   private String discontinued;
 
   /** The company name. */
