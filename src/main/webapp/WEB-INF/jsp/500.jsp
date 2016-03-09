@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Computer Database</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Bootstrap -->
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="resources/css/font-awesome.css" rel="stylesheet" media="screen">
-	<link href="resources/css/main.css" rel="stylesheet" media="screen">
+<title>Computer Database</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen">
+<link href="resources/css/font-awesome.css" rel="stylesheet"
+	media="screen">
+<link href="resources/css/main.css" rel="stylesheet" media="screen">
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard.html"> Application - Computer Database </a>
+			<a class="navbar-brand" href="dashboard"> Application - Computer
+				Database </a> <a href="?lang=en"
+				class="navbar-brand btn btn-inverse btn-large pull-right">en</a> <a
+				href="?lang=fr"
+				class="navbar-brand btn btn-inverse btn-large pull-right">fr</a>
 		</div>
+
 	</header>
 
 	<section id="main">
-		<div class="container">	
+		<div class="container">
 			<div class="alert alert-danger">
-				Error 500: An error has occured!
-				entered data is not valid
-				<br/>
+				Error 500: An error has occured! entered data is not valid <br />
 				<!-- stacktrace -->
 			</div>
 		</div>
