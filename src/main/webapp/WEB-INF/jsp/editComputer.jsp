@@ -24,9 +24,9 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a> <a href="?lang=en"
-				class="navbar-brand btn btn-inverse btn-large pull-right">en</a> <a
+				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
 				href="?lang=fr"
-				class="navbar-brand btn btn-inverse btn-large pull-right">fr</a>
+				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
 		</div>
 
 	</header>

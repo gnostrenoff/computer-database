@@ -24,9 +24,9 @@
 		<div class="container">
 			<a class="navbar-brand" href="dashboard"> Application - Computer
 				Database </a> <a href="?lang=en"
-				class="navbar-brand btn btn-inverse btn-large pull-right">en</a> <a
+				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
 				href="?lang=fr"
-				class="navbar-brand btn btn-inverse btn-large pull-right">fr</a>
+				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
 		</div>
 
 	</header>
@@ -36,20 +36,19 @@
 			<h1 id="homeTitle">${nbTotalComputers}
 				<spring:message code="dashboard.count" />
 			</h1>
-			<span style="float: right"> <a href="?lang=en">en</a> | <a
-				href="?lang=fr">fr</a>
-			</span>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
+					<spring:message code="dashboard.searchValue" var="searchValue" />
+					<spring:message code="dashboard.searchButton" var="searchButton" />
 					<form id="searchForm"
 						action="${pageContext.request.contextPath}/dashboard" method="GET"
 						class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" /> <input
+							class="form-control" placeholder="${searchValue}" /> <input
 							type="hidden" name="nbElementPerPage" value="${page.nbElements}">
 						<input type="hidden" name="pageIndex" value="${page.index}">
-						<input type="submit" id="searchsubmit" value="Filter by name"
+						<input type="submit" id="searchsubmit" value="${searchButton}"
 							class="btn btn-primary" />
 					</form>
 				</div>
