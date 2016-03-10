@@ -10,16 +10,29 @@ import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 
 /**
  * The Class ComputerDtoTest.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/application-context-test.xml" })
+@Ignore
 public class ComputerDtoTest {
+  
+  @Autowired
+  ComputerDtoMapper computerDtoMapper;
 
   /** The computer mock. */
   Computer computerMock;
@@ -29,6 +42,10 @@ public class ComputerDtoTest {
   
   /** The dto mock. */
   ComputerDto dtoMock;
+  
+  /** The dto mock. */
+  @Autowired
+  MessageSource messageSourceMock;
 
   /**
    * Before tests.
@@ -53,6 +70,11 @@ public class ComputerDtoTest {
     Mockito.when(dtoMock.getDiscontinued()).thenReturn("2015-03-12");
     Mockito.when(dtoMock.getCompanyName()).thenReturn("apple");
     Mockito.when(dtoMock.getCompanyId()).thenReturn((long) 1);
+    
+    Mockito
+        .when(
+            messageSourceMock.getMessage("util.dateFormat", null, LocaleContextHolder.getLocale()))
+        .thenReturn("yyyy-MM-dd");
   }
 
   /**
@@ -61,7 +83,7 @@ public class ComputerDtoTest {
   @Test
   public void toDtoTest() {
 
-    ComputerDto dto = ComputerDtoMapper.toDto(computerMock);
+    ComputerDto dto = computerDtoMapper.toDto(computerMock);
 
     assertNotNull(dto);
     assertTrue(dto.getName() instanceof String);
@@ -81,7 +103,7 @@ public class ComputerDtoTest {
   @Test
   public void toComputerTest() {
 
-    Computer computer = ComputerDtoMapper.toComputer(dtoMock);
+    Computer computer = computerDtoMapper.toComputer(dtoMock);
 
     assertNotNull(computer);
     assertTrue(computer.getName() instanceof String);

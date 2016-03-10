@@ -28,6 +28,9 @@ public class ComputerServiceImpl implements ComputerService {
   /** The computer dao. */
   @Autowired
   private ComputerDao computerDao;
+  
+  @Autowired
+  private ComputerValidator computerValidator;
 
   /**
    * Instantiates a new computer service impl.
@@ -38,7 +41,7 @@ public class ComputerServiceImpl implements ComputerService {
   @Override
   public void create(Computer computer) {
 
-    ComputerValidator.validate(computer);
+    computerValidator.validate(computer);
     computerDao.create(computer);
 
   }
@@ -55,7 +58,7 @@ public class ComputerServiceImpl implements ComputerService {
 
   @Override
   public void update(Computer computer) {
-    ComputerValidator.validate(computer);
+    computerValidator.validate(computer);
     computerDao.update(computer);
   }
 

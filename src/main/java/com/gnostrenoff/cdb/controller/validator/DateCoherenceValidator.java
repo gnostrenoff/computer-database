@@ -2,15 +2,17 @@ package com.gnostrenoff.cdb.controller.validator;
 
 import com.gnostrenoff.cdb.dto.ComputerDto;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@Component
 public class DateCoherenceValidator implements ConstraintValidator<DateCoherence, ComputerDto> {
 
-  public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  @Autowired
+  private DateChecker dateChecker;
 
   @Override
   public void initialize(DateCoherence arg0) {
@@ -22,19 +24,6 @@ public class DateCoherenceValidator implements ConstraintValidator<DateCoherence
     String introduced = computerDto.getIntroduced();
     String discontinued = computerDto.getDiscontinued();
 
-    if (discontinued != null && !discontinued.isEmpty()) {
-      // Make sure introduced date is also set
-      if (introduced == null || introduced.isEmpty()) {
-        return false;
-      } else {
-        // check if dates order is correct (check only if syntax is correct
-        if (!DateFormat.checkSyntax(discontinued) || !DateFormat.checkSyntax(introduced)) {
-          return true;
-        }
-        return LocalDate.parse(introduced, FORMATTER)
-            .isBefore(LocalDate.parse(discontinued, FORMATTER));
-      }
-    }
-    return true;
+    return dateChecker.checkCoherence(introduced, discontinued);
   }
 }

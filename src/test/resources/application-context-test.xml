@@ -32,8 +32,16 @@
 		<constructor-arg name="classToBeMocked"
 			value="com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl" />
 	</bean>
+	<!-- message source mock -->
+	<bean id="messageSourceMock" class="com.gnostrenoff.cdbtests.junit.mock.MockitoFactoryBean">
+		<constructor-arg name="classToBeMocked"
+			value="org.springframework.context.support.ReloadableResourceBundleMessageSource" />
+	</bean>
 
 	<context:annotation-config />
+	<context:component-scan base-package="com.gnostrenoff.cdb.dao.impl" />
 	<context:component-scan base-package="com.gnostrenoff.cdb.service.impl" />
+	<context:component-scan base-package="com.gnostrenoff.cdb.service.util" />
+	<context:component-scan base-package="com.gnostrenoff.cdb.dto.mapper" />
 
 </beans>

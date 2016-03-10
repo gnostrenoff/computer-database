@@ -4,10 +4,16 @@ import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class is providing a static method to convert a dto to a computer object, and a computer
@@ -15,10 +21,12 @@ import java.util.List;
  *
  * @author excilys
  */
+@Component
 public class ComputerDtoMapper {
 
-  /** format for dates. */
-  public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  /** The message source. */
+  @Autowired
+  private MessageSource messageSource;
 
   /**
    * converts a dto in computer.
@@ -27,19 +35,23 @@ public class ComputerDtoMapper {
    *          the dto
    * @return computer
    */
-  public static Computer toComputer(ComputerDto dto) {
+  public Computer toComputer(ComputerDto dto) {
+    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+        messageSource.getMessage("util.dateFormat", null, LocaleContextHolder.getLocale()));
+    
     Computer computer = new Computer();
     computer.setName(dto.getName());
     computer.setId(dto.getId());
 
     String strIntroduced = dto.getIntroduced();
     if (strIntroduced != null && !strIntroduced.isEmpty()) {
-      LocalDate introduced = LocalDate.parse(strIntroduced, FORMATTER);
+      LocalDate introduced = LocalDate.parse(strIntroduced, formatter);
       computer.setIntroduced(introduced);
     }
     String strDiscontinued = dto.getDiscontinued();
     if (strDiscontinued != null && !strDiscontinued.isEmpty()) {
-      LocalDate discontinued = LocalDate.parse(strDiscontinued, FORMATTER);
+      LocalDate discontinued = LocalDate.parse(strDiscontinued, formatter);
       computer.setDiscontinued(discontinued);
     }
 
@@ -60,17 +72,20 @@ public class ComputerDtoMapper {
    *          the computer
    * @return dto
    */
-  public static ComputerDto toDto(Computer computer) {
+  public ComputerDto toDto(Computer computer) {
+    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+        messageSource.getMessage("util.dateFormat", null, LocaleContextHolder.getLocale()));
 
     ComputerDto computerDto = new ComputerDto();
     computerDto.setName(computer.getName());
     computerDto.setId(computer.getId());
 
     if (computer.getIntroduced() != null) {
-      computerDto.setIntroduced(computer.getIntroduced().format(FORMATTER));
+      computerDto.setIntroduced(computer.getIntroduced().format(formatter));
     }
     if (computer.getDiscontinued() != null) {
-      computerDto.setDiscontinued(computer.getDiscontinued().format(FORMATTER));
+      computerDto.setDiscontinued(computer.getDiscontinued().format(formatter));
     }
 
     Company company = computer.getCompany();
@@ -89,7 +104,7 @@ public class ComputerDtoMapper {
    *          list of dtos
    * @return computerList list of computers
    */
-  public static List<Computer> toComputerList(List<ComputerDto> dtoList) {
+  public List<Computer> toComputerList(List<ComputerDto> dtoList) {
 
     List<Computer> computerList = new ArrayList<>();
 
@@ -105,7 +120,7 @@ public class ComputerDtoMapper {
    *          list of computers
    * @return dtoList of dtos
    */
-  public static List<ComputerDto> toDtoList(List<Computer> computerList) {
+  public List<ComputerDto> toDtoList(List<Computer> computerList) {
 
     List<ComputerDto> dtoList = new ArrayList<>();
 
@@ -113,5 +128,4 @@ public class ComputerDtoMapper {
 
     return dtoList;
   }
-
 }

@@ -5,12 +5,19 @@ import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
  * The Class PageCreator.
  */
+@Component
 public class PageCreator {
+  
+  @Autowired
+  private ComputerDtoMapper computerDtoMapper;
 
   /**
    * Creates the.
@@ -21,7 +28,7 @@ public class PageCreator {
    *          the query params
    * @return the page dto
    */
-  public static PageDto create(List<Computer> computerList, QueryParams queryParams) {
+  public PageDto create(List<Computer> computerList, QueryParams queryParams) {
 
     PageDto pageDto = new PageDto(queryParams.getIndex(), queryParams.getNbElements());
 
@@ -33,7 +40,7 @@ public class PageCreator {
 
     pageDto.setNbTotalPages(totalPages);
     pageDto.setNbTotalComputers(nbComputers);
-    pageDto.setComputerList(ComputerDtoMapper.toDtoList(computerList));
+    pageDto.setComputerList(computerDtoMapper.toDtoList(computerList));
     pageDto.setSearch(queryParams.getSearch());
     pageDto.setOrderBy(queryParams.getOrderBy().toString());
     pageDto.setOrder(queryParams.getOrder());

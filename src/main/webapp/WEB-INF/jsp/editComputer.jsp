@@ -36,7 +36,7 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<h1>
-						<spring:message code="common.new" />
+						<spring:message code="common.${action}" />
 					</h1>
 					<sf:form
 						action="${pageContext.request.contextPath}/computer/${action}"
@@ -138,7 +138,7 @@
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.additional.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/addComputer.js"></script>
+	<%-- <script
+		src="${pageContext.request.contextPath}/resources/js/addComputer.js"></script> --%>
 </body>
 </html>

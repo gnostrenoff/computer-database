@@ -6,7 +6,6 @@ import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.dto.PageDto;
 import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
-import com.gnostrenoff.cdb.dto.util.ComputerDtoValidator;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 import com.gnostrenoff.cdb.service.CompanyService;
@@ -54,6 +53,12 @@ public class ComputerController {
   /** The company service. */
   @Autowired
   private CompanyService companyService;
+  
+  @Autowired
+  private ComputerDtoMapper computerDtoMapper;
+  
+  @Autowired
+  private PageCreator pageCreator;
 
   /**
    * Display computer form for a creation.
@@ -88,10 +93,11 @@ public class ComputerController {
 
     if (result.hasErrors()) {
       model.addAttribute("companies", companyService.getList());
-      return "addComputer";
+      model.addAttribute("action", "new");
+      return "editComputer";
     } else {
       // get computer from dto
-      Computer computer = ComputerDtoMapper.toComputer(computerDto);
+      Computer computer = computerDtoMapper.toComputer(computerDto);
       // then save computer into database
       computerService.create(computer);
       return "redirect:/computer/dashboard";
@@ -116,7 +122,7 @@ public class ComputerController {
     // retrieve nb of computers
     params.setNbTotalComputers(computerService.count(params.getSearch()));
     // create page using list of computers and params
-    PageDto page = PageCreator.create(list, params);
+    PageDto page = pageCreator.create(list, params);
     // set attribute
     model.addAttribute("page", page);
 
@@ -137,8 +143,7 @@ public class ComputerController {
 
     // retrieve computer
     Computer computer = computerService.get(id);
-    ComputerDto computerDto = ComputerDtoMapper.toDto(computer);
-    ComputerDtoValidator.validate(computerDto);
+    ComputerDto computerDto = computerDtoMapper.toDto(computer);
 
     model.addAttribute("companies", companyService.getList());
     model.addAttribute("computerDto", computerDto);
@@ -163,10 +168,11 @@ public class ComputerController {
 
     if (result.hasErrors()) {
       model.addAttribute("companies", companyService.getList());
-      return "addComputer";
+      model.addAttribute("action", "edit");
+      return "editComputer";
     } else {
       // get computer from dto
-      Computer computer = ComputerDtoMapper.toComputer(computerDto);
+      Computer computer = computerDtoMapper.toComputer(computerDto);
 
       // then save computer into database
       computerService.update(computer);

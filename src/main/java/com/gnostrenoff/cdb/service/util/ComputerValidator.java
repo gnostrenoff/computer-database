@@ -6,12 +6,14 @@ import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 /**
  * The Class ComputerValidator.
  */
+@Component
 public class ComputerValidator {
 
   /** The Constant LOGGER. */
@@ -23,7 +25,7 @@ public class ComputerValidator {
    * @param computer
    *          the computer
    */
-  public static void validate(Computer computer) {
+  public void validate(Computer computer) {
 
     String name = computer.getName();
     LocalDate introduced = computer.getIntroduced();
