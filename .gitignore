@@ -128,3 +128,7 @@ fabric.properties
 # Docker
 docker/
 
+# checkstyle config
+.checkstyle
+/config
+
