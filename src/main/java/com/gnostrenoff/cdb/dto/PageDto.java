@@ -18,6 +18,9 @@ public class PageDto {
 
   /** number total of page. */
   private int nbTotalPages;
+  
+  /**  total nulber of computers. */
+  private int nbTotalComputers;
 
   /** search parameter. */
   private String search;
@@ -116,6 +119,24 @@ public class PageDto {
    */
   public int getNbTotalPages() {
     return nbTotalPages;
+  }
+
+  /**
+   * Gets the nb total computers.
+   *
+   * @return the nb total computers
+   */
+  public int getNbTotalComputers() {
+    return nbTotalComputers;
+  }
+
+  /**
+   * Sets the nb total computers.
+   *
+   * @param nbTotalComputers the new nb total computers
+   */
+  public void setNbTotalComputers(int nbTotalComputers) {
+    this.nbTotalComputers = nbTotalComputers;
   }
 
   /**

@@ -19,21 +19,20 @@ public class PageCreator {
    *          the computer list
    * @param queryParams
    *          the query params
-   * @param nbTotalElements
-   *          the nb total elements
    * @return the page dto
    */
-  public static PageDto create(List<Computer> computerList, QueryParams queryParams,
-      int nbTotalElements) {
+  public static PageDto create(List<Computer> computerList, QueryParams queryParams) {
 
     PageDto pageDto = new PageDto(queryParams.getIndex(), queryParams.getNbElements());
 
-    int totalPages = (nbTotalElements / queryParams.getNbElements());
-    if (nbTotalElements % queryParams.getNbElements() != 0) {
+    int nbComputers = queryParams.getNbTotalComputers();
+    int totalPages = (nbComputers / queryParams.getNbElements());
+    if (nbComputers % queryParams.getNbElements() != 0) {
       totalPages++;
     }
 
     pageDto.setNbTotalPages(totalPages);
+    pageDto.setNbTotalComputers(nbComputers);
     pageDto.setComputerList(ComputerDtoMapper.toDtoList(computerList));
     pageDto.setSearch(queryParams.getSearch());
     pageDto.setOrderBy(queryParams.getOrderBy().toString());

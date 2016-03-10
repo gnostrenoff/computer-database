@@ -15,6 +15,9 @@ public class QueryParams {
    */
   private int nbElements;
 
+  /** total nulber of computers. */
+  private int nbTotalComputers;
+
   /**
    * offset.
    */
@@ -101,6 +104,14 @@ public class QueryParams {
 
   public void setNbElements(int nbElements) {
     this.nbElements = nbElements;
+  }
+
+  public int getNbTotalComputers() {
+    return nbTotalComputers;
+  }
+
+  public void setNbTotalComputers(int nbTotalComputers) {
+    this.nbTotalComputers = nbTotalComputers;
   }
 
   public int getOffset() {

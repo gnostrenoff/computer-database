@@ -114,12 +114,10 @@ public class ComputerController {
     // get computers list
     List<Computer> list = computerService.getList(params);
     // retrieve nb of computers
-    int nbTotalComputers = computerService.count(params.getSearch());
-    // create page
-    PageDto page = PageCreator.create(list, params, nbTotalComputers);
-
-    // set attributes
-    model.addAttribute("nbTotalComputers", nbTotalComputers);
+    params.setNbTotalComputers(computerService.count(params.getSearch()));
+    // create page using list of computers and params
+    PageDto page = PageCreator.create(list, params);
+    // set attribute
     model.addAttribute("page", page);
 
     return "dashboard";

@@ -33,7 +33,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${nbTotalComputers}
+			<h1 id="homeTitle">${page.nbTotalComputers}
 				<spring:message code="dashboard.count" />
 			</h1>
 			<div id="actions" class="form-horizontal">
