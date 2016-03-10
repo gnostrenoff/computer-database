@@ -13,7 +13,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/computer/dashboard"> Application - Computer
 				Database </a> <a href="?lang=en"
 				class="navbar-brand btn btn-inverse btn-large pull-right">en</a> <a
 				href="?lang=fr"

@@ -9,7 +9,7 @@
 
 	<context:property-placeholder location="classpath:db.properties" />
 
-	<bean id="applicationContextProvder" class="com.gnostrenoff.cdb.spring.ApplicationContextProvider" />
+	<bean id="applicationContextProvider" class="com.gnostrenoff.cdb.spring.ApplicationContextProvider" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

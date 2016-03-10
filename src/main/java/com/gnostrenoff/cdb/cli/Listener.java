@@ -58,33 +58,33 @@ public class Listener {
       input = scanIn.nextInt();
 
       switch (input) {
-        case 1:
-          listCompanies();
-          break;
-        case 2:
-          listComputers();
-          break;
-        case 3:
-          create();
-          break;
-        case 4:
-          readDetails();
-          break;
-        case 5:
-          update();
-          break;
-        case 6:
-          deleteSingleComputer();
-          break;
-        case 7:
-          deleteByCompanyId();
-          break;
-        case 8:
-          exit = true;
-          break;
-        default:
-          System.out.println("command not reconized");
-          break;
+      case 1:
+        listCompanies();
+        break;
+      case 2:
+        listComputers();
+        break;
+      case 3:
+        create();
+        break;
+      case 4:
+        readDetails();
+        break;
+      case 5:
+        update();
+        break;
+      case 6:
+        deleteSingleComputer();
+        break;
+      case 7:
+        deleteByCompanyId();
+        break;
+      case 8:
+        exit = true;
+        break;
+      default:
+        System.out.println("command not reconized");
+        break;
       }
     }
     scanIn.close();
@@ -130,9 +130,10 @@ public class Listener {
     int initialNbComputers = computerService.count(null);
     int nbComputers = initialNbComputers;
     do {
-      QueryParams queryParams = new QueryParams(nbComputers < 10 ? nbComputers : 10,
-          initialNbComputers - nbComputers, OrderBy.NAME, Order.ASC);
-      ;
+      QueryParams queryParams = new QueryParams(
+          nbComputers % 10 == 0 ? nbComputers / 10 : nbComputers / 10 + 1,
+          nbComputers < 10 ? nbComputers : 10, initialNbComputers - nbComputers, OrderBy.NAME,
+          Order.ASC);
       List<Computer> list = computerService.getList(queryParams);
       for (int i = 0; i < list.size(); i++) {
         Computer comp = list.get(i);

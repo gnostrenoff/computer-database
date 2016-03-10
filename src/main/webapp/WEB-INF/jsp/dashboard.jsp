@@ -22,7 +22,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/computer/dashboard"> Application - Computer
 				Database </a> <a href="?lang=en"
 				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
 				href="?lang=fr"
@@ -41,7 +41,7 @@
 					<spring:message code="dashboard.searchValue" var="searchValue" />
 					<spring:message code="dashboard.searchButton" var="searchButton" />
 					<form id="searchForm"
-						action="${pageContext.request.contextPath}/dashboard" method="GET"
+						action="${pageContext.request.contextPath}/computer/dashboard" method="GET"
 						class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
@@ -54,7 +54,7 @@
 				</div>
 				<div class="pull-right">
 					<a class="btn btn-success" id="addComputer"
-						href="${pageContext.request.contextPath}/new"><spring:message
+						href="${pageContext.request.contextPath}/computer/new"><spring:message
 							code="common.new" /></a> <a class="btn btn-default"
 						id="editComputer" href="#" onclick="$.fn.toggleEditMode();"><spring:message
 							code="dashboard.edit" /></a>
@@ -63,7 +63,7 @@
 		</div>
 
 		<form id="deleteForm"
-			action="${pageContext.request.contextPath}/dashboard/delete"
+			action="${pageContext.request.contextPath}/computer/delete"
 			method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
@@ -105,7 +105,7 @@
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="${computer.id}"></td>
 							<td><a
-								href="${pageContext.request.contextPath}/edit/${computer.id}"
+								href="${pageContext.request.contextPath}/computer/edit/${computer.id}"
 								onclick=""><c:out value="${computer.name}" /></a></td>
 							<td><c:out value="${computer.introduced}" /></td>
 							<td><c:out value="${computer.discontinued}" /></td>

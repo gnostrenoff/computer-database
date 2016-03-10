@@ -20,8 +20,8 @@
 	<c:if test="${not empty order}">
 		<c:param name="order" value="${order}" />
 	</c:if>
-	<c:param name="pageIndex" value="${page}" />
-	<c:param name="nbElementPerPage" value="${number}" />
+	<c:param name="index" value="${page}" />
+	<c:param name="nbElements" value="${number}" />
 </c:url>
 
 <c:out value="${generatedUrl}" />

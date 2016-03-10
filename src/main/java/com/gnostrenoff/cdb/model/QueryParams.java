@@ -79,7 +79,8 @@ public class QueryParams {
    * @param order
    *          the order
    */
-  public QueryParams(int nbElements, int offset, String orderBy, String order) {
+  public QueryParams(int index, int nbElements, int offset, String orderBy, String order) {
+    this.index = index;
     this.nbElements = nbElements;
     this.offset = offset;
     this.orderBy = orderBy;

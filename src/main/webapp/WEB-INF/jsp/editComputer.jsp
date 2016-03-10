@@ -22,8 +22,9 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
-				Database </a> <a href="?lang=en"
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/computer/dashboard">
+				Application - Computer Database </a> <a href="?lang=en"
 				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
 				href="?lang=fr"
 				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
@@ -34,30 +35,63 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
-					<div class="label label-default pull-right">id :
-						${computerDto.id}</div>
 					<h1>
-						<spring:message code="edit.edit" />
+						<spring:message code="common.new" />
 					</h1>
-
-					<sf:form action="${pageContext.request.contextPath}/edit"
-						method="post" id="editcomputer-form" name="editcomputer-form"
+					<sf:form
+						action="${pageContext.request.contextPath}/computer/${action}"
+						method="post" id="addcomputer-form" name="addcomputer-form"
 						modelAttribute="computerDto">
-						<sf:input type="hidden" value="${computerDto.id}" path="id"
+
+						<!-- get value for placeholders, in case of update, some fields might be already set -->
+						<spring:message code="common.datePattern" var="datePattern" />
+						<c:if test="${action eq 'new'}">
+							<spring:message code="common.name" var="name" />
+							<spring:message code="common.datePattern" var="introduced" />
+							<spring:message code="common.datePattern" var="discontinued" />
+							<spring:message code="common.defaultCompanyName" var="companyId" />
+							<c:set var="companyId" value="0" />
+						</c:if>
+						<c:if test="${action eq 'edit'}">
+							<c:set var="name" value="${computerDto.name}" />
+							<c:choose>
+								<c:when test="${not empty computerDto.introduced}">
+									<c:set var="introduced" value="${computerDto.introduced}" />	
+    							</c:when>
+								<c:otherwise>
+									<c:set var="introduced" value="${datePattern}" />
+    							</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${not empty computerDto.discontinued}">
+									<c:set var="discontinued" value="${computerDto.discontinued}" />	
+    							</c:when>
+								<c:otherwise>
+									<c:set var="discontinued" value="${datePattern}" />
+    							</c:otherwise>
+							</c:choose>
+
+							<c:set var="companyName" value="${computerDto.companyName}" />
+							<c:set var="companyId" value="${computerDto.companyId}" />
+							
+							<sf:input type="hidden" value="${computerDto.id}" path="id"
 							name="id"></sf:input>
+							
+						</c:if>
+
 						<fieldset>
 							<div class="form-group">
 								<label for="computerName"><spring:message
 										code="common.name" /> *</label>
 								<sf:input type="text" path="name" cssClass="form-control"
-									id="computerName" placeholder="${computerDto.name}"></sf:input>
+									id="computerName" placeholder="${name}"></sf:input>
 								<sf:errors path="name" cssclass="error"></sf:errors>
 							</div>
 							<div class="form-group">
 								<label for="introduced"><spring:message
 										code="common.introduced" /></label>
 								<sf:input type="date" path="introduced" cssClass="form-control"
-									id="introduced" placeholder="${computerDto.introduced}"></sf:input>
+									id="introduced" placeholder="${introduced}"></sf:input>
 								<sf:errors path="introduced" cssclass="error"></sf:errors>
 							</div>
 							<div class="form-group">
@@ -65,7 +99,7 @@
 										code="common.discontinued" /></label>
 								<sf:input type="date" path="discontinued"
 									cssClass="form-control" id="discontinued"
-									placeholder="${computerDto.discontinued}"></sf:input>
+									placeholder="${discontinued}"></sf:input>
 								<sf:errors path="discontinued" cssclass="error"></sf:errors>
 							</div>
 							<div class="form-group">
@@ -73,8 +107,7 @@
 										code="common.company" /></label>
 								<sf:select path="companyId" cssClass="form-control"
 									id="company-id">
-									<option value="${computerDto.companyId}">${computerDto.companyId}-
-										${computerDto.companyName}</option>
+									<option value="${companyId}">${companyName}</option>
 									<c:forEach items="${companies}" var="company">
 										<option value="${company.id}">${company.id}-
 											${company.name}</option>
@@ -87,7 +120,8 @@
 							<input type="submit"
 								value="<spring:message
 									code="common.save" />"
-								class="btn btn-primary"></input> <a href="dashboard"
+								class="btn btn-primary"></input> <a
+								href="${pageContext.request.contextPath}/computer/dashboard"
 								class="btn btn-default"><spring:message code="common.cancel" /></a>
 						</div>
 					</sf:form>
@@ -105,6 +139,6 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.additional.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/js/editComputer.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/addComputer.js"></script>
 </body>
 </html>
