@@ -22,8 +22,9 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/computer/dashboard"> Application - Computer
-				Database </a> <a href="?lang=en"
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/computer/dashboard">
+				Application - Computer Database </a> <a href="?lang=en"
 				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
 				href="?lang=fr"
 				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
@@ -41,8 +42,8 @@
 					<spring:message code="dashboard.searchValue" var="searchValue" />
 					<spring:message code="dashboard.searchButton" var="searchButton" />
 					<form id="searchForm"
-						action="${pageContext.request.contextPath}/computer/dashboard" method="GET"
-						class="form-inline">
+						action="${pageContext.request.contextPath}/computer/dashboard"
+						method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
 							class="form-control" placeholder="${searchValue}" /> <input

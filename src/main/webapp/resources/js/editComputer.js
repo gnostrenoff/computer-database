@@ -1,5 +1,7 @@
 $(function() {
 
+	// check for date coherence : introduction date must be before discontinued
+	// date
 	jQuery.validator.addMethod("dateCompare",
 			function() {
 
@@ -13,6 +15,8 @@ $(function() {
 
 			}, "The ending date must be a later date than the start date");
 
+	// check for date coherence : introduction date must be given if
+	// discontinued date is given
 	jQuery.validator.addMethod("needsIntroduced", function() {
 
 		if ($("#discontinued").val().toString() == "") {
@@ -25,6 +29,13 @@ $(function() {
 
 	}, "An introduced date in mandatory with a discontinued date.");
 
+	// date syntax validation
+	jQuery.validator.addMethod("dateSyntax", function(value, element) {
+		return value.match(dateRegex);
+	}, "date not valid");
+
+	
+	// validate form
 	$("#editcomputer-form").validate(
 			{
 
@@ -32,14 +43,14 @@ $(function() {
 					name : "required",
 
 					introduced : {
-						dateCompare : true,
-						date : true
+						dateSyntax : true,
+						dateCompare : true						
 					},
 
 					discontinued : {
-						dateCompare : true,
+						dateSyntax : true,
 						needsIntroduced : true,
-						date : true
+						dateCompare : true			
 					},
 
 					companyId : {

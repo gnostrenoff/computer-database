@@ -40,7 +40,7 @@
 					</h1>
 					<sf:form
 						action="${pageContext.request.contextPath}/computer/${action}"
-						method="post" id="addcomputer-form" name="addcomputer-form"
+						method="post" id="editcomputer-form" name="editcomputer-form"
 						modelAttribute="computerDto">
 
 						<!-- get value for placeholders, in case of update, some fields might be already set -->
@@ -56,27 +56,27 @@
 							<c:set var="name" value="${computerDto.name}" />
 							<c:choose>
 								<c:when test="${not empty computerDto.introduced}">
-									<c:set var="introduced" value="${computerDto.introduced}" />	
-    							</c:when>
+									<c:set var="introduced" value="${computerDto.introduced}" />
+								</c:when>
 								<c:otherwise>
 									<c:set var="introduced" value="${datePattern}" />
-    							</c:otherwise>
+								</c:otherwise>
 							</c:choose>
 							<c:choose>
 								<c:when test="${not empty computerDto.discontinued}">
-									<c:set var="discontinued" value="${computerDto.discontinued}" />	
-    							</c:when>
+									<c:set var="discontinued" value="${computerDto.discontinued}" />
+								</c:when>
 								<c:otherwise>
 									<c:set var="discontinued" value="${datePattern}" />
-    							</c:otherwise>
+								</c:otherwise>
 							</c:choose>
 
 							<c:set var="companyName" value="${computerDto.companyName}" />
 							<c:set var="companyId" value="${computerDto.companyId}" />
-							
+
 							<sf:input type="hidden" value="${computerDto.id}" path="id"
-							name="id"></sf:input>
-							
+								name="id"></sf:input>
+
 						</c:if>
 
 						<fieldset>
@@ -130,6 +130,9 @@
 			</div>
 		</div>
 	</section>
+	<script>
+		var dateRegex = new RegExp("<spring:message code='util.dateRegex'/>","");
+	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery-1.11.1.js"></script>
 	<script
@@ -138,7 +141,7 @@
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.additional.js"></script>
-	<%-- <script
-		src="${pageContext.request.contextPath}/resources/js/addComputer.js"></script> --%>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/editComputer.js"></script>
 </body>
 </html>
