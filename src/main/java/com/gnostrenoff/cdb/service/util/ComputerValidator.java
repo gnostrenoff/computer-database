@@ -32,6 +32,12 @@ public class ComputerValidator {
     LocalDate discontinued = computer.getDiscontinued();
     Company company = computer.getCompany();
 
+    if (company != null) {
+      if (company.getId() < 0) {
+        LOGGER.error("invalid company");
+        throw new ServiceValidatorException("invalid company");
+      }
+    }
     if (name == null || name.equals("")) {
       LOGGER.error("no name found in computer");
       throw new ServiceValidatorException("no name found in computer");
@@ -45,12 +51,6 @@ public class ComputerValidator {
     if (introduced == null && discontinued != null) {
       LOGGER.error("no introduced date");
       throw new ServiceValidatorException("no introduced date");
-    }
-    if (company != null) {
-      if (company.getId() < 0) {
-        LOGGER.error("invalid company");
-        throw new ServiceValidatorException("invalid company");
-      }
     }
   }
 

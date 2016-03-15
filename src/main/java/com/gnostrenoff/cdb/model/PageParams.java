@@ -1,13 +1,10 @@
-package com.gnostrenoff.cdb.dao.model;
+package com.gnostrenoff.cdb.model;
 
 /**
  * The Class QueryParams.
  */
-public class QueryParams {
+public class PageParams {
 
-  /**
-   * index of page to get.
-   */
   private int index;
 
   /**
@@ -42,47 +39,10 @@ public class QueryParams {
   private String order;
 
   /**
-   * Instantiates a new query params.
-   */
-  public QueryParams() {
-  }
-
-  /**
-   * Instantiates a new query params.
-   *
-   * @param companyId
-   *          the company id
-   */
-  public QueryParams(long companyId) {
-    this.companyId = companyId;
-  }
-
-  /**
-   * Instantiates a new query params.
-   *
-   * @param index
-   *          the index.html
-   * @param nbElements
-   *          the nb elements
-   */
-  public QueryParams(int index, int nbElements) {
-    this.index = index;
-    this.nbElements = nbElements;
-  }
-
-  /**
-   * Instantiates a new query params.
-   *
-   * @param nbElements
-   *          the nb elements
-   * @param offset
-   *          the offset
-   * @param orderBy
-   *          the order by
    * @param order
-   *          the order
+   *          the order.
    */
-  public QueryParams(int index, int nbElements, int offset, String orderBy, String order) {
+  public PageParams(int index, int nbElements, int offset, String orderBy, String order) {
     this.index = index;
     this.nbElements = nbElements;
     this.offset = offset;

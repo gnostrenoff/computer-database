@@ -2,7 +2,6 @@ package com.gnostrenoff.cdb.dto;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * class model for Page.
  *
@@ -20,7 +19,7 @@ public class PageDto {
   private int nbTotalPages;
   
   /**  total nulber of computers. */
-  private int nbTotalComputers;
+  private long nbTotalComputers;
 
   /** search parameter. */
   private String search;
@@ -126,7 +125,7 @@ public class PageDto {
    *
    * @return the nb total computers
    */
-  public int getNbTotalComputers() {
+  public long getNbTotalComputers() {
     return nbTotalComputers;
   }
 
@@ -135,7 +134,7 @@ public class PageDto {
    *
    * @param nbTotalComputers the new nb total computers
    */
-  public void setNbTotalComputers(int nbTotalComputers) {
+  public void setNbTotalComputers(long nbTotalComputers) {
     this.nbTotalComputers = nbTotalComputers;
   }
 

@@ -31,6 +31,10 @@ $(function() {
 
 	// date syntax validation
 	jQuery.validator.addMethod("dateSyntax", function(value, element) {
+		
+		if(value =="") {
+			return true;
+		}	
 		return value.match(dateRegex);
 	}, "date not valid");
 
@@ -43,8 +47,7 @@ $(function() {
 					name : "required",
 
 					introduced : {
-						dateSyntax : true,
-						dateCompare : true						
+						dateSyntax : true,				
 					},
 
 					discontinued : {
@@ -74,7 +77,7 @@ $(function() {
 
 				submitHandler : function(form) {
 					form.submit();
-					alert('Computer has been successfully updated !');
+					alert('Computer has been successfully added !');
 				}
 			});
 });

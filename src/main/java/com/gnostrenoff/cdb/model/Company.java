@@ -1,18 +1,23 @@
 package com.gnostrenoff.cdb.model;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * The Class Company.
  */
-public class Company implements Serializable {
-
-  private static final long serialVersionUID = 8080712197594541733L;
+@Entity
+@Table(name = "company")
+public class Company {
 
   /** company id. */
+  @Id
   private long id;
 
   /** company name. */
+  @Column(name = "name")
   private String name;
 
   /**

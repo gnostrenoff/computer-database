@@ -2,8 +2,8 @@ package com.gnostrenoff.cdbtests.junit.service;
 
 import static org.junit.Assert.fail;
 
+import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.exception.DaoException;
-import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.ComputerService;
@@ -41,7 +41,7 @@ public class ComputerServiceTest {
 
   /** The computer dao mock. */
   @Autowired
-  private ComputerDaoImpl computerDaoMock;
+  private ComputerDao computerDaoMock;
 
   /**
    * Initialiation, executed once.
@@ -73,19 +73,19 @@ public class ComputerServiceTest {
   public void initTests() {
 
     // init dao mock
-    Mockito.doNothing().when(computerDaoMock).create(goodComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer2);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).create(badComputer3);
+    Mockito.doNothing().when(computerDaoMock).save(goodComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer2);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer3);
 
-    Mockito.doNothing().when(computerDaoMock).update(goodComputer);
+    Mockito.doNothing().when(computerDaoMock).save(goodComputer);
 
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer2);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).update(badComputer3);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer2);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer3);
 
-    Mockito.doNothing().when(computerDaoMock).delete(1);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).delete(0);
+    Mockito.doNothing().when(computerDaoMock).delete(1L);
+    Mockito.doThrow(new DaoException("")).when(computerDaoMock).delete(0L);
   }
 
   /**

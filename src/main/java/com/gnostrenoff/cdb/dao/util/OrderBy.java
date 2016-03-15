@@ -6,7 +6,7 @@ package com.gnostrenoff.cdb.dao.util;
 public final class OrderBy {
 
   /** The Constant NAME. */
-  public static final String NAME = "computer.name";
+  public static final String NAME = "name";
   
   /** The Constant INTRODUCED. */
   public static final String INTRODUCED = "introduced";

@@ -1,7 +1,5 @@
 package com.gnostrenoff.cdb.cli;
 
-import com.gnostrenoff.cdb.dao.util.Order;
-import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
@@ -13,10 +11,14 @@ import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,7 +29,7 @@ public class Listener {
 
   /** The application context. */
   public static final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-      "classpath:/application-context-cli.xml");
+      "classpath:/application-context.xml");
 
   /** The Constant scanIn. */
   public static final Scanner scanIn = new Scanner(System.in);
@@ -58,33 +60,33 @@ public class Listener {
       input = scanIn.nextInt();
 
       switch (input) {
-      case 1:
-        listCompanies();
-        break;
-      case 2:
-        listComputers();
-        break;
-      case 3:
-        create();
-        break;
-      case 4:
-        readDetails();
-        break;
-      case 5:
-        update();
-        break;
-      case 6:
-        deleteSingleComputer();
-        break;
-      case 7:
-        deleteByCompanyId();
-        break;
-      case 8:
-        exit = true;
-        break;
-      default:
-        System.out.println("command not reconized");
-        break;
+        case 1:
+          listCompanies();
+          break;
+        case 2:
+          listComputers();
+          break;
+        case 3:
+          create();
+          break;
+        case 4:
+          readDetails();
+          break;
+        case 5:
+          update();
+          break;
+        case 6:
+          deleteSingleComputer();
+          break;
+        case 7:
+          deleteByCompanyId();
+          break;
+        case 8:
+          exit = true;
+          break;
+        default:
+          System.out.println("command not reconized");
+          break;
       }
     }
     scanIn.close();
@@ -127,28 +129,19 @@ public class Listener {
    * List computers.
    */
   private void listComputers() {
-    int initialNbComputers = computerService.count(null);
-    int nbComputers = initialNbComputers;
-    do {
-      QueryParams queryParams = new QueryParams(
-          nbComputers % 10 == 0 ? nbComputers / 10 : nbComputers / 10 + 1,
-          nbComputers < 10 ? nbComputers : 10, initialNbComputers - nbComputers, OrderBy.NAME,
-          Order.ASC);
-      List<Computer> list = computerService.getList(queryParams);
-      for (int i = 0; i < list.size(); i++) {
-        Computer comp = list.get(i);
-        System.out.println(comp.toString());
-      }
+    List<Computer> computerList = new ArrayList<>();
+    Pageable pageRequest = new PageRequest(0, 10);
+    QueryParams params = new QueryParams(pageRequest, null);
+    Page<Computer> page = computerService.getList(params);
+    computerList.forEach(computer -> System.out.println(computer.toString()));
 
-      if (nbComputers < 10) {
-        System.out.println("\nNo more computer\n");
-        break;
-      }
-
-      nbComputers -= 10;
-      System.out.println("computers left : " + nbComputers + "\n");
-      System.out.println("continue (1) ?");
-    } while (scanIn.nextInt() == 1);
+    while (page.hasNext()) {
+      pageRequest = page.nextPageable();
+      params = new QueryParams(pageRequest, null);
+      page = computerService.getList(params);
+      computerList = page.getContent();
+      computerList.forEach(computer -> System.out.println(computer.toString()));
+    }
   }
 
   /**

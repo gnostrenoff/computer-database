@@ -1,17 +1,19 @@
 package com.gnostrenoff.cdb.controller;
 
-import com.gnostrenoff.cdb.controller.util.PageCreator;
+import com.gnostrenoff.cdb.controller.mapper.PageQueryMapper;
 import com.gnostrenoff.cdb.dao.util.Order;
 import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.dto.ComputerDto;
 import com.gnostrenoff.cdb.dto.PageDto;
 import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
+import com.gnostrenoff.cdb.dto.mapper.PageDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.QueryParams;
+import com.gnostrenoff.cdb.model.PageParams;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +42,8 @@ public class ComputerController {
    * @return the some bean
    */
   @ModelAttribute("params")
-  QueryParams getDefaultParams() {
-    return new QueryParams(1, 10, 0, OrderBy.NAME, Order.ASC);
+  PageParams getDefaultParams() {
+    return new PageParams(1, 10, 0, OrderBy.NAME, Order.ASC);
   }
 
   /** The computer service. */
@@ -58,7 +58,7 @@ public class ComputerController {
   private ComputerDtoMapper computerDtoMapper;
   
   @Autowired
-  private PageCreator pageCreator;
+  private PageDtoMapper pageDtoMapper;
 
   /**
    * Display computer form for a creation.
@@ -113,18 +113,13 @@ public class ComputerController {
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-  public String displayComputers(@ModelAttribute("params") QueryParams params, Model model) {
-
-    params.setOffset((params.getIndex() - 1) * params.getNbElements());
+  public String displayComputers(@ModelAttribute("params") PageParams params, Model model) {
     
     // get computers list
-    List<Computer> list = computerService.getList(params);
-    // retrieve nb of computers
-    params.setNbTotalComputers(computerService.count(params.getSearch()));
-    // create page using list of computers and params
-    PageDto page = pageCreator.create(list, params);
-    // set attribute
-    model.addAttribute("page", page);
+    Page<Computer> page = computerService.getList(PageQueryMapper.toQueryParams(params));
+    // set atributes
+    PageDto pageDto = pageDtoMapper.toPageDto(page, params);
+    model.addAttribute("page", pageDto);
 
     return "dashboard";
   }

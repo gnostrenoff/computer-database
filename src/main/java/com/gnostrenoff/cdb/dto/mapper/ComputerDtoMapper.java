@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * This class is providing a static method to convert a dto to a computer object, and a computer

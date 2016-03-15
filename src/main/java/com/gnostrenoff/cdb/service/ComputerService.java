@@ -3,9 +3,8 @@ package com.gnostrenoff.cdb.service;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.model.QueryParams;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
-// TODO: Auto-generated Javadoc
 /**
  * service for computers.
  *
@@ -31,10 +30,10 @@ public interface ComputerService {
   /**
    * load the complete list of existing computers in database.
    *
-   * @param params          TODO
-   * @return TODO
+   * @param params the params
+   * @return the list
    */
-  public List<Computer> getList(QueryParams params);
+  public Page<Computer> getList(QueryParams params);
 
   /**
    * updates the given computer in database.
@@ -56,6 +55,6 @@ public interface ComputerService {
    * @param params the params
    * @return row count
    */
-  public int count(String search);
+  public long count();
 
 }

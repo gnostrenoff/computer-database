@@ -1,28 +1,40 @@
 package com.gnostrenoff.cdb.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The Class Computer.
  */
-public class Computer implements Serializable {
-
-  private static final long serialVersionUID = 4027018618232051841L;
+@Entity
+@Table(name = "computer")
+public class Computer {
 
   /** id of computer. */
+  @Id
   private long id;
 
   /** name of computer. */
+  @Column(name = "name")
   private String name;
 
   /** date computer was introduced. */
+  @Column(name = "introduced")
   private LocalDate introduced;
 
   /** date computer was discontinued. */
+  @Column(name = "discontinued")
   private LocalDate discontinued;
 
   /** manufacturer. */
+  @ManyToOne
+  @JoinColumn(name = "company_id")
   private Company company;
 
   /**

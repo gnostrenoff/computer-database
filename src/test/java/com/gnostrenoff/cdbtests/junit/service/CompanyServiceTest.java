@@ -2,9 +2,9 @@ package com.gnostrenoff.cdbtests.junit.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import com.gnostrenoff.cdb.dao.CompanyDao;
+import com.gnostrenoff.cdb.dao.ComputerDao;
 import com.gnostrenoff.cdb.dao.exception.DaoException;
-import com.gnostrenoff.cdb.dao.impl.CompanyDaoImpl;
-import com.gnostrenoff.cdb.dao.impl.ComputerDaoImpl;
 import com.gnostrenoff.cdb.service.CompanyService;
 
 import org.junit.Before;
@@ -45,11 +45,11 @@ public class CompanyServiceTest {
 
   /** The company dao mock. */
   @Autowired
-  private CompanyDaoImpl companyDaoMock;
+  private CompanyDao companyDaoMock;
 
   /** The company dao mock. */
   @Autowired
-  private ComputerDaoImpl computerDao;
+  private ComputerDao computerDao;
 
   /**
    * Inits the.
@@ -77,7 +77,7 @@ public class CompanyServiceTest {
     }
 
     // init company dao mock
-    Mockito.doThrow(new DaoException("")).when(companyDaoMock).delete(1);
+    Mockito.doThrow(new DaoException("")).when(companyDaoMock).delete(1L);
   }
 
   /**
@@ -89,7 +89,7 @@ public class CompanyServiceTest {
   public void deleteById() {
     // expected : roolback between the two delete calls.
     companyService.delete(1);
-    assertNotNull(computerDao.get(1));
+    assertNotNull(computerDao.findOne(1L));
   }
 
 }

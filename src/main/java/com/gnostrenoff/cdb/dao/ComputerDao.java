@@ -1,74 +1,32 @@
 package com.gnostrenoff.cdb.dao;
 
 import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.model.QueryParams;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * interface for computer entity DAO.
  *
  * @author excilys
  */
-public interface ComputerDao {
+public interface ComputerDao extends JpaRepository<Computer, Long> {
 
+  
   /**
-   * save the given computer in database.
+   * custom methods to handle search parameter.
    *
-   * @param computer
-   *          to save
+   * @param searchParam the search param
+   * @param pageable the pageable
+   * @return the page
    */
-  public void create(Computer computer);
+  @Query("SELECT c FROM Computer c LEFT JOIN c.company cpy WHERE "
+      + "(c.name LIKE %:searchParam% OR cpy.name LIKE %:searchParam% )")
+  Page<Computer> findByNameAndCompanyLike(@Param("searchParam") String searchParam,
+      Pageable pageable);
 
-  /**
-   * retrieves a computer by id form database.
-   *
-   * @param computerId
-   *          id of computer to retrieve
-   * @return computer computer retrieved
-   */
-  public Computer get(long computerId);
-
-  /**
-   * load the complete list of existing computers in database.
-   *
-   * @param params
-   *          TODO
-   * @return list of computers
-   */
-  public List<Computer> getList(QueryParams params);
-
-  /**
-   * updates the given computer in database.
-   *
-   * @param computer
-   *          computer to update
-   */
-  public void update(Computer computer);
-
-  /**
-   * deletes the computer with the given id.
-   *
-   * @param computerId
-   *          id of the computer to delete
-   */
-  public void delete(long computerId);
-
-  /**
-   * deletes all the computers related to the given company id.
-   *
-   * @param computerId
-   *          id of the computer to delete
-   */
-  public void deleteByCompanyId(long companyId);
-
-  /**
-   * get row count of computer table.
-   *
-   * @param params
-   *          the params
-   * @return row count
-   */
-  public int count(String search);
-
+  void deleteByCompany_Id(@Param("searchParam") long id);
 }

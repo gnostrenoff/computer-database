@@ -10,9 +10,8 @@ import com.gnostrenoff.cdb.service.util.ComputerValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * implementation of a computer service.
@@ -28,7 +27,7 @@ public class ComputerServiceImpl implements ComputerService {
   /** The computer dao. */
   @Autowired
   private ComputerDao computerDao;
-  
+
   @Autowired
   private ComputerValidator computerValidator;
 
@@ -42,24 +41,29 @@ public class ComputerServiceImpl implements ComputerService {
   public void create(Computer computer) {
 
     computerValidator.validate(computer);
-    computerDao.create(computer);
+    computerDao.save(computer);
 
   }
 
   @Override
   public Computer get(long computerId) {
-    return computerDao.get(computerId);
+    return computerDao.findOne(computerId);
   }
 
   @Override
-  public List<Computer> getList(QueryParams params) {
-    return computerDao.getList(params);
+  public Page<Computer> getList(QueryParams params) {
+
+    String search = params.getSearchParam();
+    if (search != null && !search.isEmpty()) {
+      return computerDao.findByNameAndCompanyLike(search, params.getPageRequest());
+    }
+    return computerDao.findAll(params.getPageRequest());
   }
 
   @Override
   public void update(Computer computer) {
     computerValidator.validate(computer);
-    computerDao.update(computer);
+    computerDao.save(computer);
   }
 
   @Override
@@ -73,8 +77,8 @@ public class ComputerServiceImpl implements ComputerService {
   }
 
   @Override
-  public int count(String search) {
-    return computerDao.count(search);
+  public long count() {
+    return computerDao.count();
   }
 
 }

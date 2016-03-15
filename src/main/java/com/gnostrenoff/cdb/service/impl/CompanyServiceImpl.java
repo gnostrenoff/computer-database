@@ -40,12 +40,12 @@ public class CompanyServiceImpl implements CompanyService {
 
   @Override
   public List<Company> getList() {
-    return companyDao.getList();
+    return companyDao.findAll();
   }
 
   @Override
   public Company get(long companyId) {
-    return companyDao.get(companyId);
+    return companyDao.findOne(companyId);
   }
 
   @Override
@@ -54,7 +54,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     // first delete the related computers
     LOGGER.info("deleting the related computers");
-    computerDao.deleteByCompanyId(id);
+    computerDao.deleteByCompany_Id(id);
 
     // then delete company
     LOGGER.info("deleting company " + id);
