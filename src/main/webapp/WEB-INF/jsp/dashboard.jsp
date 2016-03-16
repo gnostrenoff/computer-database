@@ -84,7 +84,7 @@
 							</a>
 						</span></th>
 						<th><a
-							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="computer.name" order="${page.orderBy == 'computer.name' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>"><spring:message
+							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="name" order="${page.orderBy == 'name' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>"><spring:message
 									code="common.name" /></a></th>
 						<th><a
 							href="<t:link uri="${uri}" page="${page.index}" number="${page.nbElements}" search="${page.search}" orderBy="introduced" order="${page.orderBy == 'introduced' && page.order == 'ASC' ? 'DESC' : 'ASC'}"/>"><spring:message

@@ -37,21 +37,4 @@
 		</listener-class>
 	</listener>
 
-	<error-page>
-		<exception-type>com.gnostrenoff.cdb.dao.exception.DaoException</exception-type>
-		<location>/WEB-INF/jsp/500.jsp</location>
-	</error-page>
-	<error-page>
-		<exception-type>com.gnostrenoff.cdb.servlet.exception.DtoInvalidComputerException</exception-type>
-		<location>/WEB-INF/jsp/500.jsp</location>
-	</error-page>
-	<error-page>
-		<exception-type>com.gnostrenoff.cdb.service.exception.ServiceTransactionException</exception-type>
-		<location>/WEB-INF/jsp/500.jsp</location>
-	</error-page>
-	<error-page>
-		<exception-type>com.gnostrenoff.cdb.controller.exception.ServiceValidatorException</exception-type>
-		<location>/WEB-INF/jsp/500.jsp</location>
-	</error-page>
-
 </web-app>
