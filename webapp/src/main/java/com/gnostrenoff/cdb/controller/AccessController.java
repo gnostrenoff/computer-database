@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessController {
 
   /**
-   * Display computer creation form.
+   * Display login form.
    *
    * @return the string
    */
@@ -29,7 +29,7 @@ public class AccessController {
   }
   
   /**
-   * Display computer creation form.
+   * Display login form.
    *
    * @return the string
    */
@@ -40,7 +40,7 @@ public class AccessController {
   }
   
   /**
-   * Logout page.
+   * Performs logout, display page that indicates user has been correctly logged out if success.
    *
    * @param request the request
    * @param response the response

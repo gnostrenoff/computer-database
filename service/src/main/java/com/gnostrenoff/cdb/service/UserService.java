@@ -3,7 +3,7 @@ package com.gnostrenoff.cdb.service;
 import com.gnostrenoff.cdb.model.User;
 
 /**
- * service for computers.
+ * service for users.
  *
  * @author excilys
  */

@@ -54,11 +54,11 @@ public class ComputerDaoMapper implements RowMapper<Computer> {
   }
 
   /**
-   * Gets the args.
+   * Gets the attributes of the given computer.
    *
    * @param computer
    *          the computer
-   * @return the args
+   * @return the attributes of the computer in an object array
    */
   public static Object[] getRequiredArgs(Computer computer) {
 

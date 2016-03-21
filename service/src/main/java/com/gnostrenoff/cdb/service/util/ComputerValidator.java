@@ -20,7 +20,7 @@ public class ComputerValidator {
   private static final Logger LOGGER = LoggerFactory.getLogger(ComputerValidator.class);
 
   /**
-   * Validate the computer.
+   * Validate the computer. Throws an exception if the computer is not valid .
    *
    * @param computer
    *          the computer

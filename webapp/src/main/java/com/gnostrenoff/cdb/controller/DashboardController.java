@@ -45,14 +45,14 @@ public class DashboardController {
   private PageDtoMapper pageDtoMapper;
 
   /**
-   * Do get : get list of computers.
+   * Displays list of computers.
    *
    * @param params the params
    * @param model          the model
    * @return the string
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
-  @RequestMapping(value = {"/dashboard", "/"}, method = RequestMethod.GET)
+  @RequestMapping(value = {"/dashboard", "/", ""}, method = RequestMethod.GET)
   public String displayComputers(@ModelAttribute("params") PageParams params, Model model) {
 
     // get computers list

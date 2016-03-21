@@ -1,7 +1,7 @@
 package com.gnostrenoff.cdb.dao.util;
 
 /**
- * The Class Order.
+ * Contains all String for order parameters.
  */
 public final class Order {
 

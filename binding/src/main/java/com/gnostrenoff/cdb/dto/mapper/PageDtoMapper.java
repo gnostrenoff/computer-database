@@ -22,7 +22,7 @@ public class PageDtoMapper {
   private ComputerDtoMapper computerDtoMapper;
 
   /**
-   * To page dto.
+   * Converts a pageParams object into a PageDto.
    *
    * @param page the page
    * @param params the params

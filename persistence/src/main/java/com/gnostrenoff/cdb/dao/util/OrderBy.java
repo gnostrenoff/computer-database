@@ -1,7 +1,7 @@
 package com.gnostrenoff.cdb.dao.util;
 
 /**
- * The Class OrderBy.
+ * Contains all String for orderBy parameters.
  */
 public final class OrderBy {
 

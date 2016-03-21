@@ -1,20 +1,15 @@
 package com.gnostrenoff.cdb.controller;
 
-import com.gnostrenoff.cdb.dao.util.Order;
-import com.gnostrenoff.cdb.dao.util.OrderBy;
 import com.gnostrenoff.cdb.dto.ComputerDto;
-import com.gnostrenoff.cdb.dto.PageParams;
 import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.CompanyService;
 import com.gnostrenoff.cdb.service.ComputerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,21 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 
 /**
- * implementation for computer controller. It handles Create, Read, Update and delete computers.
+ * implementation for computer controller. It handles Create, Update and delete computers.
  */
 @Controller
 @RequestMapping("/computer")
 public class ComputerController {
-
-  /**
-   * Gets the default parameters to use in case there are not present in request.
-   *
-   * @return the some bean
-   */
-  @ModelAttribute("params")
-  PageParams getDefaultParams() {
-    return new PageParams(1, 10, 0, OrderBy.NAME, Order.ASC);
-  }
 
   @Autowired
   private ComputerService computerService;
@@ -145,13 +130,12 @@ public class ComputerController {
   }
 
   /**
-   * Delete computer.
+   * Delete computer(s).
    *
    * @param selection
    *          the selection
    * @return the string
    */
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public String deleteComputer(@RequestParam("selection") String selection) {
 

@@ -13,7 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 public class PageQueryMapper {
 
   /**
-   * To query params.
+   * Converts a pageParmas object into a QueryParams object.
    *
    * @param pageParams
    *          the page params

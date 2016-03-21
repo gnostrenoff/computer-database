@@ -15,7 +15,7 @@
 			access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
 
 		<!-- admin -->
-		<intercept-url pattern="/computer/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/computer/**" access="hasRole('ROLE_ADMIN')" />
 
 		<!-- login form configuration -->
 		<form-login login-page="/login" username-parameter="username"
