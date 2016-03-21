@@ -7,7 +7,7 @@
     http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
 	<!-- import binding layer context -->
-    <import resource="classpath:/binding-context.xml" />
+    <import resource="classpath:binding-context.xml" />
 	
 	<!-- binding messages.properties -->
 	<bean id="messageSource"

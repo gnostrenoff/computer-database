@@ -23,11 +23,16 @@
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/computer/dashboard">
-				Application - Computer Database </a> <a href="?lang=en"
-				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
+				href="${pageContext.request.contextPath}/dashboard"> Application -
+				Computer Database </a> 
+			<div class="navbar-brand pull-right">
+			<a href="?lang=en"
+				class="btn btn-inverse btn-large">EN</a> <a
 				href="?lang=fr"
-				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
+				class="btn btn-inverse btn-large">FR</a>
+				<a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-danger"><span
+					class="glyphicon glyphicon-log-out"></span> log out</a>
+			</div>
 		</div>
 
 	</header>
@@ -39,7 +44,7 @@
 						<spring:message code="common.${action}" />
 					</h1>
 					<sf:form
-						action="${pageContext.request.contextPath}/computer/${action}"
+						action="${pageContext.request.contextPath}/computer/admin/${action}"
 						method="post" id="editcomputer-form" name="editcomputer-form"
 						modelAttribute="computerDto">
 
@@ -121,7 +126,7 @@
 								value="<spring:message
 									code="common.save" />"
 								class="btn btn-primary"></input> <a
-								href="${pageContext.request.contextPath}/computer/dashboard"
+								href="${pageContext.request.contextPath}/dashboard"
 								class="btn btn-default"><spring:message code="common.cancel" /></a>
 						</div>
 					</sf:form>

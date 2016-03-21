@@ -4,8 +4,8 @@
 	<groupId>com.gnostrenoff</groupId>
 	<artifactId>computer-database</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>computer-database Maven Webapp</name>
+	<version>0.1.0-SNAPSHOT</version>
+	<name>computer-database project</name>
 	<url>http://maven.apache.org</url>
 
 	<modules>
@@ -41,6 +41,10 @@
 		<spring-tx.version>4.2.5.RELEASE</spring-tx.version>
 		<spring-test.version>4.2.5.RELEASE</spring-test.version>
 		<spring-data.version>1.9.4.RELEASE</spring-data.version>
+		<spring-context.version>4.0.6.RELEASE</spring-context.version>
+		<spring-security-core.version>4.0.4.RELEASE</spring-security-core.version>
+		<spring-security-config.version>4.0.4.RELEASE</spring-security-config.version>
+		<spring-security-web.version>4.0.4.RELEASE</spring-security-web.version>
 		<validation-api.version>1.1.0.Final</validation-api.version>
 		<hibernate-validation.version>5.2.4.Final</hibernate-validation.version>
 		<hibernate-entitymanager.version>5.1.0.Final</hibernate-entitymanager.version>
@@ -79,7 +83,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.0.6.RELEASE</version>
+			<version>${spring-context.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -132,12 +136,42 @@
 			<scope>test</scope>
 		</dependency>
 
-
 	</dependencies>
 
 	<!-- dependency management -->
 	<dependencyManagement>
 		<dependencies>
+
+			<!-- Modules -->
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>core</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>persistence</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>service</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>binding</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>webapp</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+			</dependency>
 
 			<!-- mysql -->
 			<dependency>
@@ -177,6 +211,23 @@
 				<version>${spring-tx.version}</version>
 			</dependency>
 
+			<!-- Spring security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring-security-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring-security-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring-security-web.version}</version>
+			</dependency>
+
 			<!-- hibernate ORM, spring data JPA -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -198,11 +249,6 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate-core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-ehcache</artifactId>
-				<version>5.1.0.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -266,6 +312,7 @@
 	<!-- build configuration -->
 	<build>
 		<finalName>computer-database</finalName>
+
 		<plugins>
 			<!-- compiler -->
 			<plugin>
@@ -324,11 +371,11 @@
 				</executions>
 			</plugin>
 		</plugins>
+
 		<!-- ressources directories -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<testResources>

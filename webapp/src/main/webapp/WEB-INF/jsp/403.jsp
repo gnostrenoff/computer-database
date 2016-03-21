@@ -26,6 +26,7 @@
 		<div class="container">
 			<div class="alert alert-danger">
 				Error 403: Access denied! <br />
+				<h2>${message}</h2>
 				<!-- stacktrace -->
 			</div>
 		</div>

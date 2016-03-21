@@ -23,11 +23,15 @@
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/computer/dashboard">
-				Application - Computer Database </a> <a href="?lang=en"
-				class="navbar-brand btn btn-inverse btn-large pull-right">EN</a> <a
-				href="?lang=fr"
-				class="navbar-brand btn btn-inverse btn-large pull-right">FR</a>
+				href="${pageContext.request.contextPath}/dashboard"> Application
+				- Computer Database </a>
+			<div class="navbar-brand pull-right">
+				<a href="?lang=en" class="btn btn-inverse btn-large">EN</a> <a
+					href="?lang=fr" class="btn btn-inverse btn-large">FR</a> <a
+					href="${pageContext.request.contextPath}/logout"
+					class="btn btn-primary btn-danger"><span
+					class="glyphicon glyphicon-log-out"></span> log out</a>
+			</div>
 		</div>
 
 	</header>
@@ -42,8 +46,8 @@
 					<spring:message code="dashboard.searchValue" var="searchValue" />
 					<spring:message code="dashboard.searchButton" var="searchButton" />
 					<form id="searchForm"
-						action="${pageContext.request.contextPath}/computer/dashboard"
-						method="GET" class="form-inline">
+						action="${pageContext.request.contextPath}/dashboard" method="GET"
+						class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
 							class="form-control" placeholder="${searchValue}" /> <input
@@ -55,7 +59,7 @@
 				</div>
 				<div class="pull-right">
 					<a class="btn btn-success" id="addComputer"
-						href="${pageContext.request.contextPath}/computer/new"><spring:message
+						href="${pageContext.request.contextPath}/computer/admin/new"><spring:message
 							code="common.new" /></a> <a class="btn btn-default"
 						id="editComputer" href="#" onclick="$.fn.toggleEditMode();"><spring:message
 							code="dashboard.edit" /></a>
@@ -66,7 +70,8 @@
 		<form id="deleteForm"
 			action="${pageContext.request.contextPath}/computer/delete"
 			method="POST">
-			<input type="hidden" name="selection" value="">
+			<input type="hidden" name="selection" value=""> <input
+				type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 
 		<div class="container" style="margin-top: 10px;">
@@ -106,7 +111,7 @@
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="${computer.id}"></td>
 							<td><a
-								href="${pageContext.request.contextPath}/computer/edit/${computer.id}"
+								href="${pageContext.request.contextPath}/computer/admin/edit/${computer.id}"
 								onclick=""><c:out value="${computer.name}" /></a></td>
 							<td><c:out value="${computer.introduced}" /></td>
 							<td><c:out value="${computer.discontinued}" /></td>
