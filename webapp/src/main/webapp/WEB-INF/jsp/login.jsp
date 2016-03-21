@@ -35,39 +35,55 @@
 	</header>
 	<section id="main">
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2 box">
+			<div class="alert alert-info">
+				<div class="row">
+					<div class="col-xs-8 col-xs-offset-2 box">
 
-					<form action="${pageContext.request.contextPath}/login"
-						method="post" id="login-form" name="login-form">
+						<form action="${pageContext.request.contextPath}/login"
+							method="post" id="login-form" name="login-form">
 
-						<spring:message code="login.username" var="username" />
-						<spring:message code="login.password" var="password" />
+							<spring:message code="login.username" var="username" />
+							<spring:message code="login.password" var="password" />
 
-						<h1>${message}</h1>
+							<h1>${message}</h1>
 
-						<fieldset>
-							<div class="form-group">
-								<label for="username">${username}</label> <input type="text"
-									style="" id="username" placeholder="${username}"
-									name="username" required></input>
-							</div>
-							<div class="form-group">
-								<label for="password">${password}</label> <input type="password"
-									style="" id="password" placeholder="${password}"
-									name="password" required></input>
-							</div>
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
-						</fieldset>
-						<div class="actions pull-right">
-							<input type="submit"
-								value="<spring:message
+							<fieldset>
+								<div class="form-group ">
+									<label class="control-label requiredField" for="username">
+										${username} <span class="asteriskField"> * </span>
+									</label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-user"> </i>
+										</div>
+										<input class="form-control" id="username" name="username"
+											placeholder="${username}" type="text" />
+									</div>
+								</div>
+								<div class="form-group ">
+									<label class="control-label requiredField" for="password">
+										${password} <span class="asteriskField"> * </span>
+									</label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-key"> </i>
+										</div>
+										<input class="form-control" type="password" id="password" name="password"
+											placeholder="${password}" />
+									</div>
+								</div>
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+							</fieldset>
+							<div class="actions pull-right">
+								<input type="submit"
+									value="<spring:message
 									code="login.login" />"
-								class="btn btn-primary"></input> <a class="btn btn-default"><spring:message
-									code="login.clear" /></a>
-						</div>
-					</form>
+									class="btn btn-primary"></input> <a class="btn btn-default"><spring:message
+										code="login.clear" /></a>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
