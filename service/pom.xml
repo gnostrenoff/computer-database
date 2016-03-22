@@ -18,6 +18,12 @@
 			<artifactId>persistence</artifactId>
 		</dependency>
 
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
 		<!-- Spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
