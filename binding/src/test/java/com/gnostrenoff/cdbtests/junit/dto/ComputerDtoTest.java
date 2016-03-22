@@ -9,26 +9,23 @@ import com.gnostrenoff.cdb.dto.mapper.ComputerDtoMapper;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 /**
  * The Class ComputerDtoTest.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/application-context-test.xml" })
-@Ignore
+@ContextConfiguration(locations = { "classpath:/binding-context-test.xml" })
 public class ComputerDtoTest {
   
   @Autowired
@@ -45,36 +42,32 @@ public class ComputerDtoTest {
   
   /** The dto mock. */
   @Autowired
-  MessageSource messageSourceMock;
+  MessageSource messageSource;
+  
+  private static Company company;
+  private static Computer computer;
+  private static ComputerDto computerDto;
 
   /**
    * Before tests.
    */
   @Before
-  public void beforeTests() {
-    MockitoAnnotations.initMocks(this);
-    computerMock = Mockito.mock(Computer.class);
-    companyMock = Mockito.mock(Company.class);
-    dtoMock = Mockito.mock(ComputerDto.class);
-
-    Mockito.when(companyMock.getName()).thenReturn("apple");
-    Mockito.when(companyMock.getId()).thenReturn((long) 1);
-
-    Mockito.when(computerMock.getName()).thenReturn("macbookpro3000");
-    Mockito.when(computerMock.getIntroduced()).thenReturn(LocalDate.of(2014, 03, 12));
-    Mockito.when(computerMock.getDiscontinued()).thenReturn(LocalDate.of(2015, 03, 12));
-    Mockito.when(computerMock.getCompany()).thenReturn(companyMock);
-
-    Mockito.when(dtoMock.getName()).thenReturn("macbookpro3000");
-    Mockito.when(dtoMock.getIntroduced()).thenReturn("2014-03-12");
-    Mockito.when(dtoMock.getDiscontinued()).thenReturn("2015-03-12");
-    Mockito.when(dtoMock.getCompanyName()).thenReturn("apple");
-    Mockito.when(dtoMock.getCompanyId()).thenReturn((long) 1);
+  public void beforeTests() { 
+    company = new Company(1L, "Apple");
+    computer = new Computer("mac", LocalDate.of(2014, 03, 12), LocalDate.of(2015, 03, 12), company);
+    computerDto = new ComputerDto("mac", "2014-03-12", "2015-03-12", "Apple", 1L);
     
-    Mockito
-        .when(
-            messageSourceMock.getMessage("util.dateFormat", null, LocaleContextHolder.getLocale()))
-        .thenReturn("yyyy-MM-dd");
+    Locale.setDefault(Locale.ENGLISH);
+  }
+  
+  /**
+   * After tests.
+   */
+  @After
+  public void afterTests() { 
+    company = null;
+    computer = null;
+    computerDto = null;
   }
 
   /**
@@ -83,17 +76,17 @@ public class ComputerDtoTest {
   @Test
   public void toDtoTest() {
 
-    ComputerDto dto = computerDtoMapper.toDto(computerMock);
+    ComputerDto dto = computerDtoMapper.toDto(computer);
 
     assertNotNull(dto);
     assertTrue(dto.getName() instanceof String);
-    assertEquals(dto.getName(), "macbookpro3000");
+    assertEquals(dto.getName(), "mac");
     assertTrue(dto.getIntroduced() instanceof String);
     assertEquals(dto.getIntroduced(), "2014-03-12");
     assertTrue(dto.getDiscontinued() instanceof String);
     assertEquals(dto.getDiscontinued(), "2015-03-12");
     assertTrue(dto.getCompanyName() instanceof String);
-    assertEquals(dto.getCompanyName(), "apple");
+    assertEquals(dto.getCompanyName(), "Apple");
     assertEquals(dto.getCompanyId(), (long) 1);
   }
 
@@ -103,17 +96,17 @@ public class ComputerDtoTest {
   @Test
   public void toComputerTest() {
 
-    Computer computer = computerDtoMapper.toComputer(dtoMock);
+    Computer computer = computerDtoMapper.toComputer(computerDto);
 
     assertNotNull(computer);
     assertTrue(computer.getName() instanceof String);
-    assertEquals(computer.getName(), "macbookpro3000");
+    assertEquals(computer.getName(), "mac");
     assertTrue(computer.getIntroduced() instanceof LocalDate);
     assertEquals(computer.getIntroduced(), LocalDate.of(2014, 03, 12));
     assertTrue(computer.getDiscontinued() instanceof LocalDate);
     assertEquals(computer.getDiscontinued(), LocalDate.of(2015, 03, 12));
     assertTrue(computer.getCompany().getName() instanceof String);
-    assertEquals(computer.getCompany().getName(), "apple");
+    assertEquals(computer.getCompany().getName(), "Apple");
   }
 
 }

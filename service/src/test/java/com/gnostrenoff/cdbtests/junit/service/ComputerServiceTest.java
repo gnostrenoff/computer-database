@@ -1,20 +1,25 @@
 package com.gnostrenoff.cdbtests.junit.service;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.gnostrenoff.cdb.dao.CompanyDao;
 import com.gnostrenoff.cdb.dao.ComputerDao;
-import com.gnostrenoff.cdb.dao.exception.DaoException;
 import com.gnostrenoff.cdb.model.Company;
 import com.gnostrenoff.cdb.model.Computer;
 import com.gnostrenoff.cdb.service.ComputerService;
 import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,200 +29,290 @@ import java.time.LocalDate;
  * The Class ComputerServiceTest.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/application-context-test.xml" })
+@ContextConfiguration(locations = { "classpath:/service-context-test.xml" })
 public class ComputerServiceTest {
 
-  /** The computers. */
-  private static Computer goodComputer;
-  private static Computer badComputer;
-  private static Computer badComputer2;
-  private static Computer badComputer3;
-  private static Computer badComputer4;
-  private static Computer badComputer5;
+  /** The company dao mock. */
+  @Autowired
+  private CompanyDao companyDao;
 
+  /** The company dao mock. */
+  @Autowired
+  private ComputerDao computerDao;
+  
   /** The computer service. */
   @Autowired
   private ComputerService computerService;
-
-  /** The computer dao mock. */
-  @Autowired
-  private ComputerDao computerDaoMock;
-
-  /**
-   * Initialiation, executed once.
-   */
-  @BeforeClass
-  public static void initOnce() {
-    goodComputer = new Computer("goodOne");
-    goodComputer.setId(8);
-
-    badComputer = new Computer("");
-    badComputer2 = new Computer(null);
-
-    badComputer3 = new Computer("ok");
-    badComputer3.setIntroduced(LocalDate.of(2015, 02, 15));
-    badComputer3.setDiscontinued(LocalDate.of(2015, 02, 14));
-    
-    badComputer4 = new Computer("ok");
-    badComputer4.setDiscontinued(LocalDate.of(2015, 02, 14));
-    
-    badComputer5 = new Computer("ok");
-    badComputer5.setCompany(new Company(-1, "badOne"));
-
-  }
+  
+  private static Company company1;
+  private static Company company2;
 
   /**
-   * Initialiation for each test.
+   * Inits the.
    */
   @Before
-  public void initTests() {
+  public void init() {
 
-    // init dao mock
-    Mockito.doNothing().when(computerDaoMock).save(goodComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer2);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer3);
+    //first fill up test database
+    
+    if(computerDao.count() != 0) {
+      computerDao.deleteAll();
+    }
+    if(companyDao.count() != 0) {
+      companyDao.deleteAll();
+    }
+  
+    company1 = new Company(1, "company 1");
+    company2 = new Company(2, "company 2");
+    companyDao.save(company1);  
+    companyDao.save(company2);
+    
+    Computer computer1 = new Computer(1, "computer 1", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company1);
+    Computer computer2 = new Computer(2, "computer 2", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company2);
+    Computer computer3 = new Computer(3, "computer 3", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company2);
+    computerDao.save(computer1);
+    computerDao.save(computer2);
+    computerDao.save(computer3);
 
-    Mockito.doNothing().when(computerDaoMock).save(goodComputer);
-
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer2);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).save(badComputer3);
-
-    Mockito.doNothing().when(computerDaoMock).delete(1L);
-    Mockito.doThrow(new DaoException("")).when(computerDaoMock).delete(0L);
-  }
-
-  /**
-   * Creates the bad.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void createBad() {
-    computerService.create(badComputer);
-  }
-
-  /**
-   * Creates the bad2.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void createBad2() {
-    computerService.create(badComputer2);
-  }
-
-  /**
-   * Creates the bad3.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void createBad3() {
-    computerService.create(badComputer3);
   }
   
   /**
-   * Creates the bad4.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void createBad4() {
-    computerService.create(badComputer4);
-  }
-  
-  /**
-   * Creates the bad5.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void createBad5() {
-    computerService.create(badComputer5);
-  }
-
-  /**
-   * Creates the good.
+   * Test creates a valid computer
+   *
+   * @return the all computers
    */
   @Test
   public void createGood() {
-    try {
-      computerService.create(goodComputer);
+    Computer computerGood = new Computer(5, "computer good", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company1);
+    
+    try{
+      computerService.create(computerGood);
     } catch (ServiceValidatorException e) {
       fail();
-    }
-  }
-
-  /**
-   * Updates bad.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void updateBad() {
-    computerService.update(badComputer);
-  }
-
-  /**
-   * Updates bad2.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void updateBad2() {
-    computerService.update(badComputer2);
-  }
-
-  /**
-   * Updates bad3.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void updateBad3() {
-    computerService.update(badComputer3);
+    }   
+    assertNotNull(computerDao.findOne(1L));
   }
   
   /**
-   * Updates the bad4.
+   * Test creates a non valid computer
+   *
+   * @return the all computers
    */
-  @Test(expected = ServiceValidatorException.class)
-  public void updateBad4() {
-    computerService.create(badComputer4);
+  @Test
+  public void createBad1() {
+    Computer computerBad = new Computer(5, null, LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company1);
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    Computer computer = computerDao.findOne(5L);
+    
+    assertNull(computer);
   }
   
   /**
-   * Updates the bad5.
+   * Test creates a non valid computer
+   *
+   * @return the all computers
    */
-  @Test(expected = ServiceValidatorException.class)
-  public void updateBad5() {
-    computerService.create(badComputer5);
+  @Test
+  public void createBad2() {
+    Computer computerBad = new Computer(5, "", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company1);
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    assertNull(computerDao.findOne(5L));
   }
-
+  
   /**
-   * Updates good.
+   * Test creates a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test
+  public void createBad3() {
+    Computer computerBad = new Computer(5, "valid name", LocalDate.of(2014, 05, 21), LocalDate.of(2014, 05, 20), company1);
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    assertNull(computerDao.findOne(5L));
+  }
+  
+  /**
+   * Test creates a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test
+  public void createBad4() {
+    Computer computerBad = new Computer(5, "valid name", null, LocalDate.of(2014, 05, 20), company1);
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    assertNull(computerDao.findOne(5L));
+  }
+  
+  /**
+   * Test updates a valid computer
+   *
+   * @return the all computers
    */
   @Test
   public void updateGood() {
-    try {
-      computerService.update(goodComputer);
+    Computer computerGood = new Computer(5, "computer good", LocalDate.of(2014, 05, 21), LocalDate.of(2015, 05, 21), company1);
+    
+    try{
+      computerService.create(computerGood);
     } catch (ServiceValidatorException e) {
       fail();
-    }
-
-  }
-
-  /**
-   * Deletes bad.
-   */
-  @Test(expected = ServiceValidatorException.class)
-  public void deleteBad() {
-    computerService.delete(0);
+    }   
+    assertNotNull(computerDao.findOne(1L));
   }
   
   /**
-   * Deletes bad2.
+   * Test updates a non valid computer
+   *
+   * @return the all computers
    */
-  @Test(expected = ServiceValidatorException.class)
-  public void deleteBad2() {
-    computerService.delete(-1);
+  @Test
+  public void updateBad1() {
+    Computer computerBad = computerDao.findOne(1L);
+    computerBad.setName(null);
+    
+    try{
+      computerService.update(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    Computer computerNotUpdated = computerDao.findOne(1L);
+    assertNotNull(computerNotUpdated);
+    assertNotNull(computerNotUpdated.getName());
   }
-
+  
   /**
-   * Deletes good.
+   * Test updates a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test
+  public void updateBad2() {
+    Computer computerBad = computerDao.findOne(1L);
+    computerBad.setName("");
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    Computer computerNotUpdated = computerDao.findOne(1L);
+    assertNotNull(computerNotUpdated);
+    assertTrue(!computerNotUpdated.getName().isEmpty());
+  }
+  
+  /**
+   * Test updates a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test
+  public void updateBad3() {
+    Computer computerBad = computerDao.findOne(1L);
+    computerBad.setDiscontinued(LocalDate.of(2014, 5, 20));
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    Computer computerNotUpdated = computerDao.findOne(1L);
+    assertNotNull(computerNotUpdated);
+    assertTrue(!computerNotUpdated.getDiscontinued().equals(LocalDate.of(2014, 5, 20)));
+  }
+  
+  /**
+   * Test updates a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test
+  public void updateBad4() {
+    Computer computerBad = computerDao.findOne(1L);
+    computerBad.setIntroduced(null);
+    
+    try{
+      computerService.create(computerBad);
+      fail();
+    } catch (ServiceValidatorException e) {
+    }   
+    
+    Computer computerNotUpdated = computerDao.findOne(1L);
+    assertNotNull(computerNotUpdated);
+    assertNotNull(computerNotUpdated.getIntroduced());
+  }
+  
+  /**
+   * Test deletes a valid computer
+   *
+   * @return the all computers
    */
   @Test
   public void deleteGood() {
-    try {
-      computerService.delete(1);
-    } catch (ServiceValidatorException e) {
-      fail();
-    }
+    computerService.delete(1);
+    assertNull(computerDao.findOne(1L));
   }
+  
+  /**
+   * Test deletes a non valid computer
+   *
+   * @return the all computers
+   */
+  @Test(expected = ServiceValidatorException.class)
+  public void deleteBad() {
+    computerService.delete(-1);
+  }
+  
+  /**
+   * Test get a valid list of computers
+   *
+   * @return the all computers
+   */
+  @Test
+  @Ignore
+  public void list1() {
+    PageRequest pageRequest = new PageRequest(1, 3);
+    Page<Computer> page = computerService.getList(pageRequest, null);    
+    assertTrue(page.getContent().size() == 3);    
+  }
+  
+  /**
+   * Test get a valid list of computers
+   *
+   * @return the all computers
+   */
+  @Test
+  @Ignore
+  public void list2() {
+    PageRequest pageRequest = new PageRequest(1, 10, Direction.ASC, "name");
+    Page<Computer> page = computerService.getList(pageRequest, "2"); 
+    assertTrue(page.getContent().size() == 2);
+  }
+  
 }

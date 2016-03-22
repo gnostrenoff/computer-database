@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.Alert;
@@ -18,11 +19,11 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.concurrent.TimeUnit;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AddComputerTest.
  */
 @Category(IntegrationTest.class)
+@Ignore
 public class AddComputerIntegrationTest {
 
   /** The driver. */
