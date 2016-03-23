@@ -27,36 +27,26 @@
 				href="${pageContext.request.contextPath}/dashboard"> Application
 				- Computer Database </a>
 			<div class="navbar-brand pull-right">
-				<!-- Single button -->
-				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<spring:message code="dashboard.lang" />
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="?lang=en"><spring:message
-									code="dashboard.english" /></a></li>
-						<li><a href="?lang=fr"><spring:message
-									code="dashboard.french" /></a></li>
-					</ul>
-				</div>
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <spring:message code="dashboard.lang" /> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="?lang=en"><spring:message code="dashboard.english" /></a></li>
+                        <li><a href="?lang=fr"><spring:message code="dashboard.french" /></a></li>
+                    </ul>
+                </div>
+
+				<a href="${pageContext.request.contextPath}/logout"
+					class="btn btn-primary btn-danger"><span
+					class="glyphicon glyphicon-log-out"></span> log out</a>
 			</div>
 		</div>
 
 	</header>
 	<section id="main">
 		<div class="container">
-			<c:if test="${param.fail== true}">
-				<div class="alert alert-danger" role="alert">
-					<spring:message code="login.fail" />
-				</div>
-			</c:if>
-			<c:if test="${param.logout == true}">
-				<div class="alert alert-success" role="alert">
-					<spring:message code="logout.message" />
-				</div>
-			</c:if>
 			<div class="alert alert-info">
 				<div class="row">
 					<div class="col-xs-8 col-xs-offset-2 box">
@@ -66,7 +56,9 @@
 
 							<spring:message code="login.username" var="username" />
 							<spring:message code="login.password" var="password" />
-							
+
+							<h1>${message}</h1>
+
 							<fieldset>
 								<div class="form-group ">
 									<label class="control-label requiredField" for="username">
@@ -88,8 +80,8 @@
 										<div class="input-group-addon">
 											<i class="fa fa-key"> </i>
 										</div>
-										<input class="form-control" type="password" id="password"
-											name="password" placeholder="${password}" />
+										<input class="form-control" type="password" id="password" name="password"
+											placeholder="${password}" />
 									</div>
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}"

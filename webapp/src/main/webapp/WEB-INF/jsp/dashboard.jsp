@@ -26,8 +26,6 @@
 				href="${pageContext.request.contextPath}/dashboard"> Application
 				- Computer Database </a>
 			<div class="navbar-brand pull-right">
-				<a href="?lang=en" class="btn btn-inverse btn-large">EN</a> <a
-					href="?lang=fr" class="btn btn-inverse btn-large">FR</a>
                 <!-- Single button -->
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,9 +34,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="?lang=en"><spring:message code="dashboard.english" /></a></li>
                         <li><a href="?lang=fr"><spring:message code="dashboard.french" /></a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
                     </ul>
                 </div>
 

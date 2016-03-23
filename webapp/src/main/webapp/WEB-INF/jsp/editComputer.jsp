@@ -23,14 +23,22 @@
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/dashboard"> Application -
-				Computer Database </a> 
+				href="${pageContext.request.contextPath}/dashboard"> Application
+				- Computer Database </a>
 			<div class="navbar-brand pull-right">
-			<a href="?lang=en"
-				class="btn btn-inverse btn-large">EN</a> <a
-				href="?lang=fr"
-				class="btn btn-inverse btn-large">FR</a>
-				<a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-danger"><span
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <spring:message code="dashboard.lang" /> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="?lang=en"><spring:message code="dashboard.english" /></a></li>
+                        <li><a href="?lang=fr"><spring:message code="dashboard.french" /></a></li>
+                    </ul>
+                </div>
+
+				<a href="${pageContext.request.contextPath}/logout"
+					class="btn btn-primary btn-danger"><span
 					class="glyphicon glyphicon-log-out"></span> log out</a>
 			</div>
 		</div>

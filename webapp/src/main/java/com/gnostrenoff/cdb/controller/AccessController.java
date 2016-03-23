@@ -23,8 +23,7 @@ public class AccessController {
    * @return the string
    */
   @RequestMapping(value = "/login", method = RequestMethod.GET)
-  public String displayLoginForm(Model model) {
-    model.addAttribute("message", "Who are you ?");
+  public String displayLoginForm() {
     return "login";
   }
   
@@ -35,8 +34,8 @@ public class AccessController {
    */
   @RequestMapping(value = "login/fail", method = RequestMethod.GET)
   public String displayLoginFormAfterFail(Model model) {
-    model.addAttribute("message", "Sorry, We were not able to authenticate you, please try again");
-    return "login";
+    model.addAttribute("fail", "true");
+    return "redirect:/login";
   }
   
   /**
@@ -47,12 +46,13 @@ public class AccessController {
    * @return the string
    */
   @RequestMapping(value="/logout", method = RequestMethod.GET)
-  public String logout (HttpServletRequest request, HttpServletResponse response) {
+  public String logout (HttpServletRequest request, HttpServletResponse response, Model model) {
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
       if (auth != null){    
           new SecurityContextLogoutHandler().logout(request, response, auth);
       }
-      return "logout";
+      model.addAttribute("logout", "true");
+      return "redirect:/login";
   }
   
   /**
