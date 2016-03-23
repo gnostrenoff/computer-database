@@ -58,12 +58,10 @@ public class AccessController {
   /**
    * Display access denied.
    *
-   * @param model the model
    * @return the string
    */
   @RequestMapping(value = "/denied", method = RequestMethod.GET)
-  public String displayAccessDenied(Model model) {
-    model.addAttribute("message", "You are not allowed to perform this action.");
+  public String displayAccessDenied() {
     return "403";
   }
   

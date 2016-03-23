@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +27,8 @@
 	<section id="main">
 		<div class="container">
 			<div class="alert alert-danger">
-				Error 403: Access denied! <br />
-				<h2>${message}</h2>
+				<spring:message code="error.403"/> <br />
+				<h2><spring:message code="error.denied"/></h2>
 				<!-- stacktrace -->
 			</div>
 		</div>

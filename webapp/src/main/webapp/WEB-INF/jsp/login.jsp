@@ -97,7 +97,5 @@
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.additional.js"></script>
-	<%-- <script
-		src="${pageContext.request.contextPath}/resources/js/editComputer.js"></script> --%>
 </body>
 </html>
