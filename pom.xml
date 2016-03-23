@@ -10,6 +10,7 @@
 
 	<modules>
 		<module>webapp</module>
+		<module>api</module>
 		<module>console</module>
 		<module>binding</module>
 		<module>service</module>
@@ -68,6 +69,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j-api-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.3.0.Final</version>
 		</dependency>
 
 		<!-- Spring -->
@@ -171,6 +177,12 @@
 			<dependency>
 				<groupId>com.gnostrenoff</groupId>
 				<artifactId>webapp</artifactId>
+				<version>0.2.0-RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.gnostrenoff</groupId>
+				<artifactId>api</artifactId>
 				<version>0.2.0-RELEASE</version>
 			</dependency>
 
