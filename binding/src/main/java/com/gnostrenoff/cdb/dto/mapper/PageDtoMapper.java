@@ -24,8 +24,10 @@ public class PageDtoMapper {
   /**
    * Converts a pageParams object into a PageDto.
    *
-   * @param page the page
-   * @param params the params
+   * @param page
+   *          the page
+   * @param params
+   *          the params
    * @return the page dto
    */
   public PageDto toPageDto(Page<Computer> page, PageParams params) {
@@ -54,9 +56,11 @@ public class PageDtoMapper {
     dto.setPageStart(pgStart);
     dto.setPageEnd(pgEnd);
 
-    dto.setSearch(params.getSearch());
-    dto.setOrder(params.getOrder());
-    dto.setOrderBy(params.getOrderBy());
+    if (params != null) {
+      dto.setSearch(params.getSearch());
+      dto.setOrder(params.getOrder());
+      dto.setOrderBy(params.getOrderBy());
+    }
 
     return dto;
   }

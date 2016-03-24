@@ -7,28 +7,10 @@
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
-	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/logout" access="permitAll" />
+	<global-method-security pre-post-annotations="enabled"
+		secured-annotations="enabled" />
 
-		<!-- only authenticated -->
-		<intercept-url pattern="/dashboard"
-			access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
-
-		<!-- admin -->
-		<intercept-url pattern="/computer/**" access="hasRole('ROLE_ADMIN')" />
-
-		<!-- login form configuration -->
-		<form-login login-page="/login" username-parameter="username"
-			password-parameter="password" authentication-failure-url="/login/fail"
-			default-target-url="/dashboard" />
-
-		<!-- logout configuration -->
-		<logout logout-success-url="/logout" />
-
-		<!-- Access denied page -->
-		<access-denied-handler error-page="/denied" />
-
+	<http auto-config="true">
 		<csrf />
 	</http>
 

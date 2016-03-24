@@ -40,7 +40,19 @@ public class Listener {
 
   private CompanyService companyService;
   private ComputerService computerService;
-
+  
+  
+//  Format json data to respect
+//  {
+//    "id": 74,
+//    "name": "Amiga 2000",
+//    "introduced": "1986-01-01",
+//    "discontinued": "1990-01-01",
+//    "companyName": "Commodore International",
+//    "companyId": 6
+//  }
+  
+ 
   /**
    * Listen.
    */
