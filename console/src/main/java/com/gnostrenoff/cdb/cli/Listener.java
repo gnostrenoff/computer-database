@@ -1,36 +1,36 @@
 package com.gnostrenoff.cdb.cli;
 
-import com.gnostrenoff.cdb.model.Company;
-import com.gnostrenoff.cdb.model.Computer;
-import com.gnostrenoff.cdb.service.CompanyService;
-import com.gnostrenoff.cdb.service.ComputerService;
-import com.gnostrenoff.cdb.service.exception.ServiceValidatorException;
-import com.gnostrenoff.cdb.service.impl.CompanyServiceImpl;
-import com.gnostrenoff.cdb.service.impl.ComputerServiceImpl;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Scanner;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * The Class Listener.
  */
 public class Listener {
 
-  /** The application context. */
-  public static final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-      "classpath:/console-context.xml");
-
   /** The Constant scanIn. */
   public static final Scanner scanIn = new Scanner(System.in);
 
   /** The Constant formatter. */
-  public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+  public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+  private static final String REST_SERVICE_URL = "http://localhost:8080/api/computer";
+
+  private static Client client = ClientBuilder.newClient().register(JacksonFeature.class);
+  private static WebTarget webTarget = client.target(REST_SERVICE_URL);
+
+  private int pageIndex = 1;
 
   /** The exit. */
   public static boolean exit = false;
@@ -38,28 +38,20 @@ public class Listener {
   /** The input. */
   public static int input;
 
-  private CompanyService companyService;
-  private ComputerService computerService;
-  
-  
-//  Format json data to respect
-//  {
-//    "id": 74,
-//    "name": "Amiga 2000",
-//    "introduced": "1986-01-01",
-//    "discontinued": "1990-01-01",
-//    "companyName": "Commodore International",
-//    "companyId": 6
-//  }
-  
- 
+  // Format json data to respect
+  // {
+  // "id": 74,
+  // "name": "Amiga 2000",
+  // "introduced": "1986-01-01",
+  // "discontinued": "1990-01-01",
+  // "companyName": "Commodore International",
+  // "companyId": 6
+  // }
+
   /**
    * Listen.
    */
   public void listen() {
-
-    companyService = applicationContext.getBean("companyService", CompanyServiceImpl.class);
-    computerService = applicationContext.getBean("computerService", ComputerServiceImpl.class);
 
     while (!exit) {
 
@@ -125,91 +117,121 @@ public class Listener {
    * List companies.
    */
   private void listCompanies() {
-    List<Company> companiesList = companyService.getList();
-    for (int i = 0; i < companiesList.size(); i++) {
-      Company comp = companiesList.get(i);
-      System.out.println(comp.toString());
-    }
+    // List<Company> companiesList = companyService.getList();
+    // for (int i = 0; i < companiesList.size(); i++) {
+    // Company comp = companiesList.get(i);
+    // System.out.println(comp.toString());
+    // }
   }
 
   /**
    * List computers.
    */
   private void listComputers() {
-    long initialNbComputers = computerService.count();
-    long nbComputers = initialNbComputers;
-    
+
+    int response;
+    pageIndex = 0;
+
+    do {
+      pageIndex++;
+      PageCli page = webTarget.path("all/" + pageIndex).request().accept(MediaType.APPLICATION_JSON)
+              .get(PageCli.class);
+
+      page.getComputerList().forEach(computer -> System.out.println(computer));
+
+      if(page.getNbTotalPages() == pageIndex) {
+        System.out.println("No more computer.");
+        return;
+      }
+
+      System.out.println("Would you like the next page ? (1/0)");
+      response = scanIn.nextInt();
+    } while (response == 1);
+
   }
 
   /**
    * Creates the.
    */
   private void create() {
-    Computer newComputer = new Computer();
+    
+    String name; 
+    String introduced;
+    String discontinued;
+    long companyId;
+    
     System.out.println("please enter a name :");
     scanIn.nextLine(); // empty previous line
-    newComputer.setName(scanIn.nextLine());
-
-    System.out
-        .println("please enter date when the computer was introduced (date format : yyyy/MM/dd) :");
-    newComputer.setIntroduced(waitForValidDate(newComputer));
-    System.out.println(
-        "please enter date when the computer was discontinued (date format : yyyy/MM/dd) :");
-    newComputer.setDiscontinued(waitForValidDate(newComputer));
+    name = scanIn.nextLine();
+    
+    System.out.println("please enter date when the computer was introduced (date format : yyyy-MM-dd) :");
+    introduced = waitForValidDate();
+    System.out.println("please enter date when the computer was introduced (date format : yyyy-MM-dd) :");
+    discontinued = waitForValidDate();
+    
     System.out.println("please enter id of manufacturer :");
-
-    Company company = new Company();
-    company.setId(scanIn.nextLong());
-    newComputer.setCompany(company);
-
-    try {
-      computerService.create(newComputer);
-      System.out
-          .println("computer " + newComputer.getId() + " has been succesfully added to database");
-    } catch (ServiceValidatorException e) {
-      System.out.println("computer " + newComputer.getId()
-          + " was NOT added to database because the dates are not correct");
+    companyId = scanIn.nextLong();  
+    
+    ComputerCli computerCli = new ComputerCli(name, introduced, discontinued, companyId);   
+    
+    Response response = webTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(computerCli, MediaType.APPLICATION_JSON));
+    
+    if(response.getStatus() != 200) {
+      System.out.println("An error occured while requesting web service :");
+      System.out.println(response.toString());
+    } else {
+      System.out.println("Computer were successfully added to database !");
     }
-
   }
 
   /**
    * Read details.
    */
   private void readDetails() {
+
     System.out.println("please enter a id :");
-    System.out.println(computerService.get(scanIn.nextLong()).toString());
+    long id = scanIn.nextLong();
+
+    ComputerCli computer = webTarget.path("/" + id).request().accept(MediaType.APPLICATION_JSON)
+        .get(ComputerCli.class);
+    System.out.println(computer);
   }
 
   /**
    * Update.
    */
   private void update() {
-    System.out.println("please enter a id :");
-    Computer computer = computerService.get(scanIn.nextLong());
-    System.out.println("please enter a new name :");
+    
+    System.out.println("please enter a id :");    
+    long id = scanIn.nextLong();
+    
+    ComputerCli computer = webTarget.path("/" + id).request().accept(MediaType.APPLICATION_JSON)
+        .get(ComputerCli.class);
+    
+    if(computer == null) {
+      System.out.println("Computer not found.");
+      return;
+    }
+    
+    System.out.println("please enter a name :");
     scanIn.nextLine(); // empty previous line
     computer.setName(scanIn.nextLine());
-
-    System.out
-        .println("please enter date when the computer was introduced (date format : yyyy/MM/dd) :");
-    computer.setIntroduced(waitForValidDate(computer));
-    System.out.println(
-        "please enter date when the computer was discontinued (date format : yyyy/MM/dd) :");
-    computer.setDiscontinued(waitForValidDate(computer));
+    
+    System.out.println("please enter date when the computer was introduced (date format : yyyy-MM-dd) :");
+    computer.setIntroduced(waitForValidDate());
+    System.out.println("please enter date when the computer was introduced (date format : yyyy-MM-dd) :");
+    computer.setDiscontinued(waitForValidDate());
+    
     System.out.println("please enter id of manufacturer :");
-
-    Company company = new Company();
-    company.setId(scanIn.nextLong());
-    computer.setCompany(company);
-
-    try {
-      computerService.update(computer);
-      System.out
-          .println("computer " + computer.getId() + " has been succesfully updated to database");
-    } catch (ServiceValidatorException e) {
-      System.out.println("computer " + computer.getId()
-          + " was NOT updated in database because the dates are not correct");
+    computer.setCompanyId(scanIn.nextLong());
+    
+    Response response = webTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(computer, MediaType.APPLICATION_JSON));
+    
+    if(response.getStatus() != 200) {
+      System.out.println("An error occured while requesting web service, are you sure this computer exists ?");
+      System.out.println(response.toString());
+    } else {
+      System.out.println("Computer " + id + " were successfully updated !");
     }
   }
 
@@ -217,31 +239,31 @@ public class Listener {
    * Delete single computer.
    */
   private void deleteSingleComputer() {
-    System.out.println("please enter a id :");
-    long id = scanIn.nextLong();
-    computerService.delete(id);
-    System.out.println("computer " + id + " has been succesfully deleted from database");
+     System.out.println("please enter a id :");
+     long id = scanIn.nextLong();
+     
+     Response response = webTarget.path("/" + id).request().delete();
+     
+     if(response.getStatus() != 200) {
+       System.out.println("An error occured while requesting web service, are you sure this computer exists ?");
+       System.out.println(response.toString());
+     } else {
+       System.out.println("Computer " + id + " were successfully deleted !");
+     }
   }
 
   /**
    * Delete by company id.
    */
   private void deleteByCompanyId() {
-    System.out.println("please enter a id :");
-    long id = scanIn.nextLong();
-    companyService.delete(id);
-    System.out.println("company " + id
-        + ", and all the related computers have been succesfully deleted from database");
+    System.out.println("We are still working on this feature ... available soon.");
   }
 
   /**
    * Wait for valid date.
-   *
-   * @param computer
-   *          the computer
    * @return the local date
    */
-  private LocalDate waitForValidDate(Computer computer) {
+  private String waitForValidDate() {
 
     LocalDate dateTime = null;
 
@@ -254,6 +276,6 @@ public class Listener {
         System.out.println("date not valid, try again");
       }
     }
-    return dateTime;
+    return dateTime.format(formatter);
   }
 }

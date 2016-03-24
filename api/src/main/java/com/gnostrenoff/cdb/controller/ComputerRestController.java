@@ -12,9 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,37 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
  * The Class ComputerRestController.
  */
 @RestController
-@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api")
 public class ComputerRestController {
-  
+
   /** The computer service. */
   @Autowired
   private ComputerService computerService;
-  
+
   /** The computer dto mapper. */
   @Autowired
   private ComputerDtoMapper computerDtoMapper;
-  
+
   @Autowired
   private PageDtoMapper pageDtoMapper;
-  
-  /**
-   * Gets the list of computers.
-   *
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computers/{index}", method = RequestMethod.GET)
-  //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-  public ResponseEntity<PageDto> get(@PathVariable int index) {
-    if(index <= 0) {
-      return new ResponseEntity<PageDto>(HttpStatus.BAD_REQUEST);  
-    }
-    PageRequest pageRequest = new PageRequest(index - 1, 10, Direction.ASC, "name");
-    Page<Computer> page = computerService.getList(pageRequest, null);
-    PageDto pageDto = pageDtoMapper.toPageDto(page, null);
-    return new ResponseEntity<PageDto>(pageDto, HttpStatus.OK);  
-  }
-  
+
   /**
    * Gets the computer matching with given id.
    *
@@ -65,9 +46,9 @@ public class ComputerRestController {
   @RequestMapping(value = "/computer/{id}", method = RequestMethod.GET)
   //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
   public ResponseEntity<ComputerDto> get(@PathVariable long id) {
-    return new ResponseEntity<ComputerDto>(computerDtoMapper.toDto(computerService.get(id)), HttpStatus.OK);  
+    return new ResponseEntity<ComputerDto>(computerDtoMapper.toDto(computerService.get(id)), HttpStatus.OK);
   }
-  
+
   /**
    * Deletes the computer matching with given id.
    *
@@ -80,7 +61,7 @@ public class ComputerRestController {
     computerService.delete(id);
     return new ResponseEntity<>(HttpStatus.OK);
   }
-  
+
   /**
    * Creates the the computer given.
    *
@@ -93,7 +74,7 @@ public class ComputerRestController {
     computerService.create(computerDtoMapper.toComputer(computerDto));
     return new ResponseEntity<>(HttpStatus.OK);
   }
-  
+
   /**
    * Update the the computer given.
    *
@@ -106,6 +87,23 @@ public class ComputerRestController {
   public ResponseEntity<ComputerDto> update(@PathVariable long id, @RequestBody ComputerDto computerDto) {
     computerService.update(computerDtoMapper.toComputer(computerDto));
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  /**
+   * Gets the list of computers.
+   *
+   * @return the response entity
+   */
+  @RequestMapping(value = "/computer/all/{index}", method = RequestMethod.GET)
+  //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+  public ResponseEntity<PageDto> get(@PathVariable int index) {
+    if(index <= 0) {
+      return new ResponseEntity<PageDto>(HttpStatus.BAD_REQUEST);
+    }
+    PageRequest pageRequest = new PageRequest(index - 1, 10, Direction.ASC, "name");
+    Page<Computer> page = computerService.getList(pageRequest, null);
+    PageDto pageDto = pageDtoMapper.toPageDto(page, null);
+    return new ResponseEntity<PageDto>(pageDto, HttpStatus.OK);
   }
 
 }
