@@ -28,5 +28,5 @@ public interface ComputerDao extends JpaRepository<Computer, Long> {
   Page<Computer> findByNameAndCompanyLike(@Param("searchParam") String searchParam,
       Pageable pageable);
 
-  void deleteByCompany_Id(@Param("id") long id);
+  void deleteByCompany_Id(long id);
 }

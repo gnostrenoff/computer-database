@@ -1,4 +1,6 @@
-package com.gnostrenoff.cdb.cli;
+package com.gnostrenoff.cdb.cli.launcher;
+
+import com.gnostrenoff.cdb.cli.listener.Listener;
 
 /**
  * The Class Launcher.

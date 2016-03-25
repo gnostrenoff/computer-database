@@ -23,87 +23,90 @@ import org.springframework.web.bind.annotation.RestController;
  * The Class ComputerRestController.
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/computer")
 public class ComputerRestController {
 
-  /** The computer service. */
-  @Autowired
-  private ComputerService computerService;
+    /**
+     * The computer service.
+     */
+    @Autowired
+    private ComputerService computerService;
 
-  /** The computer dto mapper. */
-  @Autowired
-  private ComputerDtoMapper computerDtoMapper;
+    /**
+     * The computer dto mapper.
+     */
+    @Autowired
+    private ComputerDtoMapper computerDtoMapper;
 
-  @Autowired
-  private PageDtoMapper pageDtoMapper;
+    @Autowired
+    private PageDtoMapper pageDtoMapper;
 
-  /**
-   * Gets the computer matching with given id.
-   *
-   * @param id the id
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computer/{id}", method = RequestMethod.GET)
-  //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-  public ResponseEntity<ComputerDto> get(@PathVariable long id) {
-    return new ResponseEntity<ComputerDto>(computerDtoMapper.toDto(computerService.get(id)), HttpStatus.OK);
-  }
-
-  /**
-   * Deletes the computer matching with given id.
-   *
-   * @param id the id
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computer/{id}", method = RequestMethod.DELETE)
-  //@PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ComputerDto> delete(@PathVariable long id) {
-    computerService.delete(id);
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  /**
-   * Creates the the computer given.
-   *
-   * @param computerDto the computer dto
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computer", method = RequestMethod.POST)
-  //@PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ComputerDto> create(@RequestBody ComputerDto computerDto) {
-    computerService.create(computerDtoMapper.toComputer(computerDto));
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  /**
-   * Update the the computer given.
-   *
-   * @param id the id
-   * @param computerDto the computer dto
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computer/{id}", method = RequestMethod.PUT)
-  //@PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ComputerDto> update(@PathVariable long id, @RequestBody ComputerDto computerDto) {
-    computerService.update(computerDtoMapper.toComputer(computerDto));
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  /**
-   * Gets the list of computers.
-   *
-   * @return the response entity
-   */
-  @RequestMapping(value = "/computer/all/{index}", method = RequestMethod.GET)
-  //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-  public ResponseEntity<PageDto> get(@PathVariable int index) {
-    if(index <= 0) {
-      return new ResponseEntity<PageDto>(HttpStatus.BAD_REQUEST);
+    /**
+     * Gets the computer matching with given id.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<ComputerDto> get(@PathVariable long id) {
+        return new ResponseEntity<>(computerDtoMapper.toDto(computerService.get(id)), HttpStatus.OK);
     }
-    PageRequest pageRequest = new PageRequest(index - 1, 10, Direction.ASC, "name");
-    Page<Computer> page = computerService.getList(pageRequest, null);
-    PageDto pageDto = pageDtoMapper.toPageDto(page, null);
-    return new ResponseEntity<PageDto>(pageDto, HttpStatus.OK);
-  }
 
+    /**
+     * Gets the list of computers.
+     *
+     * @return the response entity
+     */
+    @RequestMapping(value = "/all/{index}", method = RequestMethod.GET)
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<PageDto> get(@PathVariable int index) {
+        if (index <= 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        PageRequest pageRequest = new PageRequest(index - 1, 10, Direction.ASC, "name");
+        Page<Computer> page = computerService.getList(pageRequest, null);
+        PageDto pageDto = pageDtoMapper.toPageDto(page, null);
+        return new ResponseEntity<>(pageDto, HttpStatus.OK);
+    }
+
+    /**
+     * Creates the the computer given.
+     *
+     * @param computerDto the computer dto
+     * @return the response entity
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ComputerDto> create(@RequestBody ComputerDto computerDto) {
+        computerService.create(computerDtoMapper.toComputer(computerDto));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Update the the computer given.
+     *
+     * @param id          the id
+     * @param computerDto the computer dto
+     * @return the response entity
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ComputerDto> update(@PathVariable long id, @RequestBody ComputerDto computerDto) {
+        computerService.update(computerDtoMapper.toComputer(computerDto));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Deletes the computer matching with given id.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ComputerDto> delete(@PathVariable long id) {
+        computerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
